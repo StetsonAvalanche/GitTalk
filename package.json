@@ -7,8 +7,12 @@
     "test": "test"
   },
   "scripts": {
+<<<<<<< HEAD
     "test": "mocha -w test/helpers/browser.js test/client/*.spec.js test/server/*.spec.js",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./"
+=======
+    "test": "npm test"
+>>>>>>> master
   },
   "repository": {
     "type": "git",
@@ -25,6 +29,7 @@
   "bugs": {
     "url": "https://github.com/StetsonAvalanche/GitTalk/issues"
   },
+<<<<<<< HEAD
   "homepage": "https://github.com/StetsonAvalanche/GitTalk#readme",
   "dependencies": {
     "babel-core": "^6.18.2",
@@ -45,4 +50,7 @@
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2"
   }
+=======
+  "homepage": "https://github.com/StetsonAvalanche/GitTalk#readme"
+>>>>>>> master
 }
