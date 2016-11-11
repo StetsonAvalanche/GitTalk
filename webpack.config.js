@@ -7,10 +7,10 @@ const path = require('path');
 const webpack = require('webpack');
 
 // env
-const buildDirectory = './dist/';
+const buildDirectory = './public/';
 
 module.exports = {
-  entry: './client/app.js',
+  entry: './client/index.js',
   devServer: {
     hot: true,
     inline: true,
@@ -22,8 +22,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(buildDirectory),
-    filename: 'app.js',
-    publicPath: 'http://localhost:8000/dist',
+    filename: 'bundle.js',
+    publicPath: 'http://localhost:8000/public',
   },
   externals: {
     'cheerio': 'window',
@@ -35,10 +35,15 @@ module.exports = {
       test: /\.jsx?$/,
       exclude: /(node_modules|bower_components)/,
       loader: 'babel',
+      // loader: 'babel-loader',
+      // resolveLoader: {
+      //   root: path.join(__dirname, 'node_modules')
+      // },
       query: {
         presets: ['react', 'es2015', 'stage-0'],
       },
     }],
   },
   plugins: [],
+  // devtool: 'source-map',
 };
