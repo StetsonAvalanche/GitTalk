@@ -21513,16 +21513,16 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var ChatRoom = function (_React$Component) {
-		_inherits(ChatRoom, _React$Component);
+	var Chatroom = function (_React$Component) {
+		_inherits(Chatroom, _React$Component);
 
-		function ChatRoom() {
-			_classCallCheck(this, ChatRoom);
+		function Chatroom(props) {
+			_classCallCheck(this, Chatroom);
 
-			return _possibleConstructorReturn(this, (ChatRoom.__proto__ || Object.getPrototypeOf(ChatRoom)).call(this, props));
+			return _possibleConstructorReturn(this, (Chatroom.__proto__ || Object.getPrototypeOf(Chatroom)).call(this, props));
 		}
 
-		_createClass(ChatRoom, [{
+		_createClass(Chatroom, [{
 			key: 'render',
 			value: function () {
 				function render() {
@@ -21537,12 +21537,12 @@
 			}()
 		}]);
 
-		return ChatRoom;
+		return Chatroom;
 	}(_react2['default'].Component);
 
 	var styles = {};
 
-	exports['default'] = ChatRoom;
+	exports['default'] = Chatroom;
 
 /***/ },
 /* 175 */
