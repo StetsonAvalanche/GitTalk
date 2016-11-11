@@ -9,7 +9,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import {expect} from 'chai';
 
-import TestComponent from '../client/components/testcomponent';
+import TestComponent from '../../client/components/testcomponent';
 
 describe('<TestComponent/>', function () {
   it('should have an image to display the gravatar', function () {
