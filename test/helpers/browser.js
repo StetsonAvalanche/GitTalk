@@ -1,6 +1,9 @@
 /*
 Ref:
 https://semaphoreci.com/community/tutorials/testing-react-components-with-enzyme-and-mocha
+
+Create a setup file that ensures we can test our components in a realistic browser 
+environment using jsdom.
  */
 
 require('babel-register')();
