@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test/helpers/browser.js test/client/*.spec.js test/server/*.spec.js",
+    "test": "mocha test/helpers/browser.js test/client/*.spec.js test/server/*.spec.js test/server/*/*.spec.js",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./",
     "start-dev": "webpack -w | nodemon server/server.js"
   },
@@ -50,6 +50,7 @@
     "mocha": "^3.1.2",
     "react-addons-test-utils": "^15.3.2",
     "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-server": "^1.16.2",
+    "zombie": "^5.0.4"
   }
 }
