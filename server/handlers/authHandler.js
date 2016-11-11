@@ -14,7 +14,15 @@ function login(accessToken, refreshToken, profile, done) {
   done(null, profile);
 }
 
+function postLogin(req, res) {
+  // Successful authentication, redirect home.
+
+  console.log(req.isAuthenticated());
+  res.redirect('/dashboard');
+}
+
 module.exports = {
   login,
+  postLogin,
   helloWorld,
 };
