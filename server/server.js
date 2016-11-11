@@ -6,6 +6,9 @@ const auth = require('./routes/auth.js');
 const passport = require('./passportConfig.js');
 const app = express();
 
+app.use(passport.initialize());
+
+// routes
 app.use('/auth', auth);
 
 // app.use('/', express.static(path.join(__dirname, '../client/build')));
