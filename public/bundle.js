@@ -21526,7 +21526,7 @@
 			key: 'render',
 			value: function () {
 				function render() {
-					_react2['default'].createElement(
+					return _react2['default'].createElement(
 						'h1',
 						null,
 						'You are in Chatroom View'

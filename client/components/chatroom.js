@@ -6,7 +6,9 @@ class Chatroom extends React.Component {
 	}
 
 	render () {
-		<h1>You are in Chatroom View</h1>
+		return (
+		  <h1>You are in Chatroom View</h1>
+			)
 	}
 }
 
