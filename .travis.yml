@@ -1,4 +1,21 @@
 language: node_js
+
+# "node" refers to latest build
 node_js:
   - '6.1'
   - '6.0'
+  - "6"
+  - "6.1"
+  - "0.6"
+  - "node"
+ 
+# Tells Travis that we're going to be using MongoDB
+services:
+  - mongodb
+ 
+# This tells Travis that we need Chrome
+# https://swizec.com/blog/how-to-run-javascript-tests-in-chrome-on-travis/swizec/6647
+before_install:
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start 
