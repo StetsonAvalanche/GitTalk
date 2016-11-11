@@ -24,5 +24,7 @@
   "bugs": {
     "url": "https://github.com/StetsonAvalanche/GitTalk/issues"
   },
-  "homepage": "https://github.com/StetsonAvalanche/GitTalk#readme"
+  "homepage": "https://github.com/StetsonAvalanche/GitTalk#readme",
+  "dependencies": {
+  }
 }
