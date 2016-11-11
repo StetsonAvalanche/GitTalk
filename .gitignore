@@ -29,4 +29,4 @@ node_modules/
 bower_components/
 
 # http://stackoverflow.com/questions/14744993/git-strange-branch-merge-error-that-i-am-not-sure-how-to-solve
-.DS_Store
+#.DS_Store
