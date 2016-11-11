@@ -1,5 +1,9 @@
+// import env variables from .env - if not found, fallback to OS env vars
+require('dotenv').config({silent: true, path: './../.env'});
+
 const express = require('express');
 const auth = require('./routes/auth.js');
+const passport = require('./passportConfig.js');
 const app = express();
 
 app.use('/auth', auth);

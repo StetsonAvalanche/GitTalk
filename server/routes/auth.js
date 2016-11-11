@@ -5,6 +5,6 @@ const router = express.Router();
 // routes for github authentication
 
 // hello world example
-router.get('/github', authHandler.login);
+router.get('/github', authHandler.helloWorld);
 
 module.exports = router;
