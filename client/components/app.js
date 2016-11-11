@@ -13,7 +13,7 @@ class App extends React.Component {
 	  	return (
 	      <Router history={browserHistory}>
 	        <Route path="/dashboard" component={Dashboard} />
-	        <Route path="/rooms/:name" component={Chatroom} />
+	        <Route path="/rooms/:username/:reponame" component={Chatroom} />
 	      </Router>
 	  		)
   	} else {

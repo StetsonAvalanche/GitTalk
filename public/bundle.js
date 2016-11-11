@@ -21484,7 +21484,7 @@
 	            _reactRouter.Router,
 	            { history: _reactRouter.browserHistory },
 	            _react2['default'].createElement(_reactRouter.Route, { path: '/dashboard', component: _dashboard2['default'] }),
-	            _react2['default'].createElement(_reactRouter.Route, { path: '/rooms/:name', component: _chatroom2['default'] })
+	            _react2['default'].createElement(_reactRouter.Route, { path: '/rooms/:username/:reponame', component: _chatroom2['default'] })
 	          );
 	        } else {
 	          return _react2['default'].createElement(_login2['default'], null);
@@ -21573,6 +21573,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(175);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21595,9 +21597,27 @@
 			value: function () {
 				function render() {
 					return _react2['default'].createElement(
-						'h1',
+						'div',
 						null,
-						'You are in Chatroom View'
+						_react2['default'].createElement(
+							'h1',
+							null,
+							'Hello ',
+							this.props.params.username,
+							'!'
+						),
+						_react2['default'].createElement(
+							'h2',
+							null,
+							'This is your ',
+							this.props.params.reponame,
+							' Chatroom'
+						),
+						_react2['default'].createElement(
+							_reactRouter.Link,
+							{ to: '/dashboard' },
+							'Home'
+						)
 					);
 				}
 

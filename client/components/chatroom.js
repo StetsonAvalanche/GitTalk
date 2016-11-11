@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 
 class Chatroom extends React.Component {
 	constructor(props){
@@ -7,7 +8,12 @@ class Chatroom extends React.Component {
 
 	render () {
 		return (
-		  <h1>You are in Chatroom View</h1>
+			<div>
+		      <h1>Hello {this.props.params.username}!</h1>
+		      <h2>This is your {this.props.params.reponame} Chatroom</h2>
+
+		      <Link to="/dashboard">Home</Link>
+		    </div>
 			)
 	}
 }
