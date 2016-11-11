@@ -8,21 +8,25 @@ function helloWorld(req, res) {
 function login(accessToken, refreshToken, profile, done) {
   // check here to see if user is in our db
   // if not, create the user
-  // It would be cool if we could return a jwt to the front-end with user info
-
-  console.log(profile); // check to see what is returned from github
   done(null, profile);
 }
 
-function postLogin(req, res) {
-  // Successful authentication, redirect home.
-
-  console.log(req.isAuthenticated());
+function postAuth(req, res) {
+  // Successful authentication, redirect to dashboard.
   res.redirect('/dashboard');
+}
+
+function getUser(req, res) {
+  if (req.isAuthenticated()) {
+    res.json(JSON.stringify(req.user));
+  } else {
+    res.status(401).end();
+  }
 }
 
 module.exports = {
   login,
-  postLogin,
+  postAuth,
+  getUser,
   helloWorld,
 };
