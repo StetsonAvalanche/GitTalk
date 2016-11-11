@@ -1,3 +1,4 @@
+
 const path = require('path');
 // import env variables from .env - if not found, fallback to OS env vars
 require('dotenv').config({silent: true, path: path.join(__dirname, '../.env')});
@@ -30,3 +31,8 @@ app.listen(port);
 
 console.log(`🌎  ===> server listening on port ${port}`);
 module.exports = app;
+
+var mongoose = require('mongoose'); 
+
+mongoose.connect('mongodb://localhost/gittalk');
+
