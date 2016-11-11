@@ -8,8 +8,7 @@ class App extends React.Component {
   render(){
   	return (
       <Router history={browserHistory}>
-        {//<Route path="/" component>
-        }
+        <Route path="/" component={ChatRoom} />
       </Router>
   		)
   }
