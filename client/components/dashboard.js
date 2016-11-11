@@ -6,7 +6,9 @@ class Dashboard extends React.Component {
 	}
 
 	render () {
-		<h1>You are in Dashboard View</h1>
+		return (
+		  <h1>You are in Dashboard View</h1>
+			)
 	}
 }
 
