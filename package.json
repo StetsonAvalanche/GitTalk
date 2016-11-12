@@ -7,7 +7,11 @@
     "test": "test"
   },
   "scripts": {
+<<<<<<< b0b6ece2e8c434ef066dd7ad543987f9b97f92fb
     "test": "mocha test/helpers/browser.js test/client/components/*.spec.js test/server/*.spec.js test/server/*/*.spec.js",
+=======
+    "test": "node server/server.js & mocha test/helpers/browser.js test/client/*.spec.js test/server/*.spec.js test/server/*/*.spec.js",
+>>>>>>> (test) modify npm test script to start server
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./",
     "start-dev": "webpack -w | nodemon server/server.js",
     "start": "node server/server.js"
