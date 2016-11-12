@@ -7,7 +7,12 @@ class Login extends React.Component {
 
 	render () {
 		return (
-		  <h1>You are in Login View</h1>
+			<div>
+		      <h1>You are in Login View</h1>
+		      <div>
+                <a href="/auth/github">Login with Github</a>
+		      </div>
+		    </div>
 			)
 	}
 }
