@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var userSchmea = mongoose.Schmea({
+var userSchema = mongoose.Schema({
 	id: {
 		type: String, 
 		unique: true
@@ -8,6 +8,6 @@ var userSchmea = mongoose.Schmea({
 	repos: Array
 });
 
-var UserModel = mongoose.model('User', userSchmea); 
+var UserModel = mongoose.model('User', userSchema); 
 
 module.exports = UserModel; 

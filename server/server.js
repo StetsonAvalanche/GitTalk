@@ -34,5 +34,14 @@ module.exports = app;
 
 var mongoose = require('mongoose'); 
 
-mongoose.connect('mongodb://localhost/gittalk');
+var uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
+
+mongoose.connect(uriString, (err, res) => {
+  if (err) { 
+    console.log ('ERROR connecting to: ' + uriString + '. ' + err);
+  } else {
+    console.log ('Succeeded connected to: ' + uriString);
+  }
+});
+
 

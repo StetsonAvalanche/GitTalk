@@ -1,7 +1,7 @@
 var UserModel = require('../models/user.js'); 
 
 // findOne retrieves a user with the associated id 
-function findOne(callback) {
+function findOne(id, callback) {
 	UserModel.find({id: id}, callback);
 }
 
