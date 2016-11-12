@@ -4,6 +4,7 @@ machine:
 
 test:
   override:
-    - npm start & npm test
+    - npm test:
+      npm start & npm test
 
 
