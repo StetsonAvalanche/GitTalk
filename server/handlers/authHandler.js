@@ -7,11 +7,17 @@ function login(accessToken, refreshToken, profile, done) {
   done(null, profile);
 }
 
+function logout(req, res) {
+  req.session.passport = null;
+  res.redirect('/');
+}
+
 function postAuth(req, res) {
   // Successful authentication, redirect to dashboard.
   res.redirect('/dashboard');
 }
 
+// returns logged in user's data
 function getUser(req, res) {
   if (req.isAuthenticated()) {
     res.json(JSON.stringify(req.user));
@@ -22,6 +28,7 @@ function getUser(req, res) {
 
 module.exports = {
   login,
+  logout,
   postAuth,
   getUser,
 };
