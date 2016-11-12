@@ -9,11 +9,11 @@ import $ from 'jquery';
 class App extends React.Component {
   
   constructor(props){
-    super(props)
+    super(props);
 
     this.state = {
     	loggedIn: null
-    }
+    };
   }
 
   componentDidMount(){
@@ -24,7 +24,7 @@ class App extends React.Component {
   	}).done((data) => {
   		this.setState({
   			loggedIn: true
-  		})
+  		});
   	});
   }
 
@@ -36,11 +36,11 @@ class App extends React.Component {
 	        <Route path="/dashboard" component={Dashboard} />
 	        <Route path="/rooms/:username/:reponame" component={Chatroom} />
 	      </Router>
-	  		)	
+	  		);
   	} else {
   		return (
           <Login />
-  			)
+  			);
   	}
   }
 
