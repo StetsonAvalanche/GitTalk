@@ -8,7 +8,7 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 script:
-  - npm start & npm test
+  - npm test
 env:
     global:
         - secure: X/265DM7HtCM7gWRD2M6AJ4Vc1Zz1RRZ2TVGnhz6FESkLE49loIbNY2kRt+fiw6oKXpo40RCVOO30AzMRXiWSXVuYUGkGmAYOLM2sCE48Bo+fng9K08wHv/gHM4FxSRu7uQikdllh5innXHyBY8gnRN/peV/goUkDEzx3CsP2o6mZvk6HMC58YrezodXN8NpCblyl4NZE6R2zQ4Zh3eM3w6nA0mVH1dEg5TVdbfB6tL+zXzp4ETVGNKQSloz2Cy9ruqONby2cW2uQFBGjvozoeZKbE/g2nmIqMoNunasfW7RBkz7noUfEa5WC1moBqXOfxw1wDqiPNwQmucEQ0OuoxxVjzqUk6MzGpLc33To8QVMRi5Bnx+OwkKJXyqHE30Ynvm9pA0SqGqH8QGH9l3PZJvUaZBdhCbFejyASFdIF/ppx4qkfpoRiNzg/EAdPcXRnrfnVBDnR0MLeOq7wvYLMS8wZ/9XPf2dTpXo7d9hMR8+h/pUrVU+mevOOVyTkjdMS7w5eOUMjJIj3YEl2Wswfhd1I5n9s5qUg7e37krZFo6YIblptGrRh/GlikZxIy1RMFmWH0oqr9olwjtfE4ITZhfFsKVGEfxxjWuhd+VIBrzDlN9wboCmD3tKHZUbEx9DMWMDgq5uViwyyEKFVCkG82rI+ybY9785OnRRiuVYOtA=
