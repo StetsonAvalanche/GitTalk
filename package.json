@@ -52,9 +52,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "mongoose": "^4.6.7",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
-  },
-  "devDependencies": {
+    "react-dom": "^15.3.2",
     "chai": "^3.5.0",
     "chai-enzyme": "^0.6.0",
     "enzyme": "^2.6.0",
