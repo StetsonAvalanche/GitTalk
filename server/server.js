@@ -2,6 +2,7 @@ const path = require('path');
 // import env variables from .env - if not found, fallback to OS env vars
 require('dotenv').config({silent: true, path: path.join(__dirname, '../.env')});
 
+
 const express = require('express');
 const session = require('express-session');
 const auth = require('./routes/auth.js');
@@ -18,8 +19,11 @@ app.use(passport.session());
 
 // routes
 app.use('/auth', auth);
+app.use(express.static(path.join(__dirname, '../public')));
 
-// app.use('/', express.static(path.join(__dirname, '../client/build')));
+app.get('*', function(req, res) {
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));	
+});
 
 const port = process.env.PORT || 8000;
 app.listen(port);
