@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
 class Chatroom extends React.Component {
@@ -12,7 +12,7 @@ class Chatroom extends React.Component {
 		      <h1>Hello {this.props.params.username}!</h1>
 		      <h2>This is your {this.props.params.reponame} Chatroom</h2>
 
-		      <Link to="/dashboard">Home</Link>
+		      <Link to="/dashboard" className="link-to-dashboard">Home</Link>
 		    </div>
 			)
 	}

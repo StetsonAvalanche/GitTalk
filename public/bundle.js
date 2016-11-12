@@ -60,6 +60,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+	_reactDom2['default'].render(_react2['default'].createElement(_app2['default'], null), document.getElementById('app'));
+
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -21615,7 +21617,7 @@
 						),
 						_react2['default'].createElement(
 							_reactRouter.Link,
-							{ to: '/dashboard' },
+							{ to: '/dashboard', className: 'link-to-dashboard' },
 							'Home'
 						)
 					);
