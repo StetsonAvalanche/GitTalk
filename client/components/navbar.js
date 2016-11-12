@@ -1,23 +1,25 @@
 import React, {PropTypes} from 'react';
 
-class Chatroom extends React.Component {
+import User from './user';
+
+class NavBar extends React.Component {
   constructor(props){
     super(props);
   }
 
-  render () {
+  render() {
+    const {username, reponame, repos} = this.props;
     return (
       <div>
-          <h1>Hello {this.props.params.username}!</h1>
-          <h2>This is your {this.props.params.reponame} Chatroom</h2>
-
-          <Link to="/dashboard" className="link-to-dashboard">Home</Link>
-        </div>
-      );
+        <User username={username} />
+        <p>This is your {reponame} Chatroom</p>
+        <p>Channels</p>
+        <ul>
+          {repos.map(repo => <li key={repo}>{repo}</li>)}
+        </ul>
+      </div>
+    );
   }
 }
 
-const styles = {
-};
-
-export default Chatroom;
+export default NavBar;
