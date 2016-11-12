@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 
 class Chatroom extends React.Component {
 	constructor(props){
-		super(props)
+		super(props);
 	}
 
 	render () {
@@ -14,7 +14,7 @@ class Chatroom extends React.Component {
 
 		      <Link to="/dashboard" className="link-to-dashboard">Home</Link>
 		    </div>
-			)
+			);
 	}
 }
 
