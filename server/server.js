@@ -1,6 +1,6 @@
 const path = require('path');
 // import env variables from .env - if not found, fallback to OS env vars
-require('dofenv').config({silent: true, path: path.join(__dirname, '../.env')});
+require('dotenv').config({silent: true, path: path.join(__dirname, '../.env')});
 
 const express = require('express');
 const session = require('express-session');
