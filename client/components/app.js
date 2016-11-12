@@ -34,7 +34,6 @@ class App extends React.Component {
   	if (this.state.currUser) {
 	  	return (
 	      <Router history={browserHistory}>
-	        <Route path="/" component = {Login} />
 	        <Route path="/dashboard" component={Dashboard} />
 	        <Route path="/rooms/:username/:reponame" component={Chatroom} />
 	      </Router>

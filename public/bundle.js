@@ -21514,7 +21514,6 @@
 	          return _react2['default'].createElement(
 	            _reactRouter.Router,
 	            { history: _reactRouter.browserHistory },
-	            _react2['default'].createElement(_reactRouter.Route, { path: '/', component: _login2['default'] }),
 	            _react2['default'].createElement(_reactRouter.Route, { path: '/dashboard', component: _dashboard2['default'] }),
 	            _react2['default'].createElement(_reactRouter.Route, { path: '/rooms/:username/:reponame', component: _chatroom2['default'] })
 	          );
