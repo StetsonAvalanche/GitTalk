@@ -5,20 +5,30 @@ import NavBar from './navbar';
 import Messages from './messages';
 
 class Chatroom extends React.Component {
-	constructor(props){
-		super(props);
-	}
+  constructor(props){
+    super(props);
+    this.state = {
+      repos: [
+        'aframe-boilerplate',
+        'aframe-react',
+        'aframe-react-boilerplate',
+        'GitTalk',
+        'material-ui-browserify-gulp-example',
+        'microscope',
+        'sembly-heroku-server'
+      ]
+    };
+  }
 
-	render () {
-		return (
-			<div>
-		      <h1>Hello {this.props.params.username}!</h1>
-		      <h2>This is your {this.props.params.reponame} Chatroom</h2>
-
-		      <Link to="/dashboard" className="link-to-dashboard">Home</Link>
-		    </div>
-			);
-	}
+  render() {
+    return (
+      <div>
+        <NavBar username={this.props.params.username} reponame={this.props.params.reponame} repos={this.state.repos} />
+        <Messages username={this.props.params.username} />
+        <Link to="/dashboard" className="link-to-dashboard">Home</Link>
+      </div>
+    );
+  }
 }
 
 const styles = {

@@ -28,7 +28,7 @@ class App extends React.Component {
   	});
   }
 
-  render(){
+  render() {
   	// if user is authenticated
   	if (this.state.loggedIn) {
 	  	return (

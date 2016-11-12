@@ -15,40 +15,35 @@ import Chatroom from '../../../client/components/chatroom';
 import Login from '../../../client/components/login';
 import NavBar from '../../../client/components/navbar';
 import Messages from '../../../client/components/messages';
+import Message from '../../../client/components/message';
+import EnterMessage from '../../../client/components/entermessage';
+import User from '../../../client/components/user';
 
+describe('Chatroom Tests', function() {
 
-describe('Chatroom Tests', function () {
-
-  it('should have App route to Chatroom component', function () {
-    const wrapper = mount(<App />);
-    expect(wrapper).to.contain(<Login />);
-    // test not working due to this.state.loggedIn
-    // expect(wrapper).to.contain(<Route path="/rooms/:username/:reponame" component={Chatroom} />);
+  it('Chatroom should have Nav Bar', function() {
+    const wrapper = mount(<Chatroom params={{ username:'Felicia', reponame:'GitTalk' }} />);
+    expect(wrapper).to.have.descendants(NavBar);
   });
 
-  it('Chatroom should have Nav Bar', function () {
-    const wrapper = mount(<Chatroom />);
-    expect(wrapper).to.contain(<NavBar />);
+  it('Chatroom should have Messages component', function() {
+    const wrapper = mount(<Chatroom params={{ username:'Felicia', reponame:'GitTalk' }} />);
+    expect(wrapper).to.have.descendants(Messages);
   });
 
-  it('Chatroom should have Messages component', function () {
-    const wrapper = mount(<Chatroom />);
-    expect(wrapper).to.contain(<Messages />);
+  it('Nav Bar should have User component', function() {
+    const wrapper = mount(<NavBar username='Afsoon' reponame='GitTalk' repos={['GitTalk', 'GreenCast']}/>);
+    expect(wrapper).to.have.descendants(User);
   });
 
-  it('Nav Bar should have User component', function () {
-
+  it('Messages should have Message component', function() {
+    const wrapper = mount(<Messages />);
+    expect(wrapper).to.have.descendants(Message);
   });
 
-  it('Messages should have Message component', function () {
-
-  });
-
-  it('Messages should have EnterMessage component', function () {
-
+  it('Messages should have EnterMessage component', function() {
+    const wrapper = mount(<Messages />);
+    expect(wrapper).to.have.descendants(EnterMessage);
   });
 
 });
-
-
-
