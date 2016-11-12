@@ -20,7 +20,7 @@ describe('github login', () => {
 
   it('should not authorize login with incorrect credentials', (done) => {
     zombie.fill('#login_field', 'incorrectUsername')
-      .fill('#password', 'chasefeliciaafsoontony')
+      .fill('#password', 'chasefeliciaafsoontony');
     zombie.pressButton('input[value="Sign in"]')
       .then(() => {
         let url = zombie.location._url;
@@ -32,7 +32,7 @@ describe('github login', () => {
 
   it('should authorize login with correct credentials', (done) => {
     zombie.fill('#login_field', 'stetson-avalanche')
-      .fill('#password', 'chasefeliciaafsoontony')
+      .fill('#password', 'chasefeliciaafsoontony');
     zombie.pressButton('input[value="Sign in"]')
       .then(() => {
         let url = zombie.location._url;
