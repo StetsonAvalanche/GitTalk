@@ -1,6 +1,9 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
+import NavBar from './navbar';
+import Messages from './messages';
+
 class Chatroom extends React.Component {
 	constructor(props){
 		super(props);
