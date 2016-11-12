@@ -1,4 +1,5 @@
 import { ajax } from 'jquery';
+import * as bluebird from 'bluebird';
 
 function _get(url) {
   return ajax({
@@ -16,16 +17,18 @@ function _post(url, data) {
   });
 }
 
-function getUserRepos(cb) {
-  _get('auth/user').done(data => {
-    const repos_url = JSON.parse(data)._json.repos_url;
-    _get(repos_url).done(repos => {;
-      cb(null, repos);
+function getUserRepos() {
+  return new Promise((resolve, reject) => {
+    _get('auth/user').done(data => {
+      const reposUrl = JSON.parse(data)._json.repos_url;
+      _get(reposUrl).done(repos => {
+        resolve(repos);
+      }).fail((jqXHR, textStatus, err) => {;
+        reject(err);
+      });
     }).fail((jqXHR, textStatus, err) => {;
-      cb(err);
+      reject(err);
     });
-  }).fail((jqXHR, textStatus, err) => {;
-    cb(err);
   });
 }
 
