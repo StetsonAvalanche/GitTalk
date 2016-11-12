@@ -1,7 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import RepoList from './repoList.js';
-import $ from 'jquery';
+import { getUserRepos } from './../api/user/userRequest.js';
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -12,22 +12,16 @@ class Dashboard extends React.Component {
     }
   }
 
-  componentDidMount(){
-    $.ajax({
-      url:'auth/user',
-      method: 'GET',
-      dataType: 'JSON'
-    }).done((data) => {
-      let repos_url = JSON.parse(data)._json.repos_url;
-      $.ajax({
-        url: repos_url,
-        method: 'GET',
-        dataType: 'JSON'
-      }).done((repos) => {
-        this.setState({
-          repos: repos
-        });
-      });
+  componentDidMount() {
+    getUserRepos((err, repos) => {
+      if (err) console.log(err);
+      this.updateRepos(repos);
+    });
+  }
+
+  updateRepos(repos) {
+    this.setState({
+      repos: repos
     });
   }
 
