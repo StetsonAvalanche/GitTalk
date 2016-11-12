@@ -25,7 +25,7 @@ describe('github login', () => {
       .then(() => {
         let url = zombie.location._url;
         expect(url).to.equal('https://github.com/session');
-        console.log(url);
+        // console.log(url);
         done();
       });
   });
@@ -38,7 +38,7 @@ describe('github login', () => {
         let url = zombie.location._url;
         const baseUrl = url.split('?')[0];
         expect(baseUrl).to.equal('https://github.com/login/oauth/authorize');
-        console.log(url);
+        // console.log(url);
         done();
       });
   });
