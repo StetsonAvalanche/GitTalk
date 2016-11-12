@@ -12,7 +12,7 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-    	currUser: null
+    	loggedIn: null
     }
   }
 
@@ -22,16 +22,15 @@ class App extends React.Component {
   		method: 'GET',
   		dataType: 'JSON'
   	}).done((data) => {
-  		console.log('DATA', data)
   		this.setState({
-  			currUser: data
+  			loggedIn: true
   		})
   	});
   }
 
   render(){
   	// if user is authenticated
-  	if (this.state.currUser) {
+  	if (this.state.loggedIn) {
 	  	return (
 	      <Router history={browserHistory}>
 	        <Route path="/dashboard" component={Dashboard} />
