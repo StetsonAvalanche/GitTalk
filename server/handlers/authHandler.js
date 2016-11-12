@@ -1,10 +1,6 @@
 // handles login paths
 // request handlers should have the (req, res) argument signature
 
-function helloWorld(req, res) {
-  res.status(200).end('hello world');
-}
-
 function login(accessToken, refreshToken, profile, done) {
   // check here to see if user is in our db
   // if not, create the user
@@ -28,5 +24,4 @@ module.exports = {
   login,
   postAuth,
   getUser,
-  helloWorld,
 };
