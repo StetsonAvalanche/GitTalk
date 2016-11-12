@@ -2,6 +2,8 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github2');
 const authHandler = require('../handlers/authHandler.js');
 
+console.log(process.env.GITHUB_CLIENT_ID);
+
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
