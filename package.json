@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test/helpers/browser.js test/client/*.spec.js test/server/*.spec.js test/server/*/*.spec.js",
+    "test": "mocha test/helpers/browser.js test/client/components/*.spec.js test/server/*.spec.js test/server/*/*.spec.js",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./",
     "start-dev": "webpack -w | nodemon server/server.js",
     "start": "node server/server.js"
@@ -32,6 +32,7 @@
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
+    "jquery": "^3.1.1",
     "passport": "^0.3.2",
     "passport-github2": "^0.1.10",
     "react": "^15.3.2",
