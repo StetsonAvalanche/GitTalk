@@ -3,11 +3,9 @@ import Login from './login.js';
 import Chatroom from './chatroom.js';
 import Dashboard from './dashboard.js';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
-import $ from 'jquery';
-
+import { getUser } from './../api/user/userRequest.js';
 
 class App extends React.Component {
-
   constructor(props){
     super(props);
 
@@ -17,15 +15,9 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    $.ajax({
-      url:'auth/user',
-      method: 'GET',
-      dataType: 'JSON'
-    }).done((data) => {
-      this.setState({
-        loggedIn: true
-      })
-    });
+    getUser().then(() => {
+      this.setState({ loggedIn: true });
+    }).catch(err => console.log(err));
   }
 
   render(){

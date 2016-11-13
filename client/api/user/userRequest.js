@@ -17,6 +17,16 @@ function _post(url, data) {
   });
 }
 
+function getUser() {
+  return new Promise((resolve, reject) => {
+    _get('auth/user').done(data => {
+      resolve(data);
+    }).fail((jqXHR, textStatus, err) => {;
+      reject(err);
+    });
+  });
+}
+
 function getUserRepos() {
   return new Promise((resolve, reject) => {
     _get('auth/user').done(data => {
@@ -33,6 +43,7 @@ function getUserRepos() {
 }
 
 export {
+  getUser,
   getUserRepos
 }
 
