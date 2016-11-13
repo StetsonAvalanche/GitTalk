@@ -21,7 +21,7 @@ class EnterMessage extends React.Component {
       text: this.state.value
     };
     console.log('message sent', newMessage);
-    this.props.addMessage(newMessage);
+    this.props.socket.emit('new message', newMessage);
     this.setState({ value: '' });
   }
 

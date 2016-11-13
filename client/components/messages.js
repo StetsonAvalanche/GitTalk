@@ -3,6 +3,10 @@ import React, {PropTypes} from 'react';
 import Message from './message';
 import EnterMessage from './entermessage';
 
+import io from 'socket.io-client';
+
+const socket = io('', { path: '/api/chat'});
+
 class Messages extends React.Component {
   constructor(props){
     super(props);
@@ -16,13 +20,11 @@ class Messages extends React.Component {
       messageid: 5
     };
 
-    this.addMessage = this.addMessage.bind(this);
-  }
-
-  addMessage(message){
-    this.setState({
-      messages: [...this.state.messages, { user: message.user, text: message.text, id: this.state.messageid }],
-      messageid: this.state.messageid + 1
+    socket.on('new bc message', (message) => {
+      this.setState({
+        messages: [...this.state.messages, { user: message.user, text: message.text, id: this.state.messageid }],
+        messageid: this.state.messageid + 1
+      });      
     });
   }
 
@@ -33,7 +35,7 @@ class Messages extends React.Component {
         <ul>
           {this.state.messages.map(message => <Message key={message.id} user={message.user} text={message.text} />)}
         </ul>
-        <EnterMessage username={this.props.username} addMessage={this.addMessage}/>
+        <EnterMessage username={this.props.username} socket={socket}/>
       </div>
     );
   }
