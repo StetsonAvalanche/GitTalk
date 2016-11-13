@@ -25,6 +25,7 @@ class App extends React.Component {
     if (this.state.loggedIn) {
       return (
         <Router history={browserHistory}>
+          <Route path="/" component={Dashboard} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/rooms/:username/:reponame" component={Chatroom} />
         </Router>
