@@ -7,8 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test/helpers/browser.js test/client/components/*.spec.js test/server/*.spec.js test/server/*/*.spec.js",
-    "test-all": "mocha test/helpers/browser.js test/client/*.spec.js test/server/*.spec.js test/server/*/*.spec.js",
+    "test": "mocha test/helpers/browser.js test/client/components/*.spec.js test/server/*.spec.js test/server/*.spec.js",
+    "test-all": "mocha test/helpers/browser.js test/client/*/*.spec.js test/server/*.spec.js test/server/*/*.spec.js",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./",
     "start-dev": "webpack -w | nodemon server/server.js",
     "start": "node server/server.js"
@@ -31,10 +31,12 @@
   "homepage": "https://github.com/StetsonAvalanche/GitTalk#readme",
   "dependencies": {
     "babel-register": "^6.18.0",
+    "bluebird": "^3.4.6",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "jquery": "^3.1.1",
+    "mongoose": "^4.6.7",
     "passport": "^0.3.2",
     "passport-github2": "^0.1.10",
     "react": "^15.3.2",
@@ -52,17 +54,17 @@
     "babel-preset-stage-0": "^6.16.0",
     "mongoose": "^4.6.7",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
-  },
-  "devDependencies": {
+    "react-dom": "^15.3.2",
     "chai": "^3.5.0",
     "chai-enzyme": "^0.6.0",
     "enzyme": "^2.6.0",
     "jsdom": "^9.8.3",
     "mocha": "^3.1.2",
     "react-addons-test-utils": "^15.3.2",
+    "supertest": "^2.0.1",
     "webpack": "^1.13.3",
     "webpack-dev-server": "^1.16.2",
-    "zombie": "^5.0.4"
+    "zombie": "^5.0.4",
+    "sinon": "^1.17.6"
   }
 }

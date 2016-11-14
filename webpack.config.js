@@ -1,8 +1,3 @@
-/*
-Referenced from:
-https://semaphoreci.com/community/tutorials/testing-react-components-with-enzyme-and-mocha
-*/
-
 const path = require('path');
 const webpack = require('webpack');
 
