@@ -24,8 +24,13 @@ class Messages extends React.Component {
       this.setState({
         messages: [...this.state.messages, { user: message.user, text: message.text, id: this.state.messageid }],
         messageid: this.state.messageid + 1
-      });      
+      });    
     });
+  }
+
+  componentDidMount() {
+  // fetch all messages from DB
+
   }
 
   render(){
