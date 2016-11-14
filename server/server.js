@@ -8,10 +8,13 @@ const express = require('express');
 const SocketIo = require('socket.io');
 const session = require('express-session');
 const auth = require('./routes/auth.js');
+const api = require('./routes/api.js');
 const passport = require('./passport/config.js');
 const app = express();
 const api = require('./routes/api.js');
 const bodyParser = require('body-parser');
+
+const chatroomCtrl = require('./db/controllers/chatroom.js');
 
 /* express server */
 
@@ -49,7 +52,7 @@ mongoose.connect(uriString, (err, res) => {
   if (err) { 
     console.log ('ERROR connecting to: ' + uriString + '. ' + err);
   } else {
-    console.log ('Succeeded connected to: ' + uriString);
+    console.log ('Succeeded connected to: ' + uriString);    
   }
 });
 
@@ -62,6 +65,12 @@ io.on('connection', (socket) => {
     console.log('message received', msg);
     socket.emit('new bc message', msg);
     /* need to store msg in database */
+    chatroomCtrl.findOne(msg.chatroom, (chatroom) => {
+      chatroom.messages.push(msg);
+      chatroom.save();
+    })
+
+
   });
 });
 

@@ -4,7 +4,8 @@ class EnterMessage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      value: ''
+      value: '',
+      chatroom: 'anicknam/gittalk' // FIXME make me dynamic
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -18,7 +19,8 @@ class EnterMessage extends React.Component {
   sendMessage(message) {
     const newMessage = {
       user: this.props.username,
-      text: this.state.value
+      text: this.state.value,
+      chatroom: this.state.chatroom 
     };
     console.log('message sent', newMessage);
     this.props.socket.emit('new message', newMessage);
