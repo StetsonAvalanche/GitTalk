@@ -26,9 +26,9 @@ class Messages extends React.Component {
   componentDidMount() {
   // fetch all messages from DB
     console.log('getting data now');
-    console.log(getMessages('anicknam/gittalk'));
-    // .then(messages => console.log('messages', messages))
-    // .catch(err => throw err);
+    getMessages('anicknam/gittalk')
+    .then(messages => console.log('messages', messages))
+    .catch(err => throw err);
   }
 
   render(){

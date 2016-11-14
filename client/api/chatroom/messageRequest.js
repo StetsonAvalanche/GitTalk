@@ -1,18 +1,17 @@
 import { ajax } from 'jquery';
 import * as bluebird from 'bluebird';
 
-function _get(url, body) {
+function _get(url) {
   return ajax({
     url: url,
     method: 'GET',
-    dataType: 'JSON',
-    data: body
+    dataType: 'JSON'
   });
 }
 
 function getMessages(chatroomid) {
   return new Promise((resolve, reject) => {
-    _get('api/messages', {chatroomid: chatroomid})
+    _get('api/' + chatroomid + '/messages')
     .done(data => {
       resolve(data);
     })
