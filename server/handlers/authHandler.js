@@ -1,10 +1,18 @@
 // handles login paths
 // request handlers should have the (req, res) argument signature
+const User = require('./../db/controllers/user.js');
 
 function login(accessToken, refreshToken, profile, done) {
+  let user = {
+    id: profile._json.login
+  }
+  User.update(user, (err) => {
+    if (err) done(err);
+    done(null, profile);
+  });
   // check here to see if user is in our db
   // if not, create the user
-  done(null, profile);
+  // done(null, profile);
 }
 
 function logout(req, res) {
