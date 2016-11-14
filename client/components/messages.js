@@ -7,30 +7,28 @@ import io from 'socket.io-client';
 
 const socket = io('', { path: '/api/chat'});
 
+import { getMessages } from './../api/chatroom/messageRequest.js';
+
 class Messages extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      messages: [
-        { user: 'Chase', text: 'Wazzup :)', id: 1},
-        { user: 'Afsoon', text: 'I want ice cream', id: 2},
-        { user: 'Felicia', text: 'Snack Reactor', id: 3},
-        { user: 'Tony', text: 'I wanna nap', id: 4}
-      ],
-      messageid: 5
+      messages: [],
     };
 
     socket.on('new bc message', (message) => {
       this.setState({
-        messages: [...this.state.messages, { user: message.user, text: message.text, id: this.state.messageid }],
-        messageid: this.state.messageid + 1
+        messages: [...this.state.messages, { user: message.user, text: message.text, id: this.state.messageid }]
       });    
     });
   }
 
   componentDidMount() {
   // fetch all messages from DB
-
+    console.log('getting data now');
+    console.log(getMessages('anicknam/gittalk'));
+    // .then(messages => console.log('messages', messages))
+    // .catch(err => throw err);
   }
 
   render(){
@@ -38,7 +36,7 @@ class Messages extends React.Component {
       <div>
         <h1>Messages!</h1>
         <ul>
-          {this.state.messages.map(message => <Message key={message.id} user={message.user} text={message.text} />)}
+          {this.state.messages.map(message => <Message user={message.user} text={message.text} />)}
         </ul>
         <EnterMessage username={this.props.username} socket={socket}/>
       </div>
