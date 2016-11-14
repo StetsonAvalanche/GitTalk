@@ -1,9 +1,21 @@
-const Chatroom = require('./../db/controllers/chatroom.js');
+const chatroomCtrl = require('../db/controllers/chatroom.js');
 
 function chatroomInit(req, res) {
-	Chatroom.update(req.body.repo, () => {
-		res.status(201).end();
-	});
+  chatroomCtrl.update(req.body.repo, () => {
+    res.status(201).end();
+  });
 }
 
-exports.chatroomInit = chatroomInit;
+function getMessages (req, res) {
+  const chatroomId = req.body.chatroomId; 
+  chatroomCtrl.findOne(chatroomId, (err, chatroom) => {
+    if (err) {throw err;}
+    res.status(200).send(JSON.stringify(chatroom[0].messages));
+  });
+}
+
+module.exports = {
+	getMessages: getMessages,
+  chatroomInit: chatroomInit
+}
+

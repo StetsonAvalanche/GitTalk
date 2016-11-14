@@ -65,9 +65,10 @@ io.on('connection', (socket) => {
     console.log('message received', msg);
     socket.emit('new bc message', msg);
     /* need to store msg in database */
-    chatroomCtrl.findOne(msg.chatroom, (chatroom) => {
-      chatroom.messages.push(msg);
-      chatroom.save();
+    chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
+      if (err) {throw err;}
+      chatroom[0].messages.push(msg);
+      chatroom[0].save();
     })
 
 
