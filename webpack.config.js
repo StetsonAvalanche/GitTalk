@@ -29,7 +29,6 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /(node_modules|bower_components)/,
-      loader: 'babel',
       loader: 'babel-loader',
       resolveLoader: {
         root: path.join(__dirname, 'node_modules')
