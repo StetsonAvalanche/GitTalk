@@ -11,6 +11,7 @@ class Chatroom extends React.Component {
     super(props);
     this.state = {
       username: '',
+      picture: '',
       channels: [  // FIXME 
         'aframe-boilerplate',
         'aframe-react',
@@ -26,8 +27,14 @@ class Chatroom extends React.Component {
   componentDidMount() {
     getUser()
     .then((data) => {
-      const username = JSON.parse(data).username;
-      this.setState({ username: username });
+      const JSONdata = JSON.parse(data);
+      const username = JSONdata.username;
+      const photo = JSONdata._json.avatar_url;
+
+      this.setState({ 
+        username: username, 
+        photo: photo
+      });
     })
     .catch(err => console.log('error in getUser', err));
   }
@@ -35,7 +42,7 @@ class Chatroom extends React.Component {
   render() {
     return (
       <div>
-        <NavBar username={this.state.username} reponame={this.props.params.reponame} channels={this.state.channels} />
+        <NavBar username={this.state.username} photo={this.state.photo} reponame={this.props.params.reponame} channels={this.state.channels} />
         <Messages username={this.state.username} />
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
         <Logout />
