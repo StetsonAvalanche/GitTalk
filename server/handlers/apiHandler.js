@@ -7,7 +7,7 @@ function chatroomInit(req, res) {
 }
 
 function getMessages (req, res) {
-  const chatroomId = req.params.chatroomId; 
+  const chatroomId = req.params.username + '/' + req.params.chatroom; 
   chatroomCtrl.findOne(chatroomId, (err, chatroom) => {
     if (err) { 
       throw err;

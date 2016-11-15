@@ -26,7 +26,7 @@ class Messages extends React.Component {
 
   componentDidMount() {
   // fetch all messages from DB
-    getMessages('test567890')
+    getMessages('anicknam/gittalk')
     .then(messages => {
       this.setState({ messages: JSON.parse(messages) });
     })
