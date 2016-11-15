@@ -6,8 +6,6 @@ import Logout from './logout.js';
 
 import { getUser } from './../api/user/userRequest.js';
 
-import FlatButton from 'material-ui/FlatButton';
-
 class Chatroom extends React.Component {
   constructor(props){
     super(props);
@@ -35,17 +33,12 @@ class Chatroom extends React.Component {
   }
 
   render() {
-    // Add Flat Button to test that MuiThemeProvider is working
     return (
       <div>
         <NavBar username={this.state.username} reponame={this.props.params.reponame} channels={this.state.channels} />
         <Messages username={this.state.username} />
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
         <Logout />
-        <FlatButton
-          label="Logout"
-          primary={true}
-        />
       </div>
     );
   }
