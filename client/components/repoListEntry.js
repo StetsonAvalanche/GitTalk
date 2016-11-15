@@ -2,7 +2,7 @@ import React from 'react';
 
 const RepoListEntry = (props) => (
    <div>
-     <a>{props.repo.name}</a>
+     <span onClick={props.navToChatroom.bind(this, props.repo.full_name)}>{props.repo.name}</span>
    </div>
 	)
 

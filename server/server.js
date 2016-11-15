@@ -10,9 +10,13 @@ const session = require('express-session');
 const auth = require('./routes/auth.js');
 const passport = require('./passport/config.js');
 const app = express();
+const api = require('./routes/api.js');
+const bodyParser = require('body-parser');
 
 /* express server */
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ 
   secret: process.env.JWT_SECRET,
   resave: false,
@@ -23,6 +27,7 @@ app.use(passport.session());
 
 // routes
 app.use('/auth', auth);
+app.use('/api', api);
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('*', function(req, res) {

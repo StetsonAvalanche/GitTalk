@@ -4,7 +4,7 @@ import RepoListEntry from './repoListEntry.js';
 const RepoList = (props) => (
   <div>
     {props.repos.map((repo) => {
-      return <RepoListEntry key={repo.id} repo={repo}/>
+      return <RepoListEntry key={repo.id} repo={repo} navToChatroom={props.navToChatroom}/>
     })}
   </div>
 )
