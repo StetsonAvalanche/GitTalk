@@ -8,14 +8,14 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const {username, reponame, repos} = this.props;
+    const {username, reponame, channels} = this.props;
     return (
       <div>
         <User username={username} />
         <p>This is your {reponame} Chatroom</p>
         <p>Channels</p>
         <ul>
-          {repos.map(repo => <li key={repo}>{repo}</li>)}
+          {channels.map(channel => <li key={channel}>{channel}</li>)}
         </ul>
       </div>
     );
