@@ -14,26 +14,49 @@ class Message extends React.Component {
     
     return (
     	<ListItem leftAvatar={avatar} style={styles.box}>
-            <span style={styles.author}>{user}</span><br />
-            {text}
+    	  <div style={styles.content}>
+    	    <div style={styles.author}>
+              <span>{user}</span><br />
+            </div>
+            <br />
+            <div style={styles.text}>
+              {text}
+            </div>
+          </div>  
     	</ListItem>
     	);
   }
 }
 
 const styles = {
-  // date: {
-  //   fontSize: '0.8em',
-  //   color: 'gray',
-  //   marginRight: 10
-  author: {
-    fontWeight: 'bold',
-    fontSize: '16px'
-  },
   box: {
+    marginRight: 10,
+    marginBottom: '15px',
+    height: 'auto',
+    width: 'auto',
+    position: 'relative',
+    background: 'white'
+  },
+  author: {
+  	fontFamily: 'Droid Sans',
+  	fontSize: '16px',
+  	fontWeight: 'bold',
+  	left: '80px',
+  	top: '20px',
+  	position: 'absolute'
+  },
+  text: {
+  	fontFamily: 'Droid Sans',
+  	fontSize: '16px',
+  	left: '80px',
+  	top: '20px',
+  	position: 'absolute'
+  },
+  content: {
   	marginLeft: 10, 
   	padding: 10,
-  	fontSize: 10
+  	width: 'auto',
+  	height: 'auto'
   }
 }
 
