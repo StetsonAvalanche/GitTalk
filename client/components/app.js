@@ -1,9 +1,18 @@
 import React from 'react';
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import Login from './login.js';
 import Chatroom from './chatroom.js';
 import Dashboard from './dashboard.js';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import { getUser } from './../api/user/userRequest.js';
+
+import {
+  githubLightGreen,
+  githubGreen,
+  githubBrown,
+  githubBlue,
+  fullWhite,
+  grey200,
+} from './../util/colorScheme.js';
 
 class App extends React.Component {
   constructor(props){
