@@ -26,24 +26,12 @@ class Messages extends React.Component {
 
   componentDidMount() {
   // fetch all messages from DB
-    // console.log('getting data now');
-    // getMessages('test567890')
-    // .then(messages => {
-    //   console.log('messages', messages); 
-    //   // this.setState({ messages: messages });
-    // })
-    // .catch(err => throw err);
-    ajax({
-      url: '/api/messages/test567890',
-      method: 'GET',
-      dataType: 'JSON'      
-    }).done((messages) => {
-      console.log('messages', messages);
-      this.setState({ messages: messages });
-    }).fail((err) => {
-      throw err;
-    });
-
+    console.log('getting data now');
+    getMessages('test567890')
+    .then(messages => {
+      this.setState({ messages: JSON.parse(messages) });
+    })
+    .catch(err => console.log(err));
   }
 
   render(){

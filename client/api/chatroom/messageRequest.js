@@ -5,22 +5,23 @@ function _get(url) {
   return ajax({
     url: url,
     method: 'GET',
-    dataType: 'JSON'
   });
 }
 
 function getMessages(chatroomid) {
   return new Promise((resolve, reject) => {
-    _get(`api/messages/${chatroomid}`)
+    _get(`/api/messages/${chatroomid}`)
     .done(data => {
+      console.log('inside getMessages');
       resolve(data);
     })
     .fail((jqXHR, textStatus, err) => {
+      console.log('error in getMessges', jqXHR, err);
       reject(err);
     });
   });
 }
 
-export {
-  getMessages
+module.exports = {
+  getMessages: getMessages
 }
