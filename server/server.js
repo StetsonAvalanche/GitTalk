@@ -34,7 +34,8 @@ app.use('/api', api);
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('*', function(req, res) {
-  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));	
+  // res.sendFile(path.resolve(__dirname, '../public', 'index.html'));	
+  res.redirect('/');  
 });
 
 const port = process.env.PORT || 8000;
@@ -63,7 +64,7 @@ const io = new SocketIo(server, {path: '/api/chat'});
 io.on('connection', (socket) => {
   socket.on('new message', (msg) => {
     console.log('message received', msg);
-    socket.emit('new bc message', msg);
+    io.sockets.emit('new bc message', msg);
     /* need to store msg in database */
     chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
       if (err) {throw err;}
