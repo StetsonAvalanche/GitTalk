@@ -1,14 +1,15 @@
 import React, {PropTypes} from 'react';
-import { ajax } from 'jquery'; //FIXME
 
 import Message from './message';
 import EnterMessage from './entermessage';
+import { getMessages } from './../api/chatroom/messageRequest.js';
 
 import io from 'socket.io-client';
 
+import {Card, CircularProgress} from 'material-ui';
+
 const socket = io('', { path: '/api/chat'});
 
-import { getMessages } from './../api/chatroom/messageRequest.js';
 
 class Messages extends React.Component {
   constructor(props){
@@ -37,9 +38,11 @@ class Messages extends React.Component {
     return (
       <div>
         <h1>Messages!</h1>
+        {/*<Card style={{flexGrow: 4, marginLeft: 30, padding: 30}}>*/}
         <ul>
           {this.state.messages.map(message => <Message user={message.user} text={message.text} />)}
         </ul>
+        {/*</Card>*/}
         <EnterMessage username={this.props.username} socket={socket}/>
       </div>
     );
