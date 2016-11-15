@@ -19,11 +19,11 @@ class User extends React.Component {
   }
 
   render() {
-    const {username, photo} = this.props;
+    const {username, photo, style} = this.props;
 
     return (
-      <div>
-        <Avatar src={photo} size={150}/>
+      <div style={style}>
+        <Avatar src={photo} size={120}/>
         <p>{username}</p>
       </div>
     );

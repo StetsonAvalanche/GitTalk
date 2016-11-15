@@ -25,7 +25,7 @@ class NavBar extends React.Component {
   render() {
     const {username, photo, channels} = this.props;
 
-    const avatarStyle = { marginTop: '25px' };
+    const userStyle = { marginTop: '40px', fontWeight: 'bold' };
     const buttonStyle = { marginTop: '25px' };
     const drawerStyle = { textAlign: 'center' };
     const listHeaderStyle = { color: githubBlue };
@@ -39,10 +39,10 @@ class NavBar extends React.Component {
           style={drawerStyle}
         >
           <div>
-            <User username={username} photo={photo} />
+            <User username={username} photo={photo} style={userStyle} />
 
+            <h8 style={listHeaderStyle}>Channels</h8>
             <List>
-              <h7>Channels</h7>
               {channels.map((channel) => {
                 return (<ListItem primaryText={channel} innerDivStyle={listItemStyle} />);
               })}
