@@ -40,7 +40,7 @@ class Messages extends React.Component {
         <h1>Messages!</h1>
         {/*<Card style={{flexGrow: 4, marginLeft: 30, padding: 30}}>*/}
         <ul>
-          {this.state.messages.map(message => <Message user={message.user} text={message.text} />)}
+          {this.state.messages.map(message => <Message user={message.user} text={message.text} userAvatarUrl={this.props.userAvatarUrl}/>)}
         </ul>
         {/*</Card>*/}
         <EnterMessage username={this.props.username} socket={socket}/>
