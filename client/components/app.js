@@ -5,6 +5,15 @@ import Chatroom from './chatroom.js';
 import Dashboard from './dashboard.js';
 import { getUser } from './../api/user/userRequest.js';
 
+import {
+  githubLightGreen,
+  githubGreen,
+  githubBrown,
+  githubBlue,
+  fullWhite,
+  grey200,
+} from './../util/colorScheme.js';
+
 class App extends React.Component {
   constructor(props){
     super(props);

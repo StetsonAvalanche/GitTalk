@@ -3,7 +3,7 @@ import {
   grey200,
 } from 'material-ui/styles/colors';
 
-export default {
+module.exports = {
   githubLightGreen: '#d6e685',
   githubGreen: '#8cc665',
   githubBrown: '#c9510c',
@@ -21,4 +21,4 @@ export default {
 //   githubBlue,
 //   fullWhite,
 //   grey200,
-// } from './..util/colorScheme.js';
+// } from './../util/colorScheme.js';
