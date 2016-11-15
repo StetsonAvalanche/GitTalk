@@ -13,6 +13,7 @@ import {
   fullWhite,
   grey200,
 } from './../util/colorScheme.js';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends React.Component {
   constructor(props){
@@ -20,7 +21,7 @@ class App extends React.Component {
 
     this.state = {
       loggedIn: null
-    }
+    };
   }
 
   componentDidMount(){
@@ -33,15 +34,19 @@ class App extends React.Component {
     // if user is authenticated
     if (this.state.loggedIn) {
       return (
-        <Router history={browserHistory}>
-          <Route path="/" component={Dashboard} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/rooms/:username/:reponame" component={Chatroom} />
-        </Router>
+        <MuiThemeProvider>
+          <Router history={browserHistory}>
+            <Route path="/" component={Dashboard} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/rooms/:username/:reponame" component={Chatroom} />
+          </Router>
+        </MuiThemeProvider>
       )	
     } else {
       return (
-        <Login />
+        <MuiThemeProvider>
+          <Login />
+        </MuiThemeProvider>
       )
     }
   }
