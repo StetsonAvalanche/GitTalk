@@ -8,7 +8,6 @@ function chatroomInit(req, res) {
 
 function getMessages (req, res) {
   const chatroomId = req.params.chatroomId; 
-  console.log(chatroomId);
   chatroomCtrl.findOne(chatroomId, (err, chatroom) => {
     if (err) { 
       throw err;

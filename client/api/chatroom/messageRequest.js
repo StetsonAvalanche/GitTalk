@@ -12,7 +12,6 @@ function getMessages(chatroomid) {
   return new Promise((resolve, reject) => {
     _get(`/api/messages/${chatroomid}`)
     .done(data => {
-      console.log('inside getMessages');
       resolve(data);
     })
     .fail((jqXHR, textStatus, err) => {

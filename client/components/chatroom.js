@@ -11,7 +11,7 @@ class Chatroom extends React.Component {
     super(props);
     this.state = {
       username: '',
-      channels: [
+      channels: [  // FIXME 
         'aframe-boilerplate',
         'aframe-react',
         'aframe-react-boilerplate',
@@ -19,7 +19,7 @@ class Chatroom extends React.Component {
         'material-ui-browserify-gulp-example',
         'microscope',
         'sembly-heroku-server'
-      ]// FIXME
+      ]
     };
   }
 
