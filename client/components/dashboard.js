@@ -5,6 +5,8 @@ import Logout from './logout.js';
 import { getUserRepos } from './../api/user/userRequest.js';
 import { init } from '../api/chatroom/chatroomRequest.js';
 
+import { grey200 } from './../util/colorScheme.js';
+
 class Dashboard extends React.Component {
   constructor(props){
     super(props)
@@ -31,18 +33,35 @@ class Dashboard extends React.Component {
 
   render () {
     return (
-      <div>
-        <h1>You are in Dashboard View</h1>
-        <Logout />
-        <RepoList navToChatroom={this.navToChatroom.bind(this)} repos={this.state.repos}/>
-        <br />
-        <Link to="rooms/anicknam/hello">Chatroom FIXME</Link>
+      <div style={ styles.dashboardContainer } >
+        <div style={ styles.listContainer } >
+          <RepoList navToChatroom={this.navToChatroom.bind(this)} repos={this.state.repos}/>
+        </div>
+        <div style={ styles.profileContainer } >
+          <p>This is a placeholder for the profile</p>
+          <Logout />
+        </div>
       </div>
     )
   }
 }
 
 const styles = {
+  dashboardContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+  },
+  listContainer: {
+    minWidth: '400px',
+    flexGrow: '2',
+  },
+  profileContainer: {
+    minWidth: '400px',
+    background: grey200,
+    flexGrow: '1',
+  }
 };
 
 export default Dashboard;
