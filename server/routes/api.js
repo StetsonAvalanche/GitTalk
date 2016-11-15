@@ -4,7 +4,7 @@ const apiHandler = require('../handlers/apiHandler.js');
 
 router.post('/chatroom/init', apiHandler.chatroomInit); 
 
-router.get('/messages/:chatroomId', apiHandler.getMessages);
+router.get('/messages/:username/:chatroom', apiHandler.getMessages);
 
 module.exports = router;
 
