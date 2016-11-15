@@ -18,17 +18,22 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const {username, reponame, channels} = this.props;
+    const {username, channels} = this.props;
     return (
       <div>
         <Drawer
           docked={true}
-          width={200}
-          onRequestChange={(open) => this.setState({open})}
+          width={300}
         >
+          <img src={this.props.photo} />
+          <p>tonyktan</p>
+          <button>Logout</button>
+          <h5>Channels</h5>
+          <ul>
+            {channels.map((channel) => <li>{channel}</li>)}
+          </ul>
         </Drawer>
         <User username={username} />
-        <p>This is your {reponame} Chatroom</p>
         <p>Channels</p>
         <ul>
           {channels.map(channel => <li key={channel}>{channel}</li>)}
