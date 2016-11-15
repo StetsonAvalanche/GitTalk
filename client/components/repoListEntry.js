@@ -1,23 +1,27 @@
 import React from 'react';
+import { ListItem } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import ChatIcon from 'material-ui/svg-icons/communication/chat';
 
-import {
-  githubLightGreen,
-  githubGreen,
-  githubBrown,
-  githubBlue,
-  fullWhite,
-  grey200,
-} from './../util/colorScheme.js';
+import { githubBlue } from './../util/colorScheme.js';
 
 const RepoListEntry = (props) => (
-   <div>
-     <span onClick={props.navToChatroom.bind(this, props.repo.full_name)}>{props.repo.name}</span>
-     <p>{props.repo.description}</p>
-     <p>{props.repo.html_url}</p>
-   </div>
-	)
+  <div>
+    <ListItem
+      onClick={props.navToChatroom.bind(this, props.repo.full_name)}
+      primaryText={ <span style={styles.primaryLink} >{props.repo.name}</span> }
+      secondaryText={ props.repo.description }
+      secondaryTextLines={ 1 }
+      leftIcon={<ChatIcon />}
+    />
+    <Divider />
+  </div>
+)
 
 const styles = {
+  primaryLink: {
+    color: githubBlue
+  }
 };
 
 export default RepoListEntry;
