@@ -10,8 +10,11 @@ function getMessages (req, res) {
   const chatroomId = req.params.chatroomId; 
   console.log(chatroomId);
   chatroomCtrl.findOne(chatroomId, (err, chatroom) => {
-    if (err) {throw err;}
-    res.status(200).send(JSON.stringify(chatroom[0].messages));
+    if (err) { 
+      throw err;
+    } else {
+	  res.status(200).send(JSON.stringify(chatroom[0].messages));
+    } 
   });
 }
 
