@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import User from './user';
 
+/* Color Scheme */
 import {
   githubLightGreen,
   githubGreen,
@@ -10,7 +11,11 @@ import {
   grey200,
 } from './../util/colorScheme.js';
 
+/* Material-UI components */
+import Avatar from 'material-ui/Avatar';
 import Drawer from 'material-ui/Drawer';
+import {List, ListItem} from 'material-ui/List';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class NavBar extends React.Component {
   constructor(props){
@@ -18,29 +23,40 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const {username, channels} = this.props;
+    const {username, photo, channels} = this.props;
+
+    const avatarStyle = { marginTop: '25px' };
+    const buttonStyle = { marginTop: '25px' };
+    const drawerStyle = { textAlign: 'center' };
+    const listHeaderStyle = { color: githubBlue };
+    const listItemStyle = { padding: '5px', fontStyle: 'italic', fontSize: '14px' };
+
     return (
       <div>
         <Drawer
           docked={true}
           width={300}
+          style={drawerStyle}
         >
-          <img src={this.props.photo} />
-          <p>tonyktan</p>
-          <button>Logout</button>
-          <h5>Channels</h5>
-          <ul>
-            {channels.map((channel) => <li>{channel}</li>)}
-          </ul>
+          <div>
+            <User username={username} photo={photo} />
+
+            <List>
+              <h7>Channels</h7>
+              {channels.map((channel) => {
+                return (<ListItem primaryText={channel} innerDivStyle={listItemStyle} />);
+              })}
+            </List>
+
+            <RaisedButton label={'Logout'} backgroundColor={githubGreen} style={buttonStyle} />
+          </div>
         </Drawer>
-        <User username={username} />
-        <p>Channels</p>
-        <ul>
-          {channels.map(channel => <li key={channel}>{channel}</li>)}
-        </ul>
+
       </div>
     );
   }
 }
+
+
 
 export default NavBar;
