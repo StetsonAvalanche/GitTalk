@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Avatar, ListItem, Card} from 'material-ui';
+import {Avatar, ListItem} from 'material-ui';
 
 // let {Avatar, ListItem} = mui;
 
@@ -11,11 +11,11 @@ class Message extends React.Component {
   render() {
     const { user, text } = this.props;
     const avatar = <Avatar src={`${this.props.userAvatarUrl}`}/>
-    // const avatar = <Avatar src='https://cdn4.iconfinder.com/data/icons/rcons-user-line/32/user_woman_girl_female_avatar_chat_message_talk_im-512.png'/>
     
     return (
     	<ListItem leftAvatar={avatar} style={styles.box}>
-          <span style={styles.author}>{user}</span>: {text}
+            <span style={styles.author}>{user}</span><br />
+            {text}
     	</ListItem>
     	);
   }
@@ -26,14 +26,15 @@ const styles = {
   //   fontSize: '0.8em',
   //   color: 'gray',
   //   marginRight: 10
-  // },
   author: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontSize: '16px'
   },
   box: {
-  	flexGrow: 4, 
-  	marginLeft: 30, 
-  	padding: 30}
+  	marginLeft: 10, 
+  	padding: 10,
+  	fontSize: 10
+  }
 }
 
 export default Message;
