@@ -8,12 +8,11 @@ const express = require('express');
 const SocketIo = require('socket.io');
 const session = require('express-session');
 const auth = require('./routes/auth.js');
-const api = require('./routes/api.js');
 const passport = require('./passport/config.js');
 const app = express();
-const api = require('./routes/api.js');
 const bodyParser = require('body-parser');
 
+const api = require('./routes/api.js');
 const chatroomCtrl = require('./db/controllers/chatroom.js');
 
 /* express server */
@@ -34,8 +33,7 @@ app.use('/api', api);
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('*', function(req, res) {
-  // res.sendFile(path.resolve(__dirname, '../public', 'index.html'));	
-  res.redirect('/');  
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));	  
 });
 
 const port = process.env.PORT || 8000;
@@ -58,7 +56,7 @@ mongoose.connect(uriString, (err, res) => {
 });
 
 /* websockets */
-
+// FIXME -> all socketEvents should be moved to a seperate file
 const io = new SocketIo(server, {path: '/api/chat'});
 
 io.on('connection', (socket) => {
