@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
+import TopBar from './topbar';
 import NavBar from './navbar';
 import Messages from './messages';
 import Logout from './logout.js';
@@ -42,7 +43,8 @@ class Chatroom extends React.Component {
   render() {
     return (
       <div>
-        <NavBar username={this.state.username} photo={this.state.photo} reponame={this.props.params.reponame} channels={this.state.channels} />
+        <NavBar username={this.state.username} photo={this.state.photo} channels={this.state.channels} />
+        <TopBar reponame={ this.props.params.reponame } />
         <Messages username={this.state.username} />
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
         <Logout />
