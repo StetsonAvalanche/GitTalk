@@ -19,7 +19,7 @@ class Chatroom extends React.Component {
         'material-ui-browserify-gulp-example',
         'microscope',
         'sembly-heroku-server'
-      ]// still hardcoded
+      ]// FIXME
     };
   }
 
