@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import { ajax } from 'jquery'; //FIXME
 
 import Message from './message';
 import EnterMessage from './entermessage';
@@ -18,17 +19,31 @@ class Messages extends React.Component {
 
     socket.on('new bc message', (message) => {
       this.setState({
-        messages: [...this.state.messages, { user: message.user, text: message.text, id: this.state.messageid }]
-      });    
+        messages: [...this.state.messages, { user: message.user, text: message.text }]
+      });
     });
   }
 
   componentDidMount() {
   // fetch all messages from DB
-    console.log('getting data now');
-    getMessages('anicknam/gittalk')
-    .then(messages => console.log('messages', messages))
-    .catch(err => throw err);
+    // console.log('getting data now');
+    // getMessages('test567890')
+    // .then(messages => {
+    //   console.log('messages', messages); 
+    //   // this.setState({ messages: messages });
+    // })
+    // .catch(err => throw err);
+    ajax({
+      url: '/api/messages/test567890',
+      method: 'GET',
+      dataType: 'JSON'      
+    }).done((messages) => {
+      console.log('messages', messages);
+      this.setState({ messages: messages });
+    }).fail((err) => {
+      throw err;
+    });
+
   }
 
   render(){
