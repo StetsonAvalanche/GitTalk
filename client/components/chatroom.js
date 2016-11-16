@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import TopBar from './topbar';
 import NavBar from './navbar';
 import Messages from './messages';
+import EnterMessage from './entermessage';
 import Logout from './logout.js';
 
 import { getUser } from './../api/user/userRequest.js';
@@ -45,23 +46,13 @@ class Chatroom extends React.Component {
       <div>
         <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} />
         <TopBar reponame={ this.props.params.reponame } />
-        <div style={styles.msgListContainer}>
-          <Messages username={this.state.username} userAvatarUrl={this.state.userAvatarUrl}/>
-        </div>
+        <Messages username={this.state.username} userAvatarUrl={this.state.userAvatarUrl}/>
+        <EnterMessage username={this.props.username} />
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
         <Logout />
       </div>
     );
   }
 }
-
-const styles = {
-  msgListContainer: {
-    minWidth: '400px',
-    // flexGrow: '2',
-    backgroundImage: 'url(./assets/chatRoomBackGround.png)'
-    // backgroundImage: 'url(https://www.sketchappsources.com/resources/source-images-plus3/material-design-icon-patterns-3.png)'
-  },
-};
 
 export default Chatroom;
