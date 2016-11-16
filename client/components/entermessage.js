@@ -25,7 +25,7 @@ class EnterMessage extends React.Component {
     super(props);
     this.state = {
       value: '',
-      chatroom: this.props.username + '/' + this.props.reponame // FIXME make me dynamic
+      chatroom: this.props.username + '/' + this.props.reponame 
     };
 
     this.handleChange = this.handleChange.bind(this);
