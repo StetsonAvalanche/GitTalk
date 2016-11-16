@@ -29,27 +29,17 @@ const TopBar = (props) => {
     backgroundColor: githubLightGreen,
   };
 
-  const autocompleteStyle = {
-  };
-
-  const iconStyle = {
-  };
-
   const titleStyle = {
     color: fullBlack,
     fontSize: 16,
+    textAlign: 'center',
   };
 
   return (<AppBar 
     iconElementLeft={<p></p>}
+    style={appBarStyle} 
     title={`@${reponame}`}
-    iconElementRight={
-      <div>
-        <FontIcon className="material-icons" style={iconStyle}>search</FontIcon>
-        <AutoComplete hintText="search messages" dataSource={[]} />
-      </div>
-    }
-    style={appBarStyle} titleStyle={titleStyle}
+    titleStyle={titleStyle}
     zDepth={0}
   />);
 };
