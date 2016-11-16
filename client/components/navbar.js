@@ -26,7 +26,15 @@ class NavBar extends React.Component {
   }
 
   changeChannel(e) {
-    console.log(e.target);
+    let reponame;
+    // hack to obtain repo name regardless of click position on ListItem
+    if (e.target.innerHTML.slice(0, 5) === '<div>') {
+      var length = e.target.innerHTML.length;
+      reponame = e.target.innerHTML.slice(5, length - 6);
+    } else {
+      reponame = e.target.innerHTML;
+    }
+    
   }
 
   render() {
@@ -44,7 +52,7 @@ class NavBar extends React.Component {
           <h8 style={listHeaderStyle}>Channels</h8>
           <List>
             {channels.map((channel) => {
-              return (<ListItem primaryText={channel} innerDivStyle={listItemStyle} onClick={this.changeChannel}/>);
+              return (<ListItem children={<div>{channel}</div>} innerDivStyle={listItemStyle} onClick={this.changeChannel} />);
             })}
           </List>
 
