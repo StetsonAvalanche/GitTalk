@@ -1,15 +1,18 @@
 import React from 'react';
+import S3Uploader from 'react-s3-uploader';
 import RaisedButton from 'material-ui/RaisedButton';
+
+const onUploadFinish = function() {
+  console.log('upload finish');
+}
 
 const AddImage = function(props) {
   return (
     <div style={ styles.container }>
-      <input 
-        type="file" 
-        accept="image/*" 
-        capture="camera" 
-        name="userPhoto" 
-        onChange={() => {}} 
+      <S3Uploader
+        signingUrl='/s3/sign'
+        accept="image/*"
+        onFinish={ onUploadFinish }
       />
     </div>
   );
@@ -18,7 +21,6 @@ const AddImage = function(props) {
 const styles = {
   container: {
     marginLeft: '400px',
-    marginRight: '20px'
   }
 }
 

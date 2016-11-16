@@ -56,6 +56,19 @@ class EnterMessage extends React.Component {
     this.setState({ value: '' });
   }
 
+  handleImage(e) {
+    e.preventDefault();
+
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      const file = e.target.files[0];
+      
+      // ajax request to s3
+      // wait for callback with url
+      // create new message with image url
+    }
+  }
+
   render() {
 
     const divStyle = {

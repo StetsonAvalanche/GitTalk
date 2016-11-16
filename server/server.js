@@ -2,15 +2,15 @@
 const path = require('path');
 // import env variables from .env - if not found, fallback to OS env vars
 require('dotenv').config({silent: true, path: path.join(__dirname, '../.env')});
-
+require('aws-sdk');
 
 const express = require('express');
 const SocketIo = require('socket.io');
 const session = require('express-session');
 const auth = require('./routes/auth.js');
 const passport = require('./passport/config.js');
-const app = express();
 const bodyParser = require('body-parser');
+const app = express();
 
 const api = require('./routes/api.js');
 const chatroomCtrl = require('./db/controllers/chatroom.js');
@@ -46,6 +46,17 @@ app.get('/rooms/:username/:reponame', function(req, res) {
 
 app.get('*', function(req, res) {
   res.redirect('/');	  
+});
+
+// s3 middleware
+app.use('/s3', require('react-s3-uploader/s3router')({
+  bucket: "gittalk",
+  headers: {'Access-Control-Allow-Origin': '*'}
+}));
+
+// hand routing off to react router
+app.get('*', function(req, res) {
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
 });
 
 const port = process.env.PORT || 8000;
