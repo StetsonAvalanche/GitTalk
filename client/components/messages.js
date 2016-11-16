@@ -35,7 +35,6 @@ class Messages extends React.Component {
 
   componentDidMount() {
   // fetch all messages from DB
-    console.log('messages mount', this.props);
     const chatroomId = this.props.username + '/' + this.props.reponame;
     getMessages(chatroomId)
     .then(messages => {
