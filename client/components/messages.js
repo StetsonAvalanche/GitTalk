@@ -16,14 +16,21 @@ class Messages extends React.Component {
         { user: 'Chase', text: 'Wazzup peeps :)' },
         { user: 'Afsoon', text: 'Grrr!' },
         { user: 'Tony', text: 'I wanna nap!' },
+        { user: 'Felicia', text: 'Snacks!' },
+        { user: 'Chase', text: 'Wazzup peeps :)' },
+        { user: 'Tony', text: 'I wanna nap!' },
+        { user: 'Felicia', text: 'Snacks!' },
+        { user: 'Chase', text: 'Wazzup peeps :)' },
       ],
     };
 
-    // socket.on('new bc message', (message) => {
-    //   this.setState({
-    //     messages: [...this.state.messages, { user: message.user, text: message.text }]
-    //   });
-    // });
+    this.updateScroll = this.updateScroll.bind(this);
+
+    socket.on('new bc message', (message) => {
+      this.setState({
+        messages: [...this.state.messages, message]
+      });
+    });
   }
 
   componentDidMount() {
@@ -33,6 +40,17 @@ class Messages extends React.Component {
     //   this.setState({ messages: JSON.parse(messages) });
     // })
     // .catch(err => console.log(err));
+    this.updateScroll();
+  }
+
+  componentDidUpdate() {
+    this.updateScroll();
+  }
+
+  // Ref: http://stackoverflow.com/questions/18614301/keep-overflow-div-scrolled-to-bottom-unless-user-scrolls-up
+  updateScroll() {
+    let element = document.getElementById('messageBox');
+    element.scrollTop = element.scrollHeight;
   }
 
   render() {
@@ -45,13 +63,17 @@ class Messages extends React.Component {
       top: 0,
       width: window.innerWidth - 300,
       height: window.innerHeight - 55,
+      overflow: 'auto',
     };
     
     return (
-      <div style={style}>
-        <ul>
-          {this.state.messages.map(message => <Message user={message.user} text={message.text} userAvatarUrl={this.props.userAvatarUrl}/>)}
-        </ul>
+      <div style={style} id='messageBox'>
+        {this.state.messages.map(message => 
+          <Message 
+            user={message.user} 
+            text={message.text} 
+            userAvatarUrl={this.props.userAvatarUrl}
+          />)}
       </div>
     );
   }

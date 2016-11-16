@@ -54,6 +54,7 @@ class EnterMessage extends React.Component {
       bottom: 0,
       left: 300,
       width: window.innerWidth - 300,
+      zIndex: 5,
     };
 
     const textHintStyle = {

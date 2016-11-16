@@ -63,14 +63,12 @@ io.on('connection', (socket) => {
   socket.on('new message', (msg) => {
     console.log('message received', msg);
     io.sockets.emit('new bc message', msg);
-    /* need to store msg in database */
-    chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
-      if (err) {throw err;}
-      chatroom[0].messages.push(msg);
-      chatroom[0].save();
-    })
-
-
+    /* commenting out in the meantime */
+    // chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
+    //   if (err) {throw err;}
+    //   chatroom[0].messages.push(msg);
+    //   chatroom[0].save();
+    // });
   });
 });
 
