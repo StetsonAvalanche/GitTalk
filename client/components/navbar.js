@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import User from './user';
+import Logout from './logout.js';
 
 /* Color Scheme */
 import {
@@ -50,7 +51,7 @@ class NavBar extends React.Component {
               })}
             </List>
 
-            <RaisedButton label={'Logout'} backgroundColor={githubGreen} style={buttonStyle} />
+            <RaisedButton label={'Logout'} backgroundColor={githubGreen} href='/auth/logout' style={buttonStyle} />
           </div>
         </Drawer>
 
@@ -58,7 +59,5 @@ class NavBar extends React.Component {
     );
   }
 }
-
-
 
 export default NavBar;
