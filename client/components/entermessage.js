@@ -44,29 +44,21 @@ class EnterMessage extends React.Component {
     }
   }
 
-  sendMessage(message) {
+  sendMessage(message, image) {
+    image = image || null;
+
     const newMessage = {
+      type: image ? 'image': 'text',
       user: this.props.username,
-      text: this.state.value,
-      chatroom: this.state.chatroom,
       userAvatarUrl: this.props.userAvatarUrl
+      chatroom: this.state.chatroom,
+      image: image,
+      text: image ? null : this.state.value
     };
+
     console.log('message sent', newMessage);
     socket.emit('new message', newMessage);
-    this.setState({ value: '' });
-  }
-
-  handleImage(e) {
-    e.preventDefault();
-
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      const file = e.target.files[0];
-      
-      // ajax request to s3
-      // wait for callback with url
-      // create new message with image url
-    }
+    if (!image) this.setState({ value: '' });
   }
 
   render() {
@@ -109,7 +101,7 @@ class EnterMessage extends React.Component {
 
     return (
       <div style={divStyle}>
-        <AddImage />
+        <AddImage sendMessage={ this.sendMessage } />
         <TextField
           hintText={`Message @${reponame}`}
           floatingLabelText="*italics* __bold__ `code` ~~strike~~"
