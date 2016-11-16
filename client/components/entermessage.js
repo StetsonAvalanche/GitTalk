@@ -16,6 +16,10 @@ import TextField from 'material-ui/TextField';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentSend from 'material-ui/svg-icons/content/send';
 
+/* Websocket */
+import io from 'socket.io-client';
+const socket = io('', { path: '/api/chat'});
+
 class EnterMessage extends React.Component {
   constructor(props){
     super(props);
@@ -39,7 +43,7 @@ class EnterMessage extends React.Component {
       chatroom: this.state.chatroom 
     };
     console.log('message sent', newMessage);
-    this.props.socket.emit('new message', newMessage);
+    socket.emit('new message', newMessage);
     this.setState({ value: '' });
   }
 
@@ -100,7 +104,5 @@ class EnterMessage extends React.Component {
     );
   }
 }
-
-// <input type="text" name="text" onChange={this.handleChange} value={this.state.value} />
 
 export default EnterMessage;
