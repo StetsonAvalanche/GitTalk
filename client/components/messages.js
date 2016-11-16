@@ -14,8 +14,11 @@ class Messages extends React.Component {
       messages: [],
     };
 
+    /* this binding of methods */
     this.updateScroll = this.updateScroll.bind(this);
+    this.updateMessages = this.updateMessages.bind(this);
 
+    /* websockets */
     socket.on('new bc message', (message) => {
       this.setState({
         messages: [...this.state.messages, message]
@@ -23,18 +26,23 @@ class Messages extends React.Component {
     });
   }
 
-  componentDidMount() {
-  // fetch all messages from DB
+  updateMessages() {
+    // fetch all messages from DB
     const chatroomId = this.props.username + '/' + this.props.reponame;
     getMessages(chatroomId)
     .then(messages => {
       this.setState({ messages: JSON.parse(messages) });
     })
     .catch(err => console.log(err));
+  }
+
+  componentDidMount() {
+    this.updateMessages();
     this.updateScroll();
   }
 
   componentDidUpdate() {
+    this.updateMessages();
     this.updateScroll();
   }
 
