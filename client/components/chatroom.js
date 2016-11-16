@@ -52,11 +52,16 @@ class Chatroom extends React.Component {
       <div>
         <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} />
         <TopBar reponame={ this.props.params.reponame } />
-        <Messages username={this.state.username} userAvatarUrl={this.state.userAvatarUrl} reponame={ this.props.params.reponame }/>
-        <EnterMessage username={this.state.username} />
+
+        {(this.state.username) ? 
+          <Messages username={this.state.username} userAvatarUrl={this.state.userAvatarUrl} reponame={ this.props.params.reponame }/>
+          : null}
 
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
 
+        {(this.state.username) ? 
+          <EnterMessage username={this.state.username} />
+          : null}
         <Logout />
       </div>
     );
