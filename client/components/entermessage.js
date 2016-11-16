@@ -29,11 +29,18 @@ class EnterMessage extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
   }
 
   handleChange(event) {
     this.setState({ value: event.target.value });
+  }
+
+  handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      this.sendMessage();
+    }
   }
 
   sendMessage(message) {
@@ -91,6 +98,8 @@ class EnterMessage extends React.Component {
           underlineFocusStyle={underlineFocusStyle}
 
           onChange={this.handleChange}
+          onKeyDown={this.handleKeyDown}
+
           value={this.state.value}
         />
         <FloatingActionButton 
