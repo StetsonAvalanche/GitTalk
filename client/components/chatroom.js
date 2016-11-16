@@ -7,6 +7,8 @@ import Logout from './logout.js';
 
 import { getUser } from './../api/user/userRequest.js';
 
+import { grey200 } from './../util/colorScheme.js';
+
 class Chatroom extends React.Component {
   constructor(props){
     super(props);
@@ -43,7 +45,9 @@ class Chatroom extends React.Component {
       <div>
         <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} />
         <TopBar reponame={ this.props.params.reponame } />
-        <Messages username={this.state.username} userAvatarUrl={this.state.userAvatarUrl}/>
+        <div style={styles.msgListContainer}>
+          <Messages username={this.state.username} userAvatarUrl={this.state.userAvatarUrl}/>
+        </div>
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
         <Logout />
       </div>
@@ -52,6 +56,10 @@ class Chatroom extends React.Component {
 }
 
 const styles = {
+  msgListContainer: {
+    minWidth: '400px',
+    flexGrow: '2',
+  },
 };
 
 export default Chatroom;
