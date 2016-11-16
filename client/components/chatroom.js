@@ -59,8 +59,10 @@ class Chatroom extends React.Component {
 
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
 
-         
-        <EnterMessage username={'anicknam'} />
+        {(this.state.username) ? 
+          <EnterMessage username={this.state.username} reponame={ this.props.params.reponame }/>
+          : null
+        } 
         
         <Logout />
       </div>
