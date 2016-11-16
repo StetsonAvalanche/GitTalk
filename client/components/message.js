@@ -9,39 +9,35 @@ class Message extends React.Component {
 
   render() {
     const { user, text } = this.props;
-    const avatar = <Avatar src={`${this.props.userAvatarUrl}`}/>
-    
+    const avatar = <Avatar src={this.props.userAvatarUrl} />;
+   
+    const styles = {
+      box: {
+        position: 'relative',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 10, 
+        marginRight: 10,
+      },
+      author: {
+        color: grey700,
+        fontSize: '16px',
+        fontWeight: 'bold',
+      },
+      text: {
+        fontSize: '13px',
+      },
+    };
+
     return (
     	<Paper style={styles.box} zDepth={1}>
-    	  <ListItem leftAvatar={avatar}>
-    		 <div>
-    	       <span style={styles.author}>{user}</span>
-    	       <br />
-    	       <span style={styles.text}>{text}</span>
-    	     </div> 
+        <ListItem leftAvatar={avatar}>
+           <span style={styles.author}>{user}</span>
+           <br />
+           <span style={styles.text}>{text}</span>
     	  </ListItem>
     	</Paper>
     	);
-  }
-}
-
-const styles = {
-  author: {
-  	color: grey700,
-  	fontSize: '16px',
-  	fontWeight: 'bold',
-  	left: '80px',
-  	top: '20px'
-  },
-  text: {
-  	fontSize: '13px',
-  	left: '80px',
-  	top: '20px'
-  },
-  box: {
-    height: 'auto',
-    width: 'auto',
-    margin: 10
   }
 }
 

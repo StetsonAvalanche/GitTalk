@@ -47,7 +47,7 @@ class Chatroom extends React.Component {
         <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} />
         <TopBar reponame={ this.props.params.reponame } />
         <Messages username={this.state.username} userAvatarUrl={this.state.userAvatarUrl}/>
-        <EnterMessage username={this.props.username} />
+        <EnterMessage username={this.state.username} />
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
         <Logout />
       </div>
