@@ -4,7 +4,6 @@ import TopBar from './topbar';
 import NavBar from './navbar';
 import Messages from './messages';
 import EnterMessage from './entermessage';
-import Logout from './logout.js';
 
 import { getUser } from './../api/user/userRequest.js';
 import { grey200 } from './../util/colorScheme.js';
@@ -56,13 +55,10 @@ class Chatroom extends React.Component {
           : null}
 
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
-
         {(this.state.username) ? 
           <EnterMessage username={this.state.username} reponame={ this.props.params.reponame } userAvatarUrl={this.state.userAvatarUrl}/>
           : null
         } 
-        
-        <Logout />
       </div>
     );
   }
