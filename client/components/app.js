@@ -14,6 +14,8 @@ import {
   grey200,
 } from './../util/colorScheme.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 class App extends React.Component {
   constructor(props){
