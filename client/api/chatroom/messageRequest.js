@@ -9,6 +9,7 @@ function _get(url) {
 }
 
 function getMessages(chatroomid) {
+  console.log(chatroomid)
   return new Promise((resolve, reject) => {
     _get(`/api/messages/${chatroomid}`)
     .done(data => {
