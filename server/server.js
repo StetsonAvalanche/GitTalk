@@ -45,7 +45,8 @@ console.log(`🌎  ===> server listening on port ${port}`);
 
 const mongoose = require('mongoose'); 
 
-const uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
+// const uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
+const uriString = 'mongodb://localhost/gittalk';
 
 mongoose.connect(uriString, (err, res) => {
   if (err) { 
