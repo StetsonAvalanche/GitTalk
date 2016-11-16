@@ -12,15 +12,15 @@ class Messages extends React.Component {
     super(props);
     this.state = {
       messages: [
-        { user: 'Felicia', text: 'Snacks!' },
-        { user: 'Chase', text: 'Wazzup peeps :)' },
-        { user: 'Afsoon', text: 'Grrr!' },
-        { user: 'Tony', text: 'I wanna nap!' },
-        { user: 'Felicia', text: 'Snacks!' },
-        { user: 'Chase', text: 'Wazzup peeps :)' },
-        { user: 'Tony', text: 'I wanna nap!' },
-        { user: 'Felicia', text: 'Snacks!' },
-        { user: 'Chase', text: 'Wazzup peeps :)' },
+        // { user: 'Felicia', text: 'Snacks!' },
+        // { user: 'Chase', text: 'Wazzup peeps :)' },
+        // { user: 'Afsoon', text: 'Grrr!' },
+        // { user: 'Tony', text: 'I wanna nap!' },
+        // { user: 'Felicia', text: 'Snacks!' },
+        // { user: 'Chase', text: 'Wazzup peeps :)' },
+        // { user: 'Tony', text: 'I wanna nap!' },
+        // { user: 'Felicia', text: 'Snacks!' },
+        // { user: 'Chase', text: 'Wazzup peeps :)' },
       ],
     };
 
@@ -60,9 +60,9 @@ class Messages extends React.Component {
       backgroundRepeat: 'repeat',
       position: 'absolute',
       left: 300,
-      top: 0,
+      top: 64,
       width: window.innerWidth - 300,
-      height: window.innerHeight - 55,
+      height: window.innerHeight - 119,
       overflow: 'auto',
     };
     
