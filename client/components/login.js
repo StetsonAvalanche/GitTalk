@@ -13,22 +13,33 @@ import {
 const styles = {
   button: {
     margin: 12,
+  },
+  logo: {
+    height: 300,
+    width: 'auto',
+    display: 'block',
+    margin: 'auto',
+  },
+  title: {
+    textAlign: 'center', 
+    fontFamily: 'Roboto', 
+    fontSize: 48,
+  },
+  box: {
+    backgroundColor: fullWhite,
   }
 };
 
-const logoStyle = {
-  height: 400,
-  width: 'auto',
-};
 
 const Login = () => {
 
   return (
-    <div>
-      <h1>GitTalk</h1>
-      <div>
-        <img src='/assets/GitTalkLogo.png' style={logoStyle}/>
-        <RaisedButton
+    <div style={styles.box}>
+      <img src='/assets/GitTalkLogo.png' style={styles.logo}/>
+      <h1 style={styles.title}>GitTalk</h1>
+      <div style={{textAlign: 'center'}}>
+        <RaisedButton 
+          className="raised-button"
 		      href="/auth/github"
 		      target="_blank"
 		      label="Login with GitHub"

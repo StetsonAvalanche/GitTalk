@@ -29,3 +29,7 @@
 	content: "\e625";
 }
 
+.raised-button :hover {
+  background-color: #4078c0;
+}
+

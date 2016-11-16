@@ -14,7 +14,7 @@ import {
   grey200,
 } from './../util/colorScheme.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 class App extends React.Component {
@@ -35,6 +35,7 @@ class App extends React.Component {
   render(){
     // if user is authenticated
     if (this.state.loggedIn) {
+      document.body.style.backgroundColor = fullWhite;
       return (
         <MuiThemeProvider>
           <Router history={browserHistory}>
@@ -45,6 +46,7 @@ class App extends React.Component {
         </MuiThemeProvider>
       )	
     } else {
+      document.body.style.backgroundColor = fullWhite;
       return (
         <MuiThemeProvider>
           <Login />
