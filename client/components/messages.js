@@ -35,11 +35,14 @@ class Messages extends React.Component {
 
   componentDidMount() {
   // fetch all messages from DB
-    // getMessages('anicknam/gittalk')
-    // .then(messages => {
-    //   this.setState({ messages: JSON.parse(messages) });
-    // })
-    // .catch(err => console.log(err));
+    console.log('messages mount', this.props);
+    const chatroomId = this.props.username + '/' + this.props.reponame;
+    getMessages(chatroomId)
+    .then(messages => {
+      this.setState({ messages: JSON.parse(messages) });
+    })
+    .catch(err => console.log(err));
+
     this.updateScroll();
   }
 
