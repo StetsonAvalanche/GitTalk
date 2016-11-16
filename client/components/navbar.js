@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import {Link} from 'react-router';
 import User from './user';
 import Logout from './logout.js';
 
@@ -21,20 +22,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 class NavBar extends React.Component {
   constructor(props){
     super(props);
-
-    this.changeChannel = this.changeChannel.bind(this);
-  }
-
-  changeChannel(e) {
-    let reponame;
-    // hack to obtain repo name regardless of click position on ListItem
-    if (e.target.innerHTML.slice(0, 5) === '<div>') {
-      var length = e.target.innerHTML.length;
-      reponame = e.target.innerHTML.slice(5, length - 6);
-    } else {
-      reponame = e.target.innerHTML;
-    }
-    
   }
 
   render() {
@@ -52,7 +39,7 @@ class NavBar extends React.Component {
           <h8 style={listHeaderStyle}>Channels</h8>
           <List>
             {channels.map((channel) => {
-              return (<ListItem children={<div>{channel}</div>} innerDivStyle={listItemStyle} onClick={this.changeChannel} />);
+              return (<ListItem children={<Link to={`/rooms/${username}/${channel}`} style={linkStyle}>{channel}</Link>} innerDivStyle={listItemStyle} />);
             })}
           </List>
 
@@ -67,8 +54,8 @@ const userStyle = { marginTop: '40px', fontWeight: 'bold' };
 const buttonStyle = { marginTop: '25px' };
 const drawerStyle = { textAlign: 'center' };
 const drawerContainerStyle = { backgroundColor: fullWhite };
+const linkStyle = { color: 'inherit', textDecoration: 'none' };
 const listHeaderStyle = { color: githubBlue };
 const listItemStyle = { padding: '5px', fontStyle: 'italic', fontSize: '14px' };
-
 
 export default NavBar;
