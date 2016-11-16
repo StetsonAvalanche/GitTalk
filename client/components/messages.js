@@ -72,14 +72,10 @@ class Messages extends React.Component {
           <Message 
             user={message.user} 
             text={message.text} 
-            userAvatarUrl={this.props.userAvatarUrl}
-          />)}
+            userAvatarUrl={this.props.userAvatarUrl}/>)}
       </div>
     );
   }
 }
-
-const styles = {
-};
 
 export default Messages;
