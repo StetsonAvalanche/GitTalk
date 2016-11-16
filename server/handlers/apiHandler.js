@@ -25,5 +25,5 @@ function getMessages (req, res) {
 module.exports = {
 	getMessages: getMessages,
   chatroomInit: chatroomInit
-}
+};
 
