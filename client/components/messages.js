@@ -69,8 +69,4 @@ class Messages extends React.Component {
   }
 }
 
-<<<<<<< 39c15afebd5b01729bd873e199024cf0f7c8e363
 export default Messages;
-=======
-export default Messages;
->>>>>>> (fix) enabling database calls in messages and local databse in server.js
