@@ -64,11 +64,11 @@ io.on('connection', (socket) => {
     console.log('message received', msg);
     io.sockets.emit('new bc message', msg);
     /* commenting out in the meantime */
-    // chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
-    //   if (err) {throw err;}
-    //   chatroom[0].messages.push(msg);
-    //   chatroom[0].save();
-    // });
+    chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
+      if (err) {throw err;}
+      chatroom[0].messages.push(msg);
+      chatroom[0].save();
+    });
   });
 });
 
