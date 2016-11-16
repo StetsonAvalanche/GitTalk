@@ -45,7 +45,7 @@ const TopBar = (props) => {
     title={`@${reponame}`}
     iconElementRight={
       <div>
-        <FontIcon className="material-icons" style={iconStyle}>home</FontIcon>
+        <FontIcon className="material-icons" style={iconStyle}>search</FontIcon>
         <AutoComplete hintText="search messages" dataSource={[]} />
       </div>
     }
