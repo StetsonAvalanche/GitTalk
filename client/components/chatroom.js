@@ -37,12 +37,10 @@ class Chatroom extends React.Component {
     .then((data) => {
       const username = JSON.parse(data).username;
       const userAvatarUrl = JSON.parse(data)._json.avatar_url;
-      console.log(username, userAvatarUrl);
       this.setState({ 
         username: username,
         userAvatarUrl: userAvatarUrl
       });
-      console.log(this.state);
     })
     .catch(err => console.log('error in getUser', err));
   }
@@ -60,7 +58,7 @@ class Chatroom extends React.Component {
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
 
         {(this.state.username) ? 
-          <EnterMessage username={this.state.username} reponame={ this.props.params.reponame }/>
+          <EnterMessage username={this.state.username} reponame={ this.props.params.reponame } userAvatarUrl={this.state.userAvatarUrl}/>
           : null
         } 
         
