@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Avatar, ListItem} from 'material-ui';
+import {Avatar, ListItem, Paper} from 'material-ui';
 
 
 class Message extends React.Component {
@@ -12,13 +12,15 @@ class Message extends React.Component {
     const avatar = <Avatar src={`${this.props.userAvatarUrl}`}/>
     
     return (
-    	<ListItem leftAvatar={avatar} style={styles.box}>
+    	<Paper style={styles.box} zDepth={1}>
+    	  <ListItem leftAvatar={avatar}>
     		 <div>
     	       <span style={styles.author}>{user}</span>
     	       <br />
     	       <span style={styles.text}>{text}</span>
     	     </div> 
-    	</ListItem>
+    	  </ListItem>
+    	</Paper>
     	);
   }
 }
@@ -34,10 +36,16 @@ const styles = {
   },
   text: {
   	fontFamily: 'Droid Sans',
-  	fontSize: '16px',
+  	fontSize: '13px',
   	left: '80px',
   	top: '20px',
   	// position: 'absolute'
+  },
+  box: {
+    height: 'auto',
+    width: 'auto',
+    margin: 10,
+    // display: 'inline-block',
   }
 }
 
