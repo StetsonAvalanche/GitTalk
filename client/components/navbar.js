@@ -21,43 +21,46 @@ import RaisedButton from 'material-ui/RaisedButton';
 class NavBar extends React.Component {
   constructor(props){
     super(props);
+
+    this.changeChannel = this.changeChannel.bind(this);
+  }
+
+  changeChannel(e) {
+    console.log(e.target);
   }
 
   render() {
     const {username, photo, channels} = this.props;
-
-    const userStyle = { marginTop: '40px', fontWeight: 'bold' };
-    const buttonStyle = { marginTop: '25px' };
-    const drawerStyle = { textAlign: 'center' };
-    const drawerContainerStyle = { backgroundColor: fullWhite };
-    const listHeaderStyle = { color: githubBlue };
-    const listItemStyle = { padding: '5px', fontStyle: 'italic', fontSize: '14px' };
-
     return (
-      <div>
-        <Drawer
-          docked={true}
-          width={300}
-          style={drawerStyle}
-          containerStyle={drawerContainerStyle}
-        >
-          <div>
-            <User username={username} photo={photo} style={userStyle} />
+      <Drawer
+        docked={true}
+        width={300}
+        style={drawerStyle}
+        containerStyle={drawerContainerStyle}
+      >
+        <div>
+          <User username={username} photo={photo} style={userStyle} />
 
-            <h8 style={listHeaderStyle}>Channels</h8>
-            <List>
-              {channels.map((channel) => {
-                return (<ListItem primaryText={channel} innerDivStyle={listItemStyle} />);
-              })}
-            </List>
+          <h8 style={listHeaderStyle}>Channels</h8>
+          <List>
+            {channels.map((channel) => {
+              return (<ListItem primaryText={channel} innerDivStyle={listItemStyle} onClick={this.changeChannel}/>);
+            })}
+          </List>
 
-            <RaisedButton label={'Logout'} backgroundColor={githubGreen} href='/auth/logout' style={buttonStyle} />
-          </div>
-        </Drawer>
-
-      </div>
+          <RaisedButton label={'Logout'} backgroundColor={githubGreen} href='/auth/logout' style={buttonStyle} />
+        </div>
+      </Drawer>
     );
   }
 }
+
+const userStyle = { marginTop: '40px', fontWeight: 'bold' };
+const buttonStyle = { marginTop: '25px' };
+const drawerStyle = { textAlign: 'center' };
+const drawerContainerStyle = { backgroundColor: fullWhite };
+const listHeaderStyle = { color: githubBlue };
+const listItemStyle = { padding: '5px', fontStyle: 'italic', fontSize: '14px' };
+
 
 export default NavBar;
