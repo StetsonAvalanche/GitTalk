@@ -28,6 +28,7 @@ class NavBar extends React.Component {
     const userStyle = { marginTop: '40px', fontWeight: 'bold' };
     const buttonStyle = { marginTop: '25px' };
     const drawerStyle = { textAlign: 'center' };
+    const drawerContainerStyle = { backgroundColor: fullWhite };
     const listHeaderStyle = { color: githubBlue };
     const listItemStyle = { padding: '5px', fontStyle: 'italic', fontSize: '14px' };
 
@@ -37,6 +38,7 @@ class NavBar extends React.Component {
           docked={true}
           width={300}
           style={drawerStyle}
+          containerStyle={drawerContainerStyle}
         >
           <div>
             <User username={username} photo={photo} style={userStyle} />
