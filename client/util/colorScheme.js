@@ -1,8 +1,9 @@
 import {
   fullWhite,
   fullBlack,
-  grey200,
   grey100,
+  grey200,
+  grey700,
 } from 'material-ui/styles/colors';
 
 module.exports = {
@@ -12,8 +13,9 @@ module.exports = {
   githubBlue: '#4078c0',
   fullWhite: fullWhite,
   fullBlack: fullBlack,
-  grey200: grey200,
   grey100: grey100,
+  grey200: grey200,
+  grey700: grey700
 };
 
 // inject line into top of components
