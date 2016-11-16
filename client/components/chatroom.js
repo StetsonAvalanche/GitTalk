@@ -58,7 +58,9 @@ class Chatroom extends React.Component {
 const styles = {
   msgListContainer: {
     minWidth: '400px',
-    flexGrow: '2',
+    // flexGrow: '2',
+    backgroundImage: 'url(./assets/chatRoomBackGround.png)'
+    // backgroundImage: 'url(https://www.sketchappsources.com/resources/source-images-plus3/material-design-icon-patterns-3.png)'
   },
 };
 
