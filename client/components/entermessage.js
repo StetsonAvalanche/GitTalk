@@ -25,7 +25,7 @@ class EnterMessage extends React.Component {
     super(props);
     this.state = {
       value: '',
-      chatroom: 'anicknam/gittalk' // FIXME make me dynamic
+      chatroom: this.props.username + '/' + this.props.reponame // FIXME make me dynamic
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -59,7 +59,7 @@ class EnterMessage extends React.Component {
     const divStyle = {
       position: 'absolute',
       bottom: 0,
-      left: 300,
+      left: 0,
       width: window.innerWidth - 300,
       zIndex: 5,
     };

@@ -7,8 +7,12 @@ import EnterMessage from './entermessage';
 import Logout from './logout.js';
 
 import { getUser } from './../api/user/userRequest.js';
-
 import { grey200 } from './../util/colorScheme.js';
+import {Card, CircularProgress} from 'material-ui';
+
+import io from 'socket.io-client';
+const socket = io('', { path: '/api/chat'});
+
 
 class Chatroom extends React.Component {
   constructor(props){
@@ -46,8 +50,9 @@ class Chatroom extends React.Component {
       <div>
         <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} />
         <TopBar reponame={ this.props.params.reponame } />
-        <Messages username={this.state.username} userAvatarUrl={this.state.userAvatarUrl}/>
+        <Messages username={this.state.username} userAvatarUrl={this.state.userAvatarUrl} reponame={ this.props.params.reponame }/>
         <EnterMessage username={this.state.username} />
+
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
         <Logout />
       </div>
