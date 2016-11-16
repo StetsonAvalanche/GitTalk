@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import AddImage from './addImage.js';
 
 /* Color Scheme */
 import {
@@ -95,6 +96,7 @@ class EnterMessage extends React.Component {
 
     return (
       <div style={divStyle}>
+        <AddImage />
         <TextField
           hintText={`Message @${reponame}`}
           floatingLabelText="*italics* __bold__ `code` ~~strike~~"
