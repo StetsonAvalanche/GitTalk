@@ -11,17 +11,7 @@ class Messages extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      messages: [
-        // { user: 'Felicia', text: 'Snacks!' },
-        // { user: 'Chase', text: 'Wazzup peeps :)' },
-        // { user: 'Afsoon', text: 'Grrr!' },
-        // { user: 'Tony', text: 'I wanna nap!' },
-        // { user: 'Felicia', text: 'Snacks!' },
-        // { user: 'Chase', text: 'Wazzup peeps :)' },
-        // { user: 'Tony', text: 'I wanna nap!' },
-        // { user: 'Felicia', text: 'Snacks!' },
-        // { user: 'Chase', text: 'Wazzup peeps :)' },
-      ],
+      messages: [],
     };
 
     this.updateScroll = this.updateScroll.bind(this);
@@ -74,7 +64,7 @@ class Messages extends React.Component {
           <Message 
             user={message.user} 
             text={message.text} 
-            userAvatarUrl={this.props.userAvatarUrl}/>)}
+            userAvatarUrl={message.userAvatarUrl}/>)}
       </div>
     );
   }

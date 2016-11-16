@@ -47,7 +47,8 @@ class EnterMessage extends React.Component {
     const newMessage = {
       user: this.props.username,
       text: this.state.value,
-      chatroom: this.state.chatroom 
+      chatroom: this.state.chatroom,
+      userAvatarUrl: this.props.userAvatarUrl
     };
     console.log('message sent', newMessage);
     socket.emit('new message', newMessage);

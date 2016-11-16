@@ -52,7 +52,7 @@ class Chatroom extends React.Component {
         <TopBar reponame={ this.props.params.reponame } />
 
         {(this.state.username) ? 
-          <Messages username={this.state.username} userAvatarUrl={this.state.userAvatarUrl} reponame={ this.props.params.reponame }/>
+          <Messages username={this.state.username} reponame={ this.props.params.reponame }/>
           : null}
 
         <Link to="/dashboard" className="link-to-dashboard">Home</Link>
