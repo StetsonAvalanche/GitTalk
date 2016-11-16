@@ -1,5 +1,21 @@
 import React, {PropTypes} from 'react';
 
+/* Color Scheme */
+import {
+  githubLightGreen,
+  githubGreen,
+  githubBrown,
+  githubBlue,
+  fullWhite,
+  grey200,
+  grey100,
+} from './../util/colorScheme.js';
+
+/* Material-UI components */
+import TextField from 'material-ui/TextField';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentSend from 'material-ui/svg-icons/content/send';
+
 class EnterMessage extends React.Component {
   constructor(props){
     super(props);
@@ -28,16 +44,64 @@ class EnterMessage extends React.Component {
   }
 
   render() {
+
+    const divStyle = {
+      position: 'absolute',
+      bottom: 0,
+      left: 300,
+      width: window.innerWidth - 300,
+      backgroundColor: grey200,
+    };
+
+    const textHintStyle = {
+      fontSize: '12px',
+      fontColor: grey100,
+    };
+
+    const textFieldStyle = {
+      position: 'absolute',
+      bottom: '5px',
+      left:'20px',
+    };
+
+    const underlineStyle = {
+      borderColor: fullWhite,
+    };
+
+    const underlineFocusStyle = {
+      borderColor: githubLightGreen,
+    };
+
+    const buttonStyle = {
+      position: 'absolute',
+      bottom: '10px',
+      right:'10px',
+    };
+
     return (
-      <div>
-        <input type="text" name="text" onChange={this.handleChange} value={this.state.value} />
-        <button onClick={this.sendMessage}>Send</button>
+      <div style={divStyle}>
+        <TextField
+          hintText="Say something :)"
+          style={textFieldStyle}
+          underlineStyle={underlineStyle}
+          underlineFocusStyle={underlineFocusStyle}
+
+          onChange={this.handleChange}
+          value={this.state.value}
+        />
+        <FloatingActionButton 
+          backgroundColor={githubGreen}
+
+          onClick={this.sendMessage}
+          style={buttonStyle}
+        >
+          <ContentSend />
+        </FloatingActionButton>
       </div>
     );
   }
 }
 
-const styles = {
-};
+// <input type="text" name="text" onChange={this.handleChange} value={this.state.value} />
 
 export default EnterMessage;
