@@ -79,7 +79,7 @@ class EnterMessage extends React.Component {
     const textFieldStyle = {
       position: 'absolute',
       bottom: '5px',
-      width: window.innerWidth - 400,
+      width: window.innerWidth - 450,
       left:'70px',
     };
 
