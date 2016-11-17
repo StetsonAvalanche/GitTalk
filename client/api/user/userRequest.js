@@ -31,7 +31,7 @@ function getUserRepos() {
   return new Promise((resolve, reject) => {
     _get('/auth/user').done(data => {
       const reposUrl = JSON.parse(data)._json.repos_url;
-      _get(reposUrl).done(repos => {
+      _get(`${reposUrl}?per_page=100`).done(repos => {
         resolve(repos);
       }).fail((jqXHR, textStatus, err) => {
         reject(err);
