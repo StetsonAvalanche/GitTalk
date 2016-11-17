@@ -90,10 +90,12 @@ class EnterMessage extends React.Component {
       right:'10px',
     };
 
+    const reponame = this.props.reponame;
+
     return (
       <div style={divStyle}>
         <TextField
-          hintText="Say something :)"
+          hintText={`Message @${reponame}`}
           style={textFieldStyle}
           underlineStyle={underlineStyle}
           underlineFocusStyle={underlineFocusStyle}
