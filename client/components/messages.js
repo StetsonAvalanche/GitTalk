@@ -3,10 +3,6 @@ import React, {PropTypes} from 'react';
 import Message from './message';
 import { getMessages } from './../api/chatroom/messageRequest.js';
 
-/* Websocket */
-import io from 'socket.io-client';
-const socket = io('', { path: '/api/chat'});
-
 class Messages extends React.Component {
   constructor(props){
     super(props);
@@ -24,6 +20,7 @@ class Messages extends React.Component {
         messages: [...this.state.messages, message]
       });
     });
+
   }
 
   updateMessages() {

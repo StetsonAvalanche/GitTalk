@@ -19,9 +19,19 @@ import Drawer from 'material-ui/Drawer';
 import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 
+/* Websocket */
+import io from 'socket.io-client';
+const socket = io('', { path: '/api/chat'});
+
 class NavBar extends React.Component {
   constructor(props){
     super(props);
+
+    this.changeChannel = this.changeChannel.bind(this);
+  }
+
+  changeChannel() {
+    console.log('change channel');
   }
 
   render() {
@@ -43,6 +53,7 @@ class NavBar extends React.Component {
                         children={<Link key={channel} to={`/rooms/${channel}`}
                         style={linkStyle}>{channel}</Link>}
                         innerDivStyle={listItemStyle}
+                        onClick={this.changeChannel}
                       />);
             })}
           </List>
