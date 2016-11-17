@@ -6,7 +6,8 @@ var UserController = require('../../server/db/controllers/user.js');
 var ChatroomModel = require('../../server/db/models/chatroom.js');
 var UserModel = require('../../server/db/models/user.js');
 
-var uriString = process.env.MONGODB_URI || 'mongodb://localhost/devDB';
+
+var uriString = 'mongodb://localhost/devDB';
 
 var chat1 = {
 	id: 'DYWXaStMxp/GypORHVxal', 
