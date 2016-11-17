@@ -44,15 +44,15 @@ app.get('/rooms/:username/:reponame', function(req, res) {
   res.sendFile(path.resolve(__dirname, '../public', 'index.html'));   
 });
 
-app.get('*', function(req, res) {
-  res.redirect('/');	  
-});
-
 // s3 middleware
 app.use('/s3', require('react-s3-uploader/s3router')({
   bucket: "gittalk",
   headers: {'Access-Control-Allow-Origin': '*'}
 }));
+
+app.get('*', function(req, res) {
+  res.redirect('/');	  
+});
 
 // hand routing off to react router
 app.get('*', function(req, res) {

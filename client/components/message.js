@@ -11,8 +11,9 @@ class Message extends React.Component {
   render() {
     const user = this.props.user;
     const text = <MarkdownElement text={this.props.text} />;
+    const { image } = this.props;
     const avatar = <Avatar src={this.props.userAvatarUrl} />;
-   
+
     const styles = {
       box: {
         position: 'relative',
@@ -31,15 +32,19 @@ class Message extends React.Component {
       },
     };
 
+    console.log(image);
+    console.log('image ^^^'); 
     return (
-    	<Paper style={styles.box} zDepth={1}>
+      <Paper style={styles.box} zDepth={1}>
         <ListItem leftAvatar={avatar}>
-           <span style={styles.author}>{user}</span>
-           <br />
-           <span style={styles.text}>{text}</span>
-    	  </ListItem>
-    	</Paper>
-    	);
+          <span style={styles.author}>{user}</span>
+          <br />
+          <span style={styles.text}>{text}</span>
+          <br />
+          <a href={ image } ><img src={ image } width='50%' /></a>
+        </ListItem>
+      </Paper>
+    );
   }
 }
 

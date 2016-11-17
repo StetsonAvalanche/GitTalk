@@ -50,7 +50,7 @@ class EnterMessage extends React.Component {
     const newMessage = {
       type: image ? 'image': 'text',
       user: this.props.username,
-      userAvatarUrl: this.props.userAvatarUrl
+      userAvatarUrl: this.props.userAvatarUrl,
       chatroom: this.state.chatroom,
       image: image,
       text: image ? null : this.state.value
@@ -79,8 +79,8 @@ class EnterMessage extends React.Component {
     const textFieldStyle = {
       position: 'absolute',
       bottom: '5px',
-      left:'20px',
       width: window.innerWidth - 400,
+      left:'70px',
     };
 
     const underlineStyle = {

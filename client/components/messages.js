@@ -73,6 +73,7 @@ class Messages extends React.Component {
             user={message.user} 
             text={message.text} 
             userAvatarUrl={message.userAvatarUrl}
+            image={ message.image }
           />)}
       </div>
     );
