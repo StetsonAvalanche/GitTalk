@@ -5,7 +5,7 @@ import NavBar from './navbar';
 import Messages from './messages';
 import EnterMessage from './entermessage';
 
-import { getUser } from './../api/user/userRequest.js';
+import { getUser, getMemberRepos } from './../api/user/userRequest.js';
 import { grey200 } from './../util/colorScheme.js';
 import {Card, CircularProgress} from 'material-ui';
 
@@ -19,19 +19,17 @@ class Chatroom extends React.Component {
     this.state = {
       username: '',
       userAvatarUrl: '',
-      channels: [  // FIXME 
-        'aframe-boilerplate',
-        'aframe-react',
-        'aframe-react-boilerplate',
-        'GitTalk',
-        'material-ui-browserify-gulp-example',
-        'microscope',
-        'sembly-heroku-server'
-      ]
+      channels: []
     };
+
+    this.updateUser = this.updateUser.bind(this);
   }
 
   componentDidMount() {
+    this.updateUser();
+  }
+
+  updateUser() {
     getUser()
     .then((data) => {
       const username = JSON.parse(data).username;
@@ -40,6 +38,16 @@ class Chatroom extends React.Component {
         username: username,
         userAvatarUrl: userAvatarUrl
       });
+      return username;
+    })
+    .then(username => {
+      getMemberRepos(username)
+      .then(repos => {
+        this.setState({
+          channels: repos
+        });
+      })
+      .catch(err => console.log('error in getMemberRepos', err));
     })
     .catch(err => console.log('error in getUser', err));
   }

@@ -74,6 +74,7 @@ class EnterMessage extends React.Component {
       position: 'absolute',
       bottom: '5px',
       left:'20px',
+      width: window.innerWidth - 400,
     };
 
     const underlineStyle = {

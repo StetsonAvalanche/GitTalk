@@ -21,7 +21,7 @@ function getUser() {
   return new Promise((resolve, reject) => {
     _get('/auth/user').done(data => {
       resolve(data);
-    }).fail((jqXHR, textStatus, err) => {;
+    }).fail((jqXHR, textStatus, err) => {
       reject(err);
     });
   });
@@ -33,10 +33,21 @@ function getUserRepos() {
       const reposUrl = JSON.parse(data)._json.repos_url;
       _get(reposUrl).done(repos => {
         resolve(repos);
-      }).fail((jqXHR, textStatus, err) => {;
+      }).fail((jqXHR, textStatus, err) => {
         reject(err);
       });
-    }).fail((jqXHR, textStatus, err) => {;
+    }).fail((jqXHR, textStatus, err) => {
+      reject(err);
+    });
+  });
+}
+
+function getMemberRepos(username) {
+  return new Promise((resolve, reject) => {
+    _get(`/api/memberrepos/${username}`).done(channels => {
+      const repoNames = channels.reduce((names, channel) => names.concat([channel.id]), []);
+      resolve(repoNames);
+    }).fail((jqXHR, textStatus, err) => {
       reject(err);
     });
   });
@@ -44,6 +55,7 @@ function getUserRepos() {
 
 export {
   getUser,
-  getUserRepos
+  getUserRepos,
+  getMemberRepos
 }
 

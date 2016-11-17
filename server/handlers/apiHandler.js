@@ -22,8 +22,20 @@ function getMessages (req, res) {
   });
 }
 
+function getMemberRepos (req, res) {
+  const username = req.params.username; 
+  chatroomCtrl.findAll(username, (err, chatrooms) => {
+    if (err) { 
+      throw err;
+    } else {
+      res.status(200).send(JSON.stringify(chatrooms));
+    } 
+  });
+}
+
 module.exports = {
 	getMessages: getMessages,
-  chatroomInit: chatroomInit
+  chatroomInit: chatroomInit,
+  getMemberRepos: getMemberRepos
 };
 
