@@ -1,4 +1,5 @@
 const chatroomCtrl = require('../db/controllers/chatroom.js');
+const gmailSend = require('gmail-send');
 
 function chatroomInit(req, res) {
   chatroomCtrl.update(req.body.repo, () => {
@@ -22,7 +23,6 @@ function getMessages (req, res) {
   });
 }
 
-
 function getMemberRepos (req, res) {
   const username = req.params.username; 
   chatroomCtrl.findAll(username, (err, chatrooms) => {
@@ -38,7 +38,7 @@ function emailInvite (req, res) {
   // Require the module and set default options 
   // You may use almost any option available in nodemailer,  
   // but if you need fine tuning I'd recommend to consider using nodemailer directly. 
-  const send = require('gmail-send')({
+  const send = gmailSend({
     user: 'gittalk.hr49@gmail.com',               // Your GMail account used to send emails 
     pass: 'sllgudocgtykewdv',             // Application-specific password 
     to:   'a.nicknam@gmail.com',      // Send back to yourself 
@@ -49,7 +49,7 @@ function emailInvite (req, res) {
     // html:    '<b>html text text</b>' 
   });
    
-  // var file = './demo.js';        // File to attach 
+  // const file = './demo.js';        // File to attach 
   // Override any default option and send email 
   send({                         
     subject: 'Hello'   // Override value set as default  
