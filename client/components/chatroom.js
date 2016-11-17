@@ -62,7 +62,7 @@ class Chatroom extends React.Component {
           : null}
 
         {(this.state.username) ? 
-          <EnterMessage username={this.state.username} chatroom={ `${this.props.params.username}/${this.props.params.reponame}` } userAvatarUrl={this.state.userAvatarUrl}/>
+          <EnterMessage username={this.state.username} chatroom={ `${this.props.params.username}/${this.props.params.reponame}` } userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} />
           : null
         } 
       </div>
