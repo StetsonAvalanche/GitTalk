@@ -32,8 +32,6 @@ class Message extends React.Component {
       },
     };
 
-    console.log(image);
-    console.log('image ^^^'); 
     return (
       <Paper style={styles.box} zDepth={1}>
         <ListItem leftAvatar={avatar}>
