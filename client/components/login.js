@@ -41,7 +41,6 @@ const Login = () => {
         <RaisedButton 
           className="raised-button"
 		      href="/auth/github"
-		      target="_blank"
 		      label="Login with GitHub"
 		      secondary={false}
 		      style={styles.button}
