@@ -32,22 +32,25 @@ function getMemberRepos (req, res) {
       res.status(200).send(JSON.stringify(chatrooms));
     } 
   });
+}
 
 function emailInvite (req, res) {
    
   const send = gmailSend({
-    user: 'gittalk.hr49@gmail.com',       // GMail account used to send emails 
-    pass: 'sllgudocgtykewdv',             // Application-specific password 
-    to: 'chasestarr@gmail.com',       
+    user: 'gittalk.hr49@gmail.com',       /* GMail account used to send emails */ 
+    pass: 'sllgudocgtykewdv',             /* Application-specific password */
+    to: 'a.nicknam@gmail.com',       
     text: req.body.chatroomUrl,
     // html:    '<b>html text text</b>' 
   });
    
+   const inviterUsername = req.body.chatroomUrl.split('/')[2];
+   const inviterChatroom = req.body.chatroomUrl.split('/')[3];
   // const file = './demo.js';        // File to attach 
 
-  // Override any default option and send email 
+  /* Override any default option and send email */ 
   send({                         
-    subject: 'Hello'   // Override value set as default  
+    subject: '\'' + inviterUsername + '\'' + ' invited you to join chatroom \'' + inviterChatroom + '\''  // Override value set as default  
     // files: [file]                // String or array of strings of filenames to attach 
   }, function (err, response) {
     console.log('send(): err:', err, '; res:', response);
@@ -59,7 +62,7 @@ function emailInvite (req, res) {
 module.exports = {
 	getMessages: getMessages,
   chatroomInit: chatroomInit,
-  getMemberRepos: getMemberRepos
+  getMemberRepos: getMemberRepos,
   emailInvite: emailInvite
 }
 
