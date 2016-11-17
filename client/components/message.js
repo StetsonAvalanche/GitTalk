@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Avatar, ListItem, Paper} from 'material-ui';
 import { grey700 } from './../util/colorScheme.js';
+import MarkdownElement from './markdownelement.js';
 
 class Message extends React.Component {
   constructor(props) {
@@ -8,7 +9,8 @@ class Message extends React.Component {
   }
 
   render() {
-    const { user, text } = this.props;
+    const user = this.props.user;
+    const text = <MarkdownElement text={this.props.text} />;
     const avatar = <Avatar src={this.props.userAvatarUrl} />;
    
     const styles = {
