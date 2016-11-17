@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Avatar, ListItem, Paper} from 'material-ui';
-import { grey700 } from './../util/colorScheme.js';
-import MarkdownElement from './markdownelement.js';
+import { grey700 } from './../util/colorScheme';
+import MarkdownElement from './markdownelement';
 
 class Message extends React.Component {
   constructor(props) {
@@ -38,12 +38,11 @@ class Message extends React.Component {
           <span style={styles.author}>{user}</span>
           <br />
           <span style={styles.text}>{text}</span>
-          <br />
-          <a href={ image } ><img src={ image } width='50%' /></a>
+          { image ? <a href={ image } ><img src={ image } width='50%' /></a> : null }
         </ListItem>
       </Paper>
     );
-  }
+  } // need to fix a tag to else it's taking up space
 }
 
 export default Message;

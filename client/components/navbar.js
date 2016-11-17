@@ -11,7 +11,7 @@ import {
   githubBlue,
   fullWhite,
   grey200,
-} from './../util/colorScheme.js';
+} from './../util/colorScheme';
 
 /* Material-UI components */
 import Avatar from 'material-ui/Avatar';
@@ -26,12 +26,6 @@ const socket = io('', { path: '/api/chat'});
 class NavBar extends React.Component {
   constructor(props){
     super(props);
-
-    this.changeChannel = this.changeChannel.bind(this);
-  }
-
-  changeChannel() {
-    console.log('change channel');
   }
 
   render() {
@@ -50,10 +44,15 @@ class NavBar extends React.Component {
           <List>
             {channels.map((channel) => {
               return (<ListItem key={channel}
-                        children={<Link key={channel} to={`/rooms/${channel}`}
-                        style={linkStyle}>{channel}</Link>}
+                        children={<Link 
+                                    key={channel} 
+                                    to={`/rooms/${channel}`}
+                                    style={linkStyle}
+                                  >
+                                    {channel}
+                                  </Link>}
                         innerDivStyle={listItemStyle}
-                        onClick={this.changeChannel}
+                        onClick={this.props.changeChannel}
                       />);
             })}
           </List>

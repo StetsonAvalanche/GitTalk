@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import AddImage from './addImage.js';
+import AddImage from './addImage';
 
 /* Color Scheme */
 import {
@@ -10,7 +10,7 @@ import {
   fullWhite,
   grey200,
   grey100,
-} from './../util/colorScheme.js';
+} from './../util/colorScheme';
 
 /* Material-UI components */
 import TextField from 'material-ui/TextField';

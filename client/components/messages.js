@@ -1,41 +1,17 @@
 import React, {PropTypes} from 'react';
 
 import Message from './message';
-import { getMessages } from './../api/chatroom/messageRequest.js';
+
+/* Websocket */
+import io from 'socket.io-client';
+const socket = io('', { path: '/api/chat'});
 
 class Messages extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      messages: [],
-    };
 
     /* this binding of methods */
     this.updateScroll = this.updateScroll.bind(this);
-    this.updateMessages = this.updateMessages.bind(this);
-
-    /* websockets */
-    socket.on('new bc message', (message) => {
-      this.setState({
-        messages: [...this.state.messages, message]
-      });
-    });
-
-  }
-
-  updateMessages() {
-    // fetch all messages from DB
-    const chatroomId = this.props.username + '/' + this.props.reponame;
-    getMessages(chatroomId)
-    .then(messages => {
-      this.setState({ messages: JSON.parse(messages) });
-      this.updateScroll();
-    })
-    .catch(err => console.log(err));
-  }
-
-  componentDidMount() {
-    this.updateMessages();
   }
 
   componentDidUpdate() {
@@ -48,23 +24,11 @@ class Messages extends React.Component {
     element.scrollTop = element.scrollHeight;
   }
 
-  render() {
-    const style = {
-      backgroundImage: 'url(/assets/chatroomBackgroundLight.png)',
-      backgroundSize: '10%',
-      backgroundRepeat: 'repeat',
-      position: 'absolute',
-      left: 300,
-      top: 64,
-      width: window.innerWidth - 300,
-      height: window.innerHeight - 135,
-      overflow: 'auto',
-    };
-    
+  render() {    
     let counter = 0;
     return (
-      <div style={style} id='messageBox'>
-        {this.state.messages.map(message => 
+      <div style={messageRoomStyle} id='messageBox'>
+        {this.props.messages.map(message => 
           <Message 
             key={counter++}
             user={message.user} 
@@ -76,5 +40,17 @@ class Messages extends React.Component {
     );
   }
 }
+
+const messageRoomStyle = {
+  backgroundImage: 'url(/assets/chatroomBackgroundLight.png)',
+  backgroundSize: '10%',
+  backgroundRepeat: 'repeat',
+  position: 'absolute',
+  left: 300,
+  top: 64,
+  width: window.innerWidth - 300,
+  height: window.innerHeight - 135,
+  overflow: 'auto',
+};
 
 export default Messages;
