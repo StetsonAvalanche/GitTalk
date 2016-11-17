@@ -55,7 +55,7 @@ class Messages extends React.Component {
   render() {
     const style = {
       backgroundImage: 'url(/assets/chatroomBackgroundLight.png)',
-      backgroundSize: '50%',
+      backgroundSize: '10%',
       backgroundRepeat: 'repeat',
       position: 'absolute',
       left: 300,
