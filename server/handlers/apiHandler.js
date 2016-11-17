@@ -39,13 +39,13 @@ function emailInvite (req, res) {
   const send = gmailSend({
     user: 'gittalk.hr49@gmail.com',       // GMail account used to send emails 
     pass: 'sllgudocgtykewdv',             // Application-specific password 
-    to: 'a.nicknam@gmail.com',       
-    // text: req.body.chatroomUrl,
-    text: 'http://www.cnn.com'
+    to: 'chasestarr@gmail.com',       
+    text: req.body.chatroomUrl,
     // html:    '<b>html text text</b>' 
   });
    
   // const file = './demo.js';        // File to attach 
+
   // Override any default option and send email 
   send({                         
     subject: 'Hello'   // Override value set as default  
