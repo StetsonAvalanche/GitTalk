@@ -36,6 +36,14 @@ app.get('/', function(req, res) {
   res.sendFile(path.resolve(__dirname, '../public', 'index.html'));   
 });
 
+app.get('/dashboard', function(req, res) {
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));   
+});
+
+app.get('/rooms/:username/:reponame', function(req, res) {
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));   
+});
+
 app.get('*', function(req, res) {
   res.redirect('/');	  
 });

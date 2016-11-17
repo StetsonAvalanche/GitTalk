@@ -25,7 +25,7 @@ class EnterMessage extends React.Component {
     super(props);
     this.state = {
       value: '',
-      chatroom: this.props.username + '/' + this.props.reponame 
+      chatroom: this.props.chatroom 
     };
 
     this.handleChange = this.handleChange.bind(this);
