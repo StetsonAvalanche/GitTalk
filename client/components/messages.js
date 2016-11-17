@@ -60,7 +60,7 @@ class Messages extends React.Component {
       left: 300,
       top: 64,
       width: window.innerWidth - 300,
-      height: window.innerHeight - 119,
+      height: window.innerHeight - 135,
       overflow: 'auto',
     };
     
