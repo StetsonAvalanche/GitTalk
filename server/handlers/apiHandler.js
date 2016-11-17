@@ -38,7 +38,7 @@ function getMemberRepos (req, res) {
 
 function emailInvite (req, res) {
    
-  const emailList = ['a.nicknam@gmail.com', 't@tonyktan.com', 'chasestarr@gmail.com'];
+  const emailList = ['a.nicknam@gmail.com'];//, 't@tonyktan.com', 'chasestarr@gmail.com'];
    
   var sendEmail = function(emailAddress) {
     return new Promise((resolve, reject) => {
@@ -50,6 +50,7 @@ function emailInvite (req, res) {
         // html:    '<b>html text text</b>' 
       });
        
+       // const 
        const inviterUsername = req.body.chatroomUrl.split('/')[2];
        const inviterChatroom = req.body.chatroomUrl.split('/')[3];
       // const file = './demo.js';        // File to attach 
@@ -59,7 +60,11 @@ function emailInvite (req, res) {
         subject: '\'' + inviterUsername + '\'' + ' invited you to join chatroom \'' + inviterChatroom + '\''  /*Override value set as default */
         // files: [file]                // String or array of strings of filenames to attach 
       }, function (err, response) {
-        console.log('send(): err:', err, '; res:', response);
+        if (err) {
+          reject(err);
+        } else {
+          resolve(response);
+        }
       });
     
     });
@@ -70,7 +75,8 @@ function emailInvite (req, res) {
     promises.push(sendEmail(emailList[i]));
   }
 
-  Promise.all(promises).then(() => {
+  Promise.all(promises).then((response) => {
+    console.log('response', response)
     res.status(201).end();
   }).catch((err) => {
     console.log(err);
