@@ -33,7 +33,6 @@ function getMemberRepos (req, res) {
     } 
   });
 
-
 function emailInvite (req, res) {
    
   const send = gmailSend({
