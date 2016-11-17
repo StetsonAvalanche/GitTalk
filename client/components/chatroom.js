@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
 import TopBar from './topbar';
 import NavBar from './navbar';
 import Messages from './messages';
@@ -62,7 +61,6 @@ class Chatroom extends React.Component {
           <Messages username={this.state.username} reponame={ this.props.params.reponame }/>
           : null}
 
-        <Link to="/dashboard" className="link-to-dashboard">Home</Link>
         {(this.state.username) ? 
           <EnterMessage username={this.state.username} reponame={ this.props.params.reponame } userAvatarUrl={this.state.userAvatarUrl}/>
           : null

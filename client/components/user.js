@@ -1,4 +1,6 @@
 import React, {PropTypes} from 'react';
+import {Link} from 'react-router';
+import FontIcon from 'material-ui/FontIcon';
 
 /* Color Scheme */
 import {
@@ -20,12 +22,15 @@ class User extends React.Component {
 
   render() {
     const {username, photo, style} = this.props;
+    const nameStyle = { color: 'inherit', textDecoration: 'none' };
 
     return (
-      <div style={style}>
-        <Avatar src={photo} size={120}/>
-        <p>{username}</p>
-      </div>
+      <Link style={nameStyle} to="/dashboard">
+        <div style={style}>
+          <Avatar src={photo} size={120}/>
+          <p>{username}</p>
+        </div>
+      </Link>
     );
   }
 }
