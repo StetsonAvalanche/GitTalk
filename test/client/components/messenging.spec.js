@@ -31,6 +31,11 @@ describe('Chatroom Tests', function() {
     expect(wrapper).to.have.descendants(Messages);
   });
 
+  it('Chatroom should have EnterMessage component', function() {
+    const wrapper = mount(<Chatroom />);
+    expect(wrapper).to.have.descendants(EnterMessage);
+  });
+
   it('Nav Bar should have User component', function() {
     const wrapper = mount(<NavBar username='Afsoon' reponame='GitTalk' repos={['GitTalk', 'GreenCast']}/>);
     expect(wrapper).to.have.descendants(User);
@@ -39,11 +44,6 @@ describe('Chatroom Tests', function() {
   it('Messages should have Message component', function() {
     const wrapper = mount(<Messages />);
     expect(wrapper).to.have.descendants(Message);
-  });
-
-  it('Messages should have EnterMessage component', function() {
-    const wrapper = mount(<Messages />);
-    expect(wrapper).to.have.descendants(EnterMessage);
   });
 
 });
