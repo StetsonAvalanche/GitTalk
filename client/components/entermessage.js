@@ -96,6 +96,9 @@ class EnterMessage extends React.Component {
       <div style={divStyle}>
         <TextField
           hintText={`Message @${reponame}`}
+          floatingLabelText="*italics* __bold__ `code` >quote"
+          floatingLabelFixed={true}
+          floatingLabelStyle={{textAlign: 'right'}}
           style={textFieldStyle}
           underlineStyle={underlineStyle}
           underlineFocusStyle={underlineFocusStyle}
