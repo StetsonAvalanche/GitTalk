@@ -35,17 +35,13 @@ function getMemberRepos (req, res) {
 
 
 function emailInvite (req, res) {
-  // Require the module and set default options 
-  // You may use almost any option available in nodemailer,  
-  // but if you need fine tuning I'd recommend to consider using nodemailer directly. 
+   
   const send = gmailSend({
-    user: 'gittalk.hr49@gmail.com',               // Your GMail account used to send emails 
+    user: 'gittalk.hr49@gmail.com',       // GMail account used to send emails 
     pass: 'sllgudocgtykewdv',             // Application-specific password 
-    to:   'a.nicknam@gmail.com',      // Send back to yourself 
-    // from:   '"User" <user@gmail.com>'  // from: by default equals to user 
-    // replyTo:'user@gmail.com'           // replyTo: by default undefined 
-    subject: 'test subject',
-    text:    'test text'
+    to: 'a.nicknam@gmail.com',       
+    // text: req.body.chatroomUrl,
+    text: 'http://www.cnn.com'
     // html:    '<b>html text text</b>' 
   });
    

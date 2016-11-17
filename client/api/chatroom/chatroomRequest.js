@@ -27,4 +27,18 @@ function init(repo) {
   });
 }
 
-exports.init = init;
+function sendInvite(chatroomUrl){
+  return new Promise((resolve, reject) => {
+    _post('/api/email/invite', {chatroomUrl: chatroomUrl}).done(() => { 
+      resolve(); 
+    }).fail((jqXHR, textStatus, err) => {
+      reject(err);
+    })
+  });
+}
+
+
+module.exports = {
+  init: init,
+  sendInvite: sendInvite
+}
