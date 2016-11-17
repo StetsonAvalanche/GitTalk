@@ -54,11 +54,6 @@ app.get('*', function(req, res) {
   res.redirect('/');	  
 });
 
-// hand routing off to react router
-app.get('*', function(req, res) {
-  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
-});
-
 const port = process.env.PORT || 8000;
 const server = app.listen(port);
 
