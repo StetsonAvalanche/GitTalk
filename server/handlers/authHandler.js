@@ -10,9 +10,6 @@ function login(accessToken, refreshToken, profile, done) {
     if (err) done(err);
     done(null, profile);
   });
-  // check here to see if user is in our db
-  // if not, create the user
-  // done(null, profile);
 }
 
 function logout(req, res) {
