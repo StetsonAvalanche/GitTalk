@@ -32,8 +32,12 @@ app.use('/auth', auth);
 app.use('/api', api);
 app.use(express.static(path.join(__dirname, '../public')));
 
+app.get('/', function(req, res) {
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));   
+});
+
 app.get('*', function(req, res) {
-  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));	  
+  res.redirect('/');	  
 });
 
 const port = process.env.PORT || 8000;
@@ -67,8 +71,13 @@ io.on('connection', (socket) => {
     /* commenting out in the meantime */
     chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
       if (err) {throw err;}
-      chatroom[0].messages.push(msg);
-      chatroom[0].save();
+      const room = chatroom[0];
+      if (room === undefined) { throw 'error: chatroom does not exist'; }
+      if (room.members.indexOf(msg.user) === -1) {
+        room.members.push(msg.user);
+      }
+      room.messages.push(msg);
+      room.save();
     });
   });
 });

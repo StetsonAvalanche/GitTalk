@@ -6,5 +6,8 @@ router.post('/chatroom/init', apiHandler.chatroomInit);
 
 router.get('/messages/:username/:chatroom', apiHandler.getMessages);
 
+// user's a member of repos
+router.get('/memberrepos/:username', apiHandler.getMemberRepos);
+
 module.exports = router;
 

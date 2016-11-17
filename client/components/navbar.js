@@ -39,7 +39,7 @@ class NavBar extends React.Component {
           <h8 style={listHeaderStyle}>Channels</h8>
           <List>
             {channels.map((channel) => {
-              return (<ListItem children={<Link to={`/rooms/${username}/${channel}`} style={linkStyle}>{channel}</Link>} innerDivStyle={listItemStyle} />);
+              return (<ListItem children={<Link to={`/rooms/${channel}`} style={linkStyle}>{channel}</Link>} innerDivStyle={listItemStyle} />);
             })}
           </List>
 
