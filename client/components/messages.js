@@ -32,17 +32,16 @@ class Messages extends React.Component {
     getMessages(chatroomId)
     .then(messages => {
       this.setState({ messages: JSON.parse(messages) });
+      this.updateScroll();
     })
     .catch(err => console.log(err));
   }
 
   componentDidMount() {
     this.updateMessages();
-    this.updateScroll();
   }
 
   componentDidUpdate() {
-    this.updateMessages();
     this.updateScroll();
   }
 
@@ -65,13 +64,16 @@ class Messages extends React.Component {
       overflow: 'auto',
     };
     
+    let counter = 0;
     return (
       <div style={style} id='messageBox'>
         {this.state.messages.map(message => 
           <Message 
+            key={counter++}
             user={message.user} 
             text={message.text} 
-            userAvatarUrl={message.userAvatarUrl}/>)}
+            userAvatarUrl={message.userAvatarUrl}
+          />)}
       </div>
     );
   }
