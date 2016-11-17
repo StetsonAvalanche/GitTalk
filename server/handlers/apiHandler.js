@@ -1,5 +1,7 @@
 const chatroomCtrl = require('../db/controllers/chatroom.js');
 const gmailSend = require('gmail-send');
+const Promise = require('bluebird');
+
 
 function chatroomInit(req, res) {
   chatroomCtrl.update(req.body.repo, () => {
@@ -36,6 +38,13 @@ function getMemberRepos (req, res) {
 
 function emailInvite (req, res) {
    
+  const emailList = ['a.nicknam@gmail.com', 't@tonyktan.com', 'chasestarr@gmail.com'];
+   
+  // var sendEmail = function(emailAddress) {
+  //   return new Promise((resolve, reject) => {
+
+  //   });
+  // } 
   const send = gmailSend({
     user: 'gittalk.hr49@gmail.com',       /* GMail account used to send emails */ 
     pass: 'sllgudocgtykewdv',             /* Application-specific password */
