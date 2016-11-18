@@ -27,9 +27,13 @@ function init(repo) {
   });
 }
 
-function sendInvite(chatroomUrl){
+function sendInvite(chatroomLink, forkedRepoUrl){
+
+  
+
+
   return new Promise((resolve, reject) => {
-    _post('/api/email/invite', {chatroomUrl: chatroomUrl}).done(() => { 
+    _post('/api/email/invite', {chatroomLink: chatroomLink}).done(() => { 
       resolve(); 
     }).fail((jqXHR, textStatus, err) => {
       reject(err);
