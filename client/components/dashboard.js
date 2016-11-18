@@ -2,8 +2,8 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import RepoList from './repoList.js';
 import Profile from './profile.js';
-import {getUser, getUserRepos } from './../api/user/userRequest';
-import { init } from '../api/chatroom/chatroomRequest';
+import {getUser, getUserRepos } from './../api/user/userRequest.js';
+import { init } from '../api/chatroom/chatroomRequest.js';
 
 import Paper from 'material-ui/Paper';
 import { grey200 } from './../util/colorScheme';
@@ -19,11 +19,12 @@ class Dashboard extends React.Component {
   }
 
   navToChatroom(name) {
-    init(name).then(() => {
-      browserHistory.push(`/rooms/${name}`);
-    }).catch(err => { 
-      console.log(err); 
-    });
+      // Initiate chatroom
+      init(name).then(() => {
+        browserHistory.push(`/rooms/${name}`);
+      }).catch(err => { 
+        console.log(err); 
+      });
   }
 
   componentDidMount() {
@@ -43,7 +44,7 @@ class Dashboard extends React.Component {
         <Paper style={ styles.listContainer } zDepth={ 2 }>
           <RepoList navToChatroom={this.navToChatroom.bind(this)} repos={this.state.repos}/>
         </Paper>
-        <Paper style={ styles.profileContainer } zDepth={2}>
+        <Paper style={ styles.profileContainer } zDepth={ 2 }>
           { this.state.user ? <Profile user={ this.state.user } /> : null }
         </Paper>
       </div>

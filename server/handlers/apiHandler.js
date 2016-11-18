@@ -1,4 +1,7 @@
 const chatroomCtrl = require('../db/controllers/chatroom.js');
+const gmailSend = require('gmail-send');
+const Promise = require('bluebird');
+
 
 function chatroomInit(req, res) {
   chatroomCtrl.update(req.body.repo, () => {
@@ -33,9 +36,47 @@ function getMemberRepos (req, res) {
   });
 }
 
+function emailInvite (req, res) {
+  const emailList = req.body.emailAddressList; 
+  const chatroomLinkParse = req.body.chatroomLink.split('/');
+  const inviterUsername = chatroomLinkParse[chatroomLinkParse.length - 2];
+  const inviterChatroom = chatroomLinkParse[chatroomLinkParse.length - 1];
+  const sendEmail = function(emailAddress) {
+    return new Promise((resolve, reject) => {
+      const send = gmailSend({
+        user: 'gittalk.hr49@gmail.com',   /* GMail account used to send emails */ 
+        pass: 'sllgudocgtykewdv',         /* Application-specific password */
+        to: emailAddress,       
+        text: req.body.chatroomLink
+      });
+      /* Override any default option and send email */ 
+      send({                         
+        subject: '\'' + inviterUsername + '\'' + ' invited you to join chatroom \'' + inviterChatroom + '\''  /*Override value set as default */               
+      }, (err, response) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(response);
+        }
+      });
+    });
+  };
+  /* Create promise for each email address and send all asyncronously */ 
+  const promises = [];
+  emailList.forEach((email) => {
+    promises.push(sendEmail(email));
+  });
+  Promise.all(promises).then((response) => {
+    res.status(201).end();
+  }).catch((err) => {
+    console.log(err);
+  });
+} 
+
 module.exports = {
 	getMessages: getMessages,
   chatroomInit: chatroomInit,
-  getMemberRepos: getMemberRepos
-};
+  getMemberRepos: getMemberRepos,
+  emailInvite: emailInvite
+}
 

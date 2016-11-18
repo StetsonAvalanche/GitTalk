@@ -57,6 +57,8 @@ class NavBar extends React.Component {
             })}
           </List>
 
+          <RaisedButton label='Send Invite' disabled={this.props.inviteSent} onClick={this.props.sendEmailInvite}/>
+          <br /><br />
           <Logout />
         </div>
       </Drawer>

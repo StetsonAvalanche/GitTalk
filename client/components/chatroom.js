@@ -6,6 +6,8 @@ import EnterMessage from './entermessage';
 
 import { getUser, getMemberRepos } from './../api/user/userRequest';
 import { getMessages } from './../api/chatroom/messageRequest';
+import { sendInvite } from '../api/chatroom/chatroomRequest.js';
+import { getUserRepos } from './../api/user/userRequest.js';
 import { grey200 } from './../util/colorScheme';
 import {Card, CircularProgress} from 'material-ui';
 
@@ -19,14 +21,17 @@ class Chatroom extends React.Component {
     this.state = {
       username: '',
       userAvatarUrl: '',
+      chatroomId: this.props.params.username + '/' + this.props.params.reponame,
       channels: [],
-      messages:[]
+      messages:[],
+      inviteSent: false
     };
 
     /* this bindings for methods */
     this.updateUser = this.updateUser.bind(this);
     this.updateMemberRepos = this.updateMemberRepos.bind(this);
     this.updateMessages = this.updateMessages.bind(this);
+    this.sendEmailInvite = this.sendEmailInvite.bind(this);
 
     /* websockets */
     socket.on('new bc message', (message) => {
@@ -71,18 +76,34 @@ class Chatroom extends React.Component {
 
   updateMessages() {
     // fetch all messages from DB
-    const chatroomId = this.props.params.username + '/' + this.props.params.reponame;
-    getMessages(chatroomId)
+    getMessages(this.state.chatroomId)
     .then(messages => {
       this.setState({ messages: JSON.parse(messages) });
     })
     .catch(err => console.log(err));
   }
 
+  sendEmailInvite() {
+    // Send email invitation to collaborators
+    const chatroomLink = '/rooms/' + this.state.chatroomId;
+    const currRepoName = this.props.params.reponame;
+    getUserRepos().then(repos => { 
+      const forkedRepoUrl = repos.reduce((targetUrl, repo) => {
+        if (repo.name === currRepoName) {targetUrl = repo.url;}
+        return targetUrl;
+      });
+      sendInvite(chatroomLink, forkedRepoUrl).then(() => {
+        this.setState({inviteSent: true});
+      }).catch(err => { 
+        console.log('ERROR',err); 
+      });
+    }).catch(err => console.log(err));
+  }
+
   render() {
     return (
       <div>
-        <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages}/>
+        <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
         <TopBar reponame={this.props.params.reponame} />
 
         {(this.state.username) ? 
@@ -90,7 +111,7 @@ class Chatroom extends React.Component {
           : null}
 
         {(this.state.username) ? 
-          <EnterMessage username={this.state.username} chatroom={`${this.props.params.username}/${this.props.params.reponame}`} userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} />
+          <EnterMessage username={this.state.username} chatroomId={this.state.chatroomId} userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} />
           : null
         } 
       </div>
