@@ -46,19 +46,16 @@ function emailInvite (req, res) {
         user: 'gittalk.hr49@gmail.com',       /* GMail account used to send emails */ 
         pass: 'sllgudocgtykewdv',             /* Application-specific password */
         to: emailAddress,       
-        text: req.body.chatroomUrl,
-        // html:    '<b>html text text</b>' 
+        text: req.body.chatroomUrl
       });
        
-       // const 
-       const inviterUsername = req.body.chatroomUrl.split('/')[2];
-       const inviterChatroom = req.body.chatroomUrl.split('/')[3];
-      // const file = './demo.js';        // File to attach 
+       const chatroomUrlParse = req.body.chatroomUrl.split('/');
+       const inviterUsername = chatroomUrlParse[chatroomUrlParse.length - 2];
+       const inviterChatroom = chatroomUrlParse[chatroomUrlParse.length - 1];
 
       /* Override any default option and send email */ 
       send({                         
-        subject: '\'' + inviterUsername + '\'' + ' invited you to join chatroom \'' + inviterChatroom + '\''  /*Override value set as default */
-        // files: [file]                // String or array of strings of filenames to attach 
+        subject: '\'' + inviterUsername + '\'' + ' invited you to join chatroom \'' + inviterChatroom + '\''  /*Override value set as default */               
       }, function (err, response) {
         if (err) {
           reject(err);
