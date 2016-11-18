@@ -44,7 +44,6 @@ describe('Chatroom Component', function () {
 
   it('should contain NavBar', function () {
     expect(wrapper).to.have.descendants(NavBar);
-    console.log(wrapper.debug());
   });
 
   it('should contain TopBar', function () {
