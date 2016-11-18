@@ -38,6 +38,9 @@ function getMemberRepos (req, res) {
 
 function emailInvite (req, res) {
   const emailList = req.body.emailAddressList; 
+  const chatroomLinkParse = req.body.chatroomLink.split('/');
+  const inviterUsername = chatroomLinkParse[chatroomLinkParse.length - 2];
+  const inviterChatroom = chatroomLinkParse[chatroomLinkParse.length - 1];
   const sendEmail = function(emailAddress) {
     return new Promise((resolve, reject) => {
       const send = gmailSend({
@@ -46,9 +49,6 @@ function emailInvite (req, res) {
         to: emailAddress,       
         text: req.body.chatroomLink
       });
-       const chatroomLinkParse = req.body.chatroomLink.split('/');
-       const inviterUsername = chatroomLinkParse[chatroomLinkParse.length - 2];
-       const inviterChatroom = chatroomLinkParse[chatroomLinkParse.length - 1];
       /* Override any default option and send email */ 
       send({                         
         subject: '\'' + inviterUsername + '\'' + ' invited you to join chatroom \'' + inviterChatroom + '\''  /*Override value set as default */               
@@ -61,15 +61,25 @@ function emailInvite (req, res) {
       });
     });
   };
-  const promises = [];
-  emailList.forEach((email) => {
-    promises.push(sendEmail(email));
+  const chatroomId = inviterUsername + '/' + inviterChatroom;
+  /* if chatroom does not exist, send email invitations */
+  chatroomCtrl.findOne(chatroomId, (err, chatroom) => {
+    if (err) { 
+      throw err;
+    } else if (chatroom[0] === undefined) {
+        const promises = [];
+        emailList.forEach((email) => {
+          promises.push(sendEmail(email));
+        });
+        Promise.all(promises).then((response) => {
+          res.status(201).end();
+        }).catch((err) => {
+          console.log(err);
+        });
+    } else {
+      res.status(200).end();
+    }
   });
-  Promise.all(promises).then((response) => {
-    res.status(201).end();
-  }).catch((err) => {
-    console.log(err);
-  })
 } 
 
 module.exports = {

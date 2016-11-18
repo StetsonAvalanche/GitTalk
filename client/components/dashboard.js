@@ -19,12 +19,6 @@ class Dashboard extends React.Component {
   }
 
   navToChatroom(name) {
-    // Initiate chatroom
-    init(name).then(() => {
-      browserHistory.push(`/rooms/${name}`);
-    }).catch(err => { 
-      console.log(err); 
-    });
     
     // Send email invitation to collaborators
     const chatroomLink = '/rooms/' + name;
@@ -36,6 +30,12 @@ class Dashboard extends React.Component {
     });
 
     sendInvite(chatroomLink, forkedRepoUrl).then(() => {
+      // Initiate chatroom
+      init(name).then(() => {
+        browserHistory.push(`/rooms/${name}`);
+      }).catch(err => { 
+        console.log(err); 
+      });
     }).catch(err => { 
       console.log('ERROR',err); 
     });
