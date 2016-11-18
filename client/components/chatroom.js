@@ -6,6 +6,7 @@ import EnterMessage from './entermessage';
 
 import { getUser, getMemberRepos } from './../api/user/userRequest';
 import { getMessages } from './../api/chatroom/messageRequest';
+import { sendInvite } from '../api/chatroom/chatroomRequest.js';
 import { grey200 } from './../util/colorScheme';
 import {Card, CircularProgress} from 'material-ui';
 
@@ -27,6 +28,7 @@ class Chatroom extends React.Component {
     this.updateUser = this.updateUser.bind(this);
     this.updateMemberRepos = this.updateMemberRepos.bind(this);
     this.updateMessages = this.updateMessages.bind(this);
+    this.sendEmailInvite = this.sendEmailInvite.bind(this);
 
     /* websockets */
     socket.on('new bc message', (message) => {
@@ -79,10 +81,28 @@ class Chatroom extends React.Component {
     .catch(err => console.log(err));
   }
 
+  sendEmailInvite() {
+    chatroomId={`${this.props.params.username}/${this.props.params.reponame}`}
+    // Send email invitation to collaborators
+    const chatroomLink = '/rooms/' + name;
+    const clickedRepoName = name.split('/').pop();
+
+    const forkedRepoUrl = this.state.repos.reduce((targetUrl, repo) => {
+      if (repo.name === clickedRepoName) {targetUrl = repo.url;}
+      return targetUrl;
+    });
+
+    sendInvite(chatroomLink, forkedRepoUrl).then(() => {
+      
+    }).catch(err => { 
+      console.log('ERROR',err); 
+    });
+  }
+
   render() {
     return (
       <div>
-        <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages}/>
+        <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite}/>
         <TopBar reponame={this.props.params.reponame} />
 
         {(this.state.username) ? 
@@ -90,7 +110,7 @@ class Chatroom extends React.Component {
           : null}
 
         {(this.state.username) ? 
-          <EnterMessage username={this.state.username} chatroom={`${this.props.params.username}/${this.props.params.reponame}`} userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} />
+          <EnterMessage username={this.state.username} chatroomId={`${this.props.params.username}/${this.props.params.reponame}`} userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} />
           : null
         } 
       </div>

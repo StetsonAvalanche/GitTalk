@@ -34,8 +34,7 @@ class Messages extends React.Component {
             user={message.user} 
             text={message.text} 
             userAvatarUrl={message.userAvatarUrl}
-            image={ message.image }
-          />)}
+            image={ message.image }/>)}
       </div>
     );
   }
