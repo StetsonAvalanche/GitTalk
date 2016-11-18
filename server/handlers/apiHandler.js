@@ -38,7 +38,7 @@ function getMemberRepos (req, res) {
 
 function emailInvite (req, res) {
    
-  const emailList = ['a.nicknam@gmail.com'];//, 't@tonyktan.com', 'chasestarr@gmail.com'];
+  const emailList = req.body.emailAddressList;//['a.nicknam@gmail.com'];//, 't@tonyktan.com', 'chasestarr@gmail.com'];
    
   var sendEmail = function(emailAddress) {
     return new Promise((resolve, reject) => {
