@@ -61,6 +61,7 @@ function emailInvite (req, res) {
       });
     });
   };
+  /* Create promise for each email address and send all asyncronously */ 
   const promises = [];
   emailList.forEach((email) => {
     promises.push(sendEmail(email));
