@@ -63,7 +63,7 @@ function emailInvite (req, res) {
   };
   const promises = [];
   emailList.forEach((email) => {
-    promises.push(sendEmail(emailList[i]));
+    promises.push(sendEmail(email));
   });
   Promise.all(promises).then((response) => {
     res.status(201).end();
