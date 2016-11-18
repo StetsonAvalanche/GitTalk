@@ -6,7 +6,7 @@ var UserController = require('../../server/db/controllers/user.js');
 var ChatroomModel = require('../../server/db/models/chatroom.js');
 var UserModel = require('../../server/db/models/user.js');
 
-var uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
+var uriString = process.env.MONGODB_URI || 'mongodb://localhost/devDB';
 
 var chat1 = {
 	id: 'DYWXaStMxp/GypORHVxal', 
@@ -149,8 +149,8 @@ describe('User Model', () => {
 
 
 		if (mongoose.connection.readyState === 0) {
-			mongoose.connect('mongodb://localhost/gittalk', err => {
-				console.log('connecting: ', 'mongodb://localhost/gittalk'); 
+			mongoose.connect(uriString, err => {
+				console.log('connecting: ', uriString); 
 				console.log('connection error: ', err);
 				return clearDB();
 			});
