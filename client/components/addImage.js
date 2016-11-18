@@ -11,7 +11,7 @@ class AddImage extends React.Component {
 
   onUploadFinish(data) {
     this.props.sendMessage(null, data.publicUrl);
-    this.node.clear();
+    this.node.clear ? this.node.clear() : null;
   }
 
   render() {
