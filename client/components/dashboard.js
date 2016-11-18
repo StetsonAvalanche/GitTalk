@@ -44,7 +44,7 @@ class Dashboard extends React.Component {
         <Paper style={ styles.listContainer } zDepth={ 2 }>
           <RepoList navToChatroom={this.navToChatroom.bind(this)} repos={this.state.repos}/>
         </Paper>
-        <Paper style={ styles.profileContainer } zDepth={2}>
+        <Paper style={ styles.profileContainer } zDepth={ 2 }>
           { this.state.user ? <Profile user={ this.state.user } /> : null }
         </Paper>
       </div>

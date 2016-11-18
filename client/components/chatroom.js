@@ -7,6 +7,7 @@ import EnterMessage from './entermessage';
 import { getUser, getMemberRepos } from './../api/user/userRequest';
 import { getMessages } from './../api/chatroom/messageRequest';
 import { sendInvite } from '../api/chatroom/chatroomRequest.js';
+import { getUserRepos } from './../api/user/userRequest.js';
 import { grey200 } from './../util/colorScheme';
 import {Card, CircularProgress} from 'material-ui';
 
@@ -20,6 +21,7 @@ class Chatroom extends React.Component {
     this.state = {
       username: '',
       userAvatarUrl: '',
+      chatroomId: this.props.params.username + '/' + this.props.params.reponame,
       channels: [],
       messages:[]
     };
@@ -73,8 +75,7 @@ class Chatroom extends React.Component {
 
   updateMessages() {
     // fetch all messages from DB
-    const chatroomId = this.props.params.username + '/' + this.props.params.reponame;
-    getMessages(chatroomId)
+    getMessages(this.state.chatroomId)
     .then(messages => {
       this.setState({ messages: JSON.parse(messages) });
     })
@@ -82,21 +83,20 @@ class Chatroom extends React.Component {
   }
 
   sendEmailInvite() {
-    chatroomId={`${this.props.params.username}/${this.props.params.reponame}`}
     // Send email invitation to collaborators
-    const chatroomLink = '/rooms/' + name;
-    const clickedRepoName = name.split('/').pop();
-
-    const forkedRepoUrl = this.state.repos.reduce((targetUrl, repo) => {
-      if (repo.name === clickedRepoName) {targetUrl = repo.url;}
-      return targetUrl;
-    });
-
-    sendInvite(chatroomLink, forkedRepoUrl).then(() => {
-      
-    }).catch(err => { 
-      console.log('ERROR',err); 
-    });
+    const chatroomLink = '/rooms/' + this.state.chatroomId;
+    const currRepoName = this.props.params.reponame;
+    getUserRepos().then(repos => { 
+      const forkedRepoUrl = repos.reduce((targetUrl, repo) => {
+        if (repo.name === currRepoName) {targetUrl = repo.url;}
+        return targetUrl;
+      });
+      sendInvite(chatroomLink, forkedRepoUrl).then(() => {
+        console.log('Email invitations to chatroom sent');
+      }).catch(err => { 
+        console.log('ERROR',err); 
+      });
+    }).catch(err => console.log(err));
   }
 
   render() {
@@ -110,7 +110,7 @@ class Chatroom extends React.Component {
           : null}
 
         {(this.state.username) ? 
-          <EnterMessage username={this.state.username} chatroomId={`${this.props.params.username}/${this.props.params.reponame}`} userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} />
+          <EnterMessage username={this.state.username} chatroomId={this.state.chatroomId} userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} />
           : null
         } 
       </div>

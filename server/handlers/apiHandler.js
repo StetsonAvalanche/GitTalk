@@ -61,24 +61,14 @@ function emailInvite (req, res) {
       });
     });
   };
-  const chatroomId = inviterUsername + '/' + inviterChatroom;
-  /* if chatroom does not exist, send email invitations */
-  chatroomCtrl.findOne(chatroomId, (err, chatroom) => {
-    if (err) { 
-      throw err;
-    } else if (chatroom[0] === undefined) {
-        const promises = [];
-        emailList.forEach((email) => {
-          promises.push(sendEmail(email));
-        });
-        Promise.all(promises).then((response) => {
-          res.status(201).end();
-        }).catch((err) => {
-          console.log(err);
-        });
-    } else {
-      res.status(200).end();
-    }
+  const promises = [];
+  emailList.forEach((email) => {
+    promises.push(sendEmail(email));
+  });
+  Promise.all(promises).then((response) => {
+    res.status(201).end();
+  }).catch((err) => {
+    console.log(err);
   });
 } 
 
