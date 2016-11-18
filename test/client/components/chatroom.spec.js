@@ -44,6 +44,7 @@ describe('Chatroom Component', function () {
 
   it('should contain NavBar', function () {
     expect(wrapper).to.have.descendants(NavBar);
+    console.log(wrapper.debug());
   });
 
   it('should contain TopBar', function () {
@@ -51,12 +52,12 @@ describe('Chatroom Component', function () {
   });
 
   it('should contain Messages if this.state.username is loaded', function () {
-    wrapper.setState({ username: 'tony' });
+    wrapper.setState({ username: 'marcus' });
     expect(wrapper).to.have.descendants(Messages);
   });
 
   it('should contain EnterMessage if this.state.username is loaded', function () {
-    wrapper.setState({ username: 'tony' });
+    wrapper.setState({ username: 'marcus' });
     expect(wrapper).to.have.descendants(EnterMessage);
   });
 
@@ -69,5 +70,26 @@ describe('Chatroom Component', function () {
     wrapper.setState({ username: '' });
     expect(wrapper).to.not.have.descendants(EnterMessage);
   });
+
+  it('should pass username, photo, and channels into NavBar', function () {
+    wrapper.setState({ username: 'marcus', userAvatarUrl: 'face', channels: 'gittalk' });
+    expect(wrapper.contains(<NavBar username='marcus' photo='face' channels='gittalk' />)).to.equal(true);
+  });
+
+  it('should pass reponame into TopBar', function () {
+    expect(wrapper.contains(<TopBar reponame='assessment' />)).to.equal(true);
+  });
+
+  it('should pass username and reponame into Messages', function () {
+    wrapper.setState({ username: 'marcus' });
+    expect(wrapper.contains(<Messages username='oleg' reponame='assessment' />)).to.equal(true);
+  });
+
+  it('should pass username, chatroom and userAvatarUrl into EnterMessage', function () {
+    wrapper.setState({ username: 'marcus', userAvatarUrl: 'face', channels: 'gittalk' });
+    expect(wrapper.contains(<EnterMessage username='marcus' chatroom='oleg/assessment' userAvatarUrl='face'/>)).to.equal(true);
+  });
+
+  // console.log(wrapper.debug());
 
 });
