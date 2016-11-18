@@ -46,12 +46,12 @@ function emailInvite (req, res) {
         user: 'gittalk.hr49@gmail.com',       /* GMail account used to send emails */ 
         pass: 'sllgudocgtykewdv',             /* Application-specific password */
         to: emailAddress,       
-        text: req.body.chatroomUrl
+        text: req.body.chatroomLink
       });
        
-       const chatroomUrlParse = req.body.chatroomUrl.split('/');
-       const inviterUsername = chatroomUrlParse[chatroomUrlParse.length - 2];
-       const inviterChatroom = chatroomUrlParse[chatroomUrlParse.length - 1];
+       const chatroomLinkParse = req.body.chatroomLink.split('/');
+       const inviterUsername = chatroomLinkParse[chatroomLinkParse.length - 2];
+       const inviterChatroom = chatroomLinkParse[chatroomLinkParse.length - 1];
 
       /* Override any default option and send email */ 
       send({                         

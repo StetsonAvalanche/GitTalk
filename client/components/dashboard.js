@@ -26,10 +26,16 @@ class Dashboard extends React.Component {
       console.log(err); 
     });
     
-    // Send email invitation to 
-    const chatroomUrl = '/rooms/' + name;
-    sendInvite(chatroomUrl).then(() => {
-      console.log('invitation sent')
+    // Send email invitation to collaborators
+    const chatroomLink = '/rooms/' + name;
+    const clickedRepoName = name.split('/').pop();
+
+    const forkedRepoUrl = this.state.repos.reduce((targetUrl, repo) => {
+      if (repo.name === clickedRepoName) {targetUrl = repo.url;}
+      return targetUrl;
+    });
+
+    sendInvite(chatroomLink, forkedRepoUrl).then(() => {
     }).catch(err => { 
       console.log('ERROR',err); 
     });
