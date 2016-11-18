@@ -43,7 +43,6 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     getUserRepos().then(repos => {
-      console.log(repos)
       this.setState({ repos: repos });
     }).catch(err => console.log(err));
 
