@@ -27,9 +27,7 @@ function init(repo) {
   });
 }
 
-
-// Send email invitation to chatroom
-
+/* Send email invitation to chatroom */
 function getUserEmailAddress(url) {
   return new Promise((resolve, reject) => {
     _get(url).done((user) => {
@@ -40,7 +38,6 @@ function getUserEmailAddress(url) {
   });
 }
 
-
 function sendInvite(chatroomLink, forkedRepoUrl) {
   return new Promise((resolve, reject) => { 
     _get(forkedRepoUrl).done((forkedRepo) => {
@@ -48,15 +45,12 @@ function sendInvite(chatroomLink, forkedRepoUrl) {
       _get(parentRepoForksUrl).done((parentRepoForks) => {
             const userUrls = parentRepoForks.map((userRepo) => {
               return userRepo.owner.url;
-            })    
-
+            });    
             const promises = [];
             userUrls.forEach((userUrl) => {
               promises.push(getUserEmailAddress(userUrl));
             });
-
             Promise.all(promises).then((emailAddressList) => {
-
               _post('/api/email/invite', {
                 chatroomLink: chatroomLink, 
                 emailAddressList: emailAddressList})
@@ -74,10 +68,8 @@ function sendInvite(chatroomLink, forkedRepoUrl) {
     }).fail((jqXHR, textStatus, err) => {
       reject(err);
     });
-
   });
 }
-
 
 module.exports = {
   init: init,
