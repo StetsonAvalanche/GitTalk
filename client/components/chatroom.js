@@ -23,7 +23,8 @@ class Chatroom extends React.Component {
       userAvatarUrl: '',
       chatroomId: this.props.params.username + '/' + this.props.params.reponame,
       channels: [],
-      messages:[]
+      messages:[],
+      inviteSent: false
     };
 
     /* this bindings for methods */
@@ -92,7 +93,7 @@ class Chatroom extends React.Component {
         return targetUrl;
       });
       sendInvite(chatroomLink, forkedRepoUrl).then(() => {
-        console.log('Email invitations to chatroom sent');
+        this.setState({inviteSent: true});
       }).catch(err => { 
         console.log('ERROR',err); 
       });
@@ -102,7 +103,7 @@ class Chatroom extends React.Component {
   render() {
     return (
       <div>
-        <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite}/>
+        <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
         <TopBar reponame={this.props.params.reponame} />
 
         {(this.state.username) ? 
