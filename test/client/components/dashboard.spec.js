@@ -2,7 +2,7 @@ import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { mount, shallow } from 'enzyme';
 import { expect } from 'chai';
-import { spy } from 'sinon';
+import sinon from 'sinon';
 
 import Dashboard from '../../../client/components/dashboard.js';
 import Profile from '../../../client/components/profile.js';
@@ -76,7 +76,7 @@ describe('<Dashboard />', () => {
   }
 
 
-  it('should render one <Logout /> component', () => {
+  it('should render one <Profile /> component', () => {
     const wrapper = mountWithContext(<Dashboard />);
     wrapper.setState({ user: JSON.stringify(user) });
     expect(wrapper.find(Profile)).to.have.length(1);
@@ -91,6 +91,13 @@ describe('<Dashboard />', () => {
     const wrapper = mountWithContext(<Dashboard />);
     expect(wrapper.state('repos')).to.eql([]);
   });
+
+  it('should call componentDidMount at least once', () => {
+    sinon.spy(Dashboard.prototype, 'componentDidMount');
+    const wrapper = mountWithContext(<Dashboard />);
+    expect(Dashboard.prototype.componentDidMount.calledOnce).to.equal(true);
+  });
+
 
   it('should render three <RepoListEntry /> when state.repos.length === 3', () => {
     const wrapper = mountWithContext(<Dashboard />);
