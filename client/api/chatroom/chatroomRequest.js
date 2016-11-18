@@ -27,4 +27,51 @@ function init(repo) {
   });
 }
 
-exports.init = init;
+/* Send email invitation to chatroom */
+function getUserEmailAddress(url) {
+  return new Promise((resolve, reject) => {
+    _get(url).done((user) => {
+      resolve(user.email);
+    }).fail((jqXHR, textStatus, err) => {
+        reject(err);
+      });
+  });
+}
+
+function sendInvite(chatroomLink, forkedRepoUrl) {
+  return new Promise((resolve, reject) => { 
+    _get(forkedRepoUrl).done((forkedRepo) => {
+      const parentRepoForksUrl = forkedRepo.parent.forks_url;
+      _get(parentRepoForksUrl).done((parentRepoForks) => {
+            const userUrls = parentRepoForks.map((userRepo) => {
+              return userRepo.owner.url;
+            });    
+            const promises = [];
+            userUrls.forEach((userUrl) => {
+              promises.push(getUserEmailAddress(userUrl));
+            });
+            Promise.all(promises).then((emailAddressList) => {
+              _post('/api/email/invite', {
+                chatroomLink: chatroomLink, 
+                emailAddressList: emailAddressList})
+              .done(() => { 
+                resolve(); 
+              }).fail((jqXHR, textStatus, err) => {
+                reject(err);
+              });
+            }).catch((err) => {
+              console.log(err)
+            }); 
+        }).fail((jqXHR, textStatus, err) => {
+        reject(err);
+      });
+    }).fail((jqXHR, textStatus, err) => {
+      reject(err);
+    });
+  });
+}
+
+module.exports = {
+  init: init,
+  sendInvite: sendInvite
+}

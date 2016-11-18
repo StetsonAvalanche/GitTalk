@@ -2,8 +2,8 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import RepoList from './repoList.js';
 import Profile from './profile.js';
-import {getUser, getUserRepos } from './../api/user/userRequest';
-import { init } from '../api/chatroom/chatroomRequest';
+import {getUser, getUserRepos } from './../api/user/userRequest.js';
+import { init, sendInvite } from '../api/chatroom/chatroomRequest.js';
 
 import Paper from 'material-ui/Paper';
 import { grey200 } from './../util/colorScheme';
@@ -19,10 +19,25 @@ class Dashboard extends React.Component {
   }
 
   navToChatroom(name) {
-    init(name).then(() => {
-      browserHistory.push(`/rooms/${name}`);
+    
+    // Send email invitation to collaborators
+    const chatroomLink = '/rooms/' + name;
+    const clickedRepoName = name.split('/').pop();
+
+    const forkedRepoUrl = this.state.repos.reduce((targetUrl, repo) => {
+      if (repo.name === clickedRepoName) {targetUrl = repo.url;}
+      return targetUrl;
+    });
+
+    sendInvite(chatroomLink, forkedRepoUrl).then(() => {
+      // Initiate chatroom
+      init(name).then(() => {
+        browserHistory.push(`/rooms/${name}`);
+      }).catch(err => { 
+        console.log(err); 
+      });
     }).catch(err => { 
-      console.log(err); 
+      console.log('ERROR',err); 
     });
   }
 

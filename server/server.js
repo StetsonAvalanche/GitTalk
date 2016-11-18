@@ -54,11 +54,6 @@ app.get('*', function(req, res) {
   res.redirect('/');	  
 });
 
-// hand routing off to react router
-app.get('*', function(req, res) {
-  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
-});
-
 const port = process.env.PORT || 8000;
 const server = app.listen(port);
 
@@ -68,8 +63,8 @@ console.log(`🌎  ===> server listening on port ${port}`);
 
 const mongoose = require('mongoose'); 
 
-const uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
-// const uriString = 'mongodb://localhost/gittalk'; // uncomment to use local database
+// const uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
+const uriString = 'mongodb://localhost/gittalk'; // uncomment to use local database
 
 mongoose.connect(uriString, (err, res) => {
   if (err) { 
@@ -87,7 +82,6 @@ io.on('connection', (socket) => {
   socket.on('new message', (msg) => {
     console.log('message received', msg);
     io.sockets.emit('new bc message', msg);
-    /* commenting out in the meantime */
     chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
       if (err) {throw err;}
       const room = chatroom[0];
