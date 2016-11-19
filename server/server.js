@@ -63,8 +63,7 @@ console.log(`🌎  ===> server listening on port ${port}`);
 
 const mongoose = require('mongoose'); 
 
-// const uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk'; // use deployed database if available in .env file
-const uriString = 'mongodb://localhost/gittalk'; // use local database
+const uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
 
 mongoose.connect(uriString, (err, res) => {
   if (err) { 
