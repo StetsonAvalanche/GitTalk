@@ -18,7 +18,7 @@ import {
 import Avatar from 'material-ui/Avatar';
 import Drawer from 'material-ui/Drawer';
 import {List, ListItem} from 'material-ui/List';
-// import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 
 /* Websocket */
