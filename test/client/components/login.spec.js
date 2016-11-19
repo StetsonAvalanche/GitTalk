@@ -2,6 +2,7 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { expect } from 'chai';
 
+import RaisedButton from 'material-ui/RaisedButton';
 import Login from '../../../client/components/login';
 import RaisedButton from 'material-ui/RaisedButton';
 

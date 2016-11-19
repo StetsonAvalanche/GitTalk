@@ -75,7 +75,6 @@ describe('<Dashboard />', () => {
     });
   }
 
-
   it('should render one <Profile /> component', () => {
     const wrapper = mountWithContext(<Dashboard />);
     wrapper.setState({ user: JSON.stringify(user) });
