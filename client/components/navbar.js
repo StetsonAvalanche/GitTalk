@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import User from './user';
 import Logout from './logout';
 
+
 /* Color Scheme */
 import {
   githubLightGreen,
@@ -18,6 +19,7 @@ import Avatar from 'material-ui/Avatar';
 import Drawer from 'material-ui/Drawer';
 import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
+import ActionHome from 'material-ui/svg-icons/action/home';
 
 /* Websocket */
 import io from 'socket.io-client';
