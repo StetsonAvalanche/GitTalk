@@ -34,40 +34,40 @@ const mountWithContext = (node) => {
   });                                                                             
 };
 
-describe('NavBar Component', function () {
+describe('NavBar Component', () => {
 
   const wrapper = mountWithContext(<NavBar username='Oleg' photo='face' channels={['gittalk']} />);
 
-  it('should contain Drawer', function () {
+  it('should contain Drawer', () => {
     expect(wrapper).to.have.descendants(Drawer);
   });
 
-  it('should contain User', function () {
+  it('should contain User', () => {
     expect(wrapper).to.have.descendants(User);
   });
 
-  it('should contain h8', function () {
+  it('should contain h8', () => {
     expect(wrapper.find('h8')).to.exist;
   });
 
-  it('should contain List', function () {
+  it('should contain List', () => {
     expect(wrapper).to.have.descendants(List);
   });
 
-  it('should contain Logout', function () {
+  it('should contain Logout', () => {
     expect(wrapper).to.have.descendants(Logout);
   });
 
-  it('should pass docked, width, style, and containerStyle into Drawer component', function () {
+  it('should pass docked, width, style, and containerStyle into Drawer component', () => {
     expect(wrapper.find(Drawer)).to.have.props(['docked', 'width', 'style', 'containerStyle']);
   });
 
-  it('should pass username, photo, and style into User component', function () {
+  it('should pass username, photo, and style into User component', () => {
     expect(wrapper.find(User)).to.have.props(['username', 'photo', 'style']);
   });
 
   // Note: did not check for key prop as enzyme throws warning if you do so
-  it('should pass children and innerDivStyle into ListItem', function () {
+  it('should pass children and innerDivStyle into ListItem', () => {
     expect(wrapper.find(ListItem)).to.have.prop('children');
     expect(wrapper.find(ListItem)).to.have.prop('innerDivStyle');
   });

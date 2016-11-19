@@ -31,53 +31,53 @@ const mountWithContext = (node) => {
 };
 
 
-describe('Chatroom Component', function () {
+describe('Chatroom Component', () => {
 
   const wrapper = shallowWithContext(<Chatroom params={{ username: 'oleg', reponame: 'assessment' }} />);
 
-  it('should contain NavBar', function () {
+  it('should contain NavBar', () => {
     expect(wrapper).to.have.descendants(NavBar);
   });
 
-  it('should contain TopBar', function () {
+  it('should contain TopBar', () => {
     expect(wrapper).to.have.descendants(TopBar);
   });
 
-  it('should contain Messages if this.state.username is loaded', function () {
+  it('should contain Messages if this.state.username is loaded', () => {
     wrapper.setState({ username: 'marcus' });
     expect(wrapper).to.have.descendants(Messages);
   });
 
-  it('should contain EnterMessage if this.state.username is loaded', function () {
+  it('should contain EnterMessage if this.state.username is loaded', () => {
     wrapper.setState({ username: 'marcus' });
     expect(wrapper).to.have.descendants(EnterMessage);
   });
 
-  it('should not contain Messages if this.state.username is blank', function () {
+  it('should not contain Messages if this.state.username is blank', () => {
     wrapper.setState({ username: '' });
     expect(wrapper).to.not.have.descendants(Messages);
   });
 
-  it('should not contain EnterMessage if this.state.username is blank', function () {
+  it('should not contain EnterMessage if this.state.username is blank', () => {
     wrapper.setState({ username: '' });
     expect(wrapper).to.not.have.descendants(EnterMessage);
   });
 
-  it('should pass username, photo, channels, changeChannel, sendEmailInvite, inviteSent, into NavBar', function () {
+  it('should pass username, photo, channels, changeChannel, sendEmailInvite, inviteSent, into NavBar', () => {
     wrapper.setState({ username: 'marcus', userAvatarUrl: 'face', channels: 'gittalk' });
     expect(wrapper.find(NavBar)).to.have.props(['username', 'photo', 'channels', 'changeChannel', 'sendEmailInvite', 'inviteSent']);
   });
 
-  it('should pass reponame into TopBar', function () {
+  it('should pass reponame into TopBar', () => {
     expect(wrapper.contains(<TopBar reponame='assessment' />)).to.equal(true);
   });
 
-  it('should pass messages into Messages', function () {
+  it('should pass messages into Messages', () => {
     wrapper.setState({ username: 'marcus' });
     expect(wrapper.find(Messages)).to.have.props(['messages']);
   });
 
-  it('should pass username, chatroomId, userAvatarUrl, and reponame into EnterMessage', function () {
+  it('should pass username, chatroomId, userAvatarUrl, and reponame into EnterMessage', () => {
     wrapper.setState({ username: 'marcus', userAvatarUrl: 'face', channels: 'gittalk' });
     expect(wrapper.find(EnterMessage)).to.have.props(['username', 'chatroomId', 'userAvatarUrl', 'reponame']);
   });
