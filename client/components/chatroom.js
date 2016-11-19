@@ -105,12 +105,11 @@ class Chatroom extends React.Component {
       <div>
         <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
         <TopBar reponame={this.props.params.reponame} />
-
-        {(this.state.username) ? 
+        {(this.state.username !== '') ? 
           <Messages messages={this.state.messages} />
           : null}
 
-        {(this.state.username) ? 
+        {(this.state.username !== '') ? 
           <EnterMessage username={this.state.username} chatroomId={this.state.chatroomId} userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} />
           : null
         } 

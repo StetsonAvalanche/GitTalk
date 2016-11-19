@@ -18,7 +18,7 @@ import {
 import Avatar from 'material-ui/Avatar';
 import Drawer from 'material-ui/Drawer';
 import {List, ListItem} from 'material-ui/List';
-import RaisedButton from 'material-ui/RaisedButton';
+// import RaisedButton from 'material-ui/RaisedButton';
 
 
 /* Websocket */
@@ -46,13 +46,14 @@ class NavBar extends React.Component {
           <List>
             {channels.map((channel) => {
               return (<ListItem key={channel}
-                        children={<Link 
-                                    key={channel} 
-                                    to={`/rooms/${channel}`}
-                                    style={linkStyle}
-                                  >
-                                    {channel}
-                                  </Link>}
+                        children={
+                          <Link 
+                            key={channel} 
+                            to={`/rooms/${channel}`}
+                            style={linkStyle}
+                          >
+                            {channel}
+                          </Link>}
                         innerDivStyle={listItemStyle}
                         onClick={this.props.changeChannel}
                       />);
