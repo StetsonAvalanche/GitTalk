@@ -61,7 +61,6 @@ class App extends React.Component {
       )
     }
   }
-
 }
 
 const styles = {
