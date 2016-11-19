@@ -2,19 +2,43 @@ import React from 'react';
 import chai from 'chai';
 import chaiEnzyme from 'chai-enzyme';
 import {mount, render, shallow} from 'enzyme';
+import sinon from 'sinon';
 
 import ReactTestUtils from 'react-addons-test-utils'; // ES6
 
 chai.use(chaiEnzyme());
 const expect = chai.expect;
 
+/* import components */
 import Chatroom from '../../../client/components/chatroom';
 import NavBar from '../../../client/components/navbar';
 import TopBar from '../../../client/components/topbar';
 import Messages from '../../../client/components/messages';
+import Message from '../../../client/components/message';
 import EnterMessage from '../../../client/components/entermessage';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 const muiTheme = getMuiTheme();                                                   
+
+// /* dependency required by material-ui */
+// import injectTapEventPlugin from 'react-tap-event-plugin';
+
+// // Needed for onTouchTap
+// // http://stackoverflow.com/a/34015469/988941
+// injectTapEventPlugin();
+
+const testMessages = [
+  { "type" : "text", 
+    "user" : "anicknam", 
+    "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
+    "chatroom" : "anicknam/GitTalk", "image" : null, "text" : "hello" 
+  }, 
+  { "type" : "text", 
+    "user" : "anicknam", 
+    "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
+    "chatroom" : "anicknam/GitTalk", "image" : null, "text" : "this is a test" 
+  } 
+];
 
 const shallowWithContext = (node) => {                                            
   return shallow(node, {                                                          
@@ -29,7 +53,6 @@ const mountWithContext = (node) => {
     childContextTypes: {muiTheme: React.PropTypes.object}                         
   });                                                                             
 };
-
 
 describe('Chatroom Component', () => {
 
@@ -80,6 +103,32 @@ describe('Chatroom Component', () => {
   it('should pass username, chatroomId, userAvatarUrl, reponame, and windowWidth into EnterMessage', () => {
     wrapper.setState({ username: 'marcus', userAvatarUrl: 'face', channels: 'gittalk' });
     expect(wrapper.find(EnterMessage)).to.have.props(['username', 'chatroomId', 'userAvatarUrl', 'reponame', 'windowWidth']);
+  });
+
+  it('should have state.messages initially set to []', () => {
+    const wrapper = mountWithContext(<Chatroom params={{ username:'Felicia', reponame:'GitTalk' }} />);
+    expect(wrapper.state('messages')).to.eql([]);
+  });
+
+  it('should call componentDidMount at least once', () => {
+    sinon.spy(Chatroom.prototype, 'componentDidMount');
+    const wrapper = mountWithContext(<Chatroom params={{ username:'Felicia', reponame:'GitTalk' }} />);
+    expect(Chatroom.prototype.componentDidMount.calledOnce).to.equal(true);
+  });
+
+  it('should have state.chatroomId initially set to route parameters', () => {
+    const wrapper = mountWithContext(<Chatroom params={{ username:'Felicia', reponame:'GitTalk' }} />);
+    expect(wrapper.state('chatroomId')).to.eql('Felicia/GitTalk');
+  });
+
+  it('Messages should contain Message component', () => {
+    const wrapper = mountWithContext(<Messages messages = {testMessages}/>)
+    expect(wrapper).to.have.descendants(Message)
+  });
+  
+  it('Messages should render two <Message /> when state.messages.length === 2', () => {
+    const wrapper = mountWithContext(<Messages messages = {testMessages}/>)
+    expect(wrapper.find(Message)).to.have.length(2);
   });
 
 });
