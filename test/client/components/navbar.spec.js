@@ -20,13 +20,6 @@ import {List, ListItem} from 'material-ui/List';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 const muiTheme = getMuiTheme();                                                  
 
-/* dependency required by material-ui */
-import injectTapEventPlugin from 'react-tap-event-plugin';
-
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
-
 const shallowWithContext = (node) => {                                            
   return shallow(node, {                                                          
     context: {muiTheme},                                                          
