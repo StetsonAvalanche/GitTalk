@@ -16,13 +16,6 @@ import EnterMessage from '../../../client/components/entermessage';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 const muiTheme = getMuiTheme();                                                   
 
-/* dependency required by material-ui */
-import injectTapEventPlugin from 'react-tap-event-plugin';
-
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
-
 const shallowWithContext = (node) => {                                            
   return shallow(node, {                                                          
     context: {muiTheme},                                                          
@@ -70,25 +63,23 @@ describe('Chatroom Component', function () {
     expect(wrapper).to.not.have.descendants(EnterMessage);
   });
 
-  it('should pass username, photo, and channels into NavBar', function () {
+  it('should pass username, photo, channels, changeChannel, sendEmailInvite, inviteSent, into NavBar', function () {
     wrapper.setState({ username: 'marcus', userAvatarUrl: 'face', channels: 'gittalk' });
-    expect(wrapper.contains(<NavBar username='marcus' photo='face' channels='gittalk' />)).to.equal(true);
+    expect(wrapper.find(NavBar)).to.have.props(['username', 'photo', 'channels', 'changeChannel', 'sendEmailInvite', 'inviteSent']);
   });
 
   it('should pass reponame into TopBar', function () {
     expect(wrapper.contains(<TopBar reponame='assessment' />)).to.equal(true);
   });
 
-  it('should pass username and reponame into Messages', function () {
+  it('should pass messages into Messages', function () {
     wrapper.setState({ username: 'marcus' });
-    expect(wrapper.contains(<Messages username='oleg' reponame='assessment' />)).to.equal(true);
+    expect(wrapper.find(Messages)).to.have.props(['messages']);
   });
 
-  it('should pass username, chatroom and userAvatarUrl into EnterMessage', function () {
+  it('should pass username, chatroomId, userAvatarUrl, and reponame into EnterMessage', function () {
     wrapper.setState({ username: 'marcus', userAvatarUrl: 'face', channels: 'gittalk' });
-    expect(wrapper.contains(<EnterMessage username='marcus' chatroom='oleg/assessment' userAvatarUrl='face'/>)).to.equal(true);
+    expect(wrapper.find(EnterMessage)).to.have.props(['username', 'chatroomId', 'userAvatarUrl', 'reponame']);
   });
-
-  // console.log(wrapper.debug());
 
 });
