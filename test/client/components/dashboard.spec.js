@@ -98,7 +98,6 @@ describe('<Dashboard />', () => {
     expect(Dashboard.prototype.componentDidMount.calledOnce).to.equal(true);
   });
 
-
   it('should render three <RepoListEntry /> when state.repos.length === 3', () => {
     const wrapper = mountWithContext(<Dashboard />);
     wrapper.setState({ repos: testRepos });
