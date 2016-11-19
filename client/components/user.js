@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 import FontIcon from 'material-ui/FontIcon';
+import ActionHome from 'material-ui/svg-icons/action/home';
 
 /* Color Scheme */
 import {
@@ -25,12 +26,12 @@ class User extends React.Component {
     const nameStyle = { color: 'inherit', textDecoration: 'none' };
 
     return (
-      <Link style={nameStyle} to="/dashboard">
+      <div style={nameStyle}>
         <div style={style}>
           <Avatar src={photo} size={120}/>
-          <p>{username}</p>
+          <p>{username}</p><Link to="/dashboard"><ActionHome /></Link>
         </div>
-      </Link>
+      </div>
     );
   }
 }
