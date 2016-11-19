@@ -11,7 +11,8 @@
     "test-all": "mocha test/helpers/browser.js test/client/*/*.spec.js test/server/*.spec.js test/server/*/*.spec.js test/db/*.spec.js",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./",
     "start-dev": "webpack -w | nodemon server/server.js",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "docker": "npm install && webpack && nodemon server/server.js"
   },
   "repository": {
     "type": "git",
@@ -67,6 +68,7 @@
     "chai-enzyme": "^0.6.0",
     "enzyme": "^2.6.0",
     "jsdom": "^9.8.3",
+    "nodemon": "1.11.0",
     "mocha": "^3.1.2",
     "mongoose": "^4.6.7",
     "react-addons-test-utils": "^15.4.0",
