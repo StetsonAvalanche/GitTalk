@@ -37,7 +37,6 @@ class Dashboard extends React.Component {
     }).catch(err => console.log(err));
   }
 
-
   render () {
     return (
       <div style={ styles.dashboardContainer } >
