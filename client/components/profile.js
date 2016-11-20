@@ -1,5 +1,6 @@
 import React from 'react';
 import Logout from './logout.js';
+import CreateApp from './createApp';
 
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
@@ -22,6 +23,9 @@ const Profile = (props) => {
         { user.location ? <p>{ user.location }</p> : null }
         { user.blog ? <p><a  style={ styles.blueFont } href={ user.blog }>{ user.blog }</a></p> : null }
         { user.email ? <p>{ user.email }</p> : null }
+        <CreateApp />
+        <br />
+        <br />
         <Logout />
       </div>
     </div>
