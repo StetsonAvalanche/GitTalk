@@ -24,8 +24,17 @@ class Chatroom extends React.Component {
       chatroomId: this.props.params.username + '/' + this.props.params.reponame,
       channels: [],
       messages:[],
-      inviteSent: false
+      inviteSent: false,
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
     };
+
+    window.onresize = () => {
+      this.setState({
+        windowWidth: window.innerWidth,
+        windowHeight: window.innerHeight,
+      });
+    }; 
 
     /* this bindings for methods */
     this.updateUser = this.updateUser.bind(this);
@@ -104,13 +113,13 @@ class Chatroom extends React.Component {
     return (
       <div>
         <NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
-        <TopBar reponame={this.props.params.reponame} />
+        <TopBar reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} />
         {(this.state.username !== '') ? 
-          <Messages messages={this.state.messages} />
+          <Messages messages={this.state.messages} windowWidth={this.state.windowWidth} windowHeight={this.state.windowHeight}/>
           : null}
 
         {(this.state.username !== '') ? 
-          <EnterMessage username={this.state.username} chatroomId={this.state.chatroomId} userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} />
+          <EnterMessage username={this.state.username} chatroomId={this.state.chatroomId} userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} />
           : null
         } 
       </div>

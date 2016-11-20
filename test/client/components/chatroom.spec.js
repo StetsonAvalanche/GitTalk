@@ -68,18 +68,18 @@ describe('Chatroom Component', () => {
     expect(wrapper.find(NavBar)).to.have.props(['username', 'photo', 'channels', 'changeChannel', 'sendEmailInvite', 'inviteSent']);
   });
 
-  it('should pass reponame into TopBar', () => {
-    expect(wrapper.contains(<TopBar reponame='assessment' />)).to.equal(true);
+  it('should pass reponame and windowWidth into TopBar', () => {
+    expect(wrapper.find(TopBar)).to.have.props(['reponame', 'windowWidth']);
   });
 
-  it('should pass messages into Messages', () => {
+  it('should pass messages, windowWidth and windowHeight into Messages', () => {
     wrapper.setState({ username: 'marcus' });
-    expect(wrapper.find(Messages)).to.have.props(['messages']);
+    expect(wrapper.find(Messages)).to.have.props(['messages', 'windowWidth', 'windowHeight']);
   });
 
-  it('should pass username, chatroomId, userAvatarUrl, and reponame into EnterMessage', () => {
+  it('should pass username, chatroomId, userAvatarUrl, reponame, and windowWidth into EnterMessage', () => {
     wrapper.setState({ username: 'marcus', userAvatarUrl: 'face', channels: 'gittalk' });
-    expect(wrapper.find(EnterMessage)).to.have.props(['username', 'chatroomId', 'userAvatarUrl', 'reponame']);
+    expect(wrapper.find(EnterMessage)).to.have.props(['username', 'chatroomId', 'userAvatarUrl', 'reponame', 'windowWidth']);
   });
 
 });
