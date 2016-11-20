@@ -26,6 +26,19 @@ class Messages extends React.Component {
 
   render() {    
     let counter = 0;
+
+    const messageRoomStyle = {
+      backgroundImage: 'url(/assets/chatroomBackgroundLight.png)',
+      backgroundSize: 75,
+      backgroundRepeat: 'repeat',
+      position: 'absolute',
+      left: 300,
+      top: 64,
+      width: this.props.windowWidth - 300,
+      height: this.props.windowHeight - 135,
+      overflow: 'auto',
+    };
+
     return (
       <div style={messageRoomStyle} id='messageBox'>
         {this.props.messages.map(message => 
@@ -39,17 +52,5 @@ class Messages extends React.Component {
     );
   }
 }
-
-const messageRoomStyle = {
-  backgroundImage: 'url(/assets/chatroomBackgroundLight.png)',
-  backgroundSize: '10%',
-  backgroundRepeat: 'repeat',
-  position: 'absolute',
-  left: 300,
-  top: 64,
-  width: window.innerWidth - 300,
-  height: window.innerHeight - 135,
-  overflow: 'auto',
-};
 
 export default Messages;

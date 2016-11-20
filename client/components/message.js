@@ -42,7 +42,7 @@ class Message extends React.Component {
         </ListItem>
       </Paper>
     );
-  } // need to fix a tag to else it's taking up space
+  } 
 }
 
 export default Message;

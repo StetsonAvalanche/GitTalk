@@ -26,7 +26,7 @@ class EnterMessage extends React.Component {
     super(props);
     this.state = {
       value: '',
-      chatroom: this.props.chatroomId 
+      chatroom: this.props.chatroomId,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -67,7 +67,7 @@ class EnterMessage extends React.Component {
       position: 'absolute',
       bottom: 0,
       left: 300,
-      width: window.innerWidth - 300,
+      width: this.props.windowWidth - 300,
       zIndex: 5,
     };
 
@@ -79,7 +79,7 @@ class EnterMessage extends React.Component {
     const textFieldStyle = {
       position: 'absolute',
       bottom: '5px',
-      width: window.innerWidth - 450,
+      width: this.props.windowWidth - 450,
       left:'70px',
     };
 
