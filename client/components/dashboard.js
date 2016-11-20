@@ -16,18 +16,22 @@ class Dashboard extends React.Component {
       repos: [],
       user: null
     }
+
+    /* this bindings for methods */
+    this.navToChatroom = this.navToChatroom.bind(this);
   }
 
   navToChatroom(name) {
-      // Initiate chatroom
-      init(name).then(() => {
-        browserHistory.push(`/rooms/${name}`);
-      }).catch(err => { 
-        console.log(err); 
-      });
+    // Initiate chatroom
+    init(name).then(() => {
+      browserHistory.push(`/rooms/${name}`);
+    }).catch(err => { 
+      console.log(err); 
+    });
   }
 
   componentDidMount() {
+    /* Fetch all user public repos */
     getUserRepos().then(repos => {
       this.setState({ repos: repos });
     }).catch(err => console.log(err));
@@ -41,7 +45,7 @@ class Dashboard extends React.Component {
     return (
       <div style={ styles.dashboardContainer } >
         <Paper style={ styles.listContainer } zDepth={ 2 }>
-          <RepoList navToChatroom={this.navToChatroom.bind(this)} repos={this.state.repos}/>
+          <RepoList navToChatroom={this.navToChatroom} repos={this.state.repos}/>
         </Paper>
         <Paper style={ styles.profileContainer } zDepth={ 2 }>
           { this.state.user ? <Profile user={ this.state.user } /> : null }

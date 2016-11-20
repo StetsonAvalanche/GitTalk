@@ -4,6 +4,7 @@ import { mount, shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+/* import components */
 import Dashboard from '../../../client/components/dashboard.js';
 import Profile from '../../../client/components/profile.js';
 import RepoList from '../../../client/components/repoList.js';
