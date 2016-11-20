@@ -21,7 +21,7 @@ const TopBar = (props) => {
 
   const { reponame } = props;
 
-  let appBarStyle = {
+  const appBarStyle = {
     position: 'absolute',
     top: 0,
     left: 300,
