@@ -13,6 +13,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const api = require('./routes/api.js');
+const appRoute = require('./routes/app.js');
 const chatroomCtrl = require('./db/controllers/chatroom.js');
 
 /* express server */
@@ -29,6 +30,7 @@ app.use(passport.session());
 // routes
 app.use('/auth', auth);
 app.use('/api', api);
+app.use('/app', appRoute);
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', function(req, res) {
