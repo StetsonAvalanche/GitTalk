@@ -23,7 +23,7 @@ const Profile = (props) => {
         { user.location ? <p>{ user.location }</p> : null }
         { user.blog ? <p><a  style={ styles.blueFont } href={ user.blog }>{ user.blog }</a></p> : null }
         { user.email ? <p>{ user.email }</p> : null }
-        <CreateApp />
+        <CreateApp login={ user.login } />
         <br />
         <br />
         <Logout />

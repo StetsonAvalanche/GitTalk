@@ -16,10 +16,12 @@ function _post(url, data) {
   });
 }
 
-
-
-function createApp() {
-
+function createApp(app) {
+  return new Promise((resolve, reject) => {
+    _post('/app/create', app).done(() => {
+      resolve();
+    }).fail((jqXHR, textStatus, err) => reject(err));
+  });
 }
 
 module.exports = {

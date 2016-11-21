@@ -3,6 +3,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import { createApp } from './../api/app/appRequest.js';
 
 import { githubGreen, githubBlue } from './../util/colorScheme.js';
 
@@ -32,7 +33,12 @@ class CreateApp extends React.Component {
   }
 
   saveApp = () => {
-    console.log(this.state);
+    createApp({
+      name: this.state.name,
+      category: this.state.category,
+      endpoint: this.state.endpoint,
+      owner: this.props.login
+    });
     this.setState({
       name: '',
       category: '',

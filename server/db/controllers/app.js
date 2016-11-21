@@ -48,5 +48,5 @@ module.exports = {
   findBySelector,
   findOneBySelector,
   insertOne,
-  UpdateOneByKey
+  updateOneByKey
 };
