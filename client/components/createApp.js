@@ -39,6 +39,9 @@ class CreateApp extends React.Component {
       endpoint: this.state.endpoint,
       owner: this.props.login
     });
+
+    this.handleClose();
+
     this.setState({
       name: '',
       category: '',
@@ -47,6 +50,15 @@ class CreateApp extends React.Component {
   }
 
   render() {
+
+    let submittable = 
+      !!this.state.name.length 
+      && !!this.state.category 
+      && !!this.state.endpoint 
+      && !!this.props.login;
+
+    console.log(submittable);
+
     const actions = [
       <FlatButton
         label="Cancel"
@@ -57,7 +69,7 @@ class CreateApp extends React.Component {
         label="Submit"
         primary={true}
         onTouchTap={ this.saveApp.bind(this) }
-        onClick={ this.handleClose }
+        disabled={ !submittable }
       />,
     ];
 
