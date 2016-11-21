@@ -4,7 +4,7 @@ const appSchema = mongoose.Schema({
   name: {
     type: String,
     unique: true
-  }
+  },
   owner: String,
   apiKey: String,
   endpoint: String,
