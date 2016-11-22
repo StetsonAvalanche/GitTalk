@@ -58,7 +58,7 @@ class EnterMessage extends React.Component {
 
     console.log('message sent', newMessage);
     socket.emit('new message', newMessage);
-    this.props.renderSentMessage(newMessage);
+    // this.props.renderSentMessage(newMessage);
     if (!image) this.setState({ value: '' });
   }
 
