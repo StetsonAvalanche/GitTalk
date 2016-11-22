@@ -28,7 +28,7 @@ class AddApp extends React.Component {
   }
 
   handleOpen() {
-    console.log('handleopen');
+    console.log('handleopen addApp');
     this.setState({open: true});
   }
 

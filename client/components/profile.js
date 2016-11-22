@@ -1,6 +1,7 @@
 import React from 'react';
 import Logout from './logout.js';
 import CreateApp from './createApp';
+import MyApps from './myApps';
 
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
@@ -25,6 +26,7 @@ const Profile = (props) => {
         { user.email ? <p>{ user.email }</p> : null }
         <CreateApp login={ user.login } />
         <br />
+        <MyApps />
         <br />
         <Logout />
       </div>
