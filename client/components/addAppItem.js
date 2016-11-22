@@ -5,16 +5,21 @@ import AddIcon from 'material-ui/svg-icons/content/add-circle';
 import CancelIcon from 'material-ui/svg-icons/navigation/cancel';
 import CheckIcon from 'material-ui/svg-icons/action/check-circle';
 
-import { githubGreen, githubBlue } from './../util/colorScheme.js';
+import { githubGreen, githubBlue, githubBrown } from './../util/colorScheme.js';
 
 import { subscribeApp, unsubscribeApp } from './../api/app/appRequest.js';
 
 class AddAppItem extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      hover: false
+    };
 
     this.addApp = this.addApp.bind(this);
     this.removeApp = this.removeApp.bind(this);
+    this.mouseOver = this.mouseOver.bind(this);
+    this.mouseOut = this.mouseOut.bind(this);
   }
 
   addApp() {
@@ -31,12 +36,22 @@ class AddAppItem extends React.Component {
     .catch((err) => console.log(err));
   }
 
+  mouseOver() {
+    this.setState({hover: true});
+  }
+
+  mouseOut() {
+    this.setState({hover: false});
+  }
+
   render() {
     // const style = { position: 'absolute', right: 0, top: 0, };
     const { app } = this.props;
-    const status = app.added ? 
-                    <CheckIcon color={githubGreen} /> : 
-                    <AddIcon color={githubBlue} onClick={this.addApp} />;
+    const status = !app.added ?
+                      <AddIcon color={githubBlue} onClick={this.addApp} />:
+                    this.state.hover ?
+                      <CancelIcon color={githubBrown} onClick={this.removeApp} onMouseOut={this.mouseOut} /> :
+                      <CheckIcon color={githubGreen} onMouseOver={this.mouseOver} />;
     return (
       <ListItem primaryText={app.name} rightIcon={status} />
     );
