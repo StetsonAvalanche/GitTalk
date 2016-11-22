@@ -78,9 +78,9 @@ mongoose.connect(uriString, (err, res) => {
 const io = new SocketIo(server, {path: '/api/chat'});
 
 io.on('connection', (socket) => {
-  socket.on('new message', (msg) => {
+  socket.on('new message', (id, msg) => {
     console.log('message received', msg);
-    socket.broadcast.to(msg.chatroom).emit('new bc message', msg);
+    socket.broadcast.to(id).emit('new bc message', msg);
     /* store sent message in DB */
     chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
       if (err) {throw err;}
