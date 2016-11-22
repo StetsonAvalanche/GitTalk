@@ -1,10 +1,6 @@
 const App = require('./../db/controllers/app.js');
 const Chatroom = require('../db/controllers/chatroom.js');
 
-const mongoose = require('mongoose'); 
-
-const uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
-
 function createApp(req, res) {
   const app = {
     name: req.body.name,
@@ -58,27 +54,23 @@ function unsubscribeApp(req, res) {
     if (err) { 
       throw err;
     } else {
-      const room = chatroom[0];
+      let room = chatroom[0];
       if (room === undefined) {
         throw 'error: chatroom does not exist';
       }
-      if (room.apps[0] === undefined) {
-        room.apps.push({
+      let apps = room.apps;
+      if (apps[0] === undefined) {
+        apps.push({
           read: {},
           write: {}
         });
       }
-      let apps = room.apps[0];
-      delete apps.read[app.endpoint.split('.').join('%dot%')];
-      delete apps.write[app.apiKey];
+      delete apps[0].read[app.endpoint.split('.').join('%dot%')];
+      delete apps[0].write[app.apiKey];
 
-      // database save is working strange, cannot append new objects
-
-      room.save((err, chatroom) => {
-        if (err) { console.log(err); }
+      Chatroom.update(room, () => {
+        res.status(201).end();        
       });
-      console.log(room.apps);
-      res.status(201).end();
     } 
   });
 }
@@ -86,21 +78,44 @@ function unsubscribeApp(req, res) {
 function getAllApps(req, res) {
   App.findAll((err, result) => {
     if (err) {
-      console.log(err);
+      console.log('error in getAllApps', err);
       res.status(400).end();
     }
     res.status(200).send(JSON.stringify(result));
   });
 }
 
-// user
+function getSubscriptions(req, res) {
+  const chatroomId = req.params.username + '/' + req.params.chatroom;
+  Chatroom.findOne(chatroomId, (err, chatroom) => {
+    if (err) { 
+      throw err;
+    } else {
+      let room = chatroom[0];
+      if (room === undefined) {
+        // refactor: attempt again to store apps in object? create chatrooms ahead of time?
+        res.status(200).send(JSON.stringify({ read: {}, write: {} }));
+        // throw 'error: chatroom does not exist';
+      } else {
+        let apps = room.apps;
+        if (apps[0] === undefined) {
+          apps.push({
+            read: {},
+            write: {}
+          });
+        }
+        res.status(200).send(JSON.stringify(apps[0]));        
+      }
+    } 
+  });
+}
 
 function getUserApps(req, res) {
   const user = req.user.username;
 
   App.findByOwner(user, (err, result) => {
     if (err) {
-      console.log(err);
+      console.log('error in getUserApps', err);
       res.status(400).end();
     }
     res.status(200).send(JSON.stringify(result));
@@ -110,6 +125,8 @@ function getUserApps(req, res) {
 module.exports = {
   createApp,
   subscribeApp,
+  unsubscribeApp,
   getAllApps,
+  getSubscriptions,
   getUserApps,
 }
