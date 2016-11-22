@@ -30,25 +30,23 @@ function subscribeApp(req, res) {
     if (err) { 
       throw err;
     } else {
-      const room = chatroom[0];
+      let room = chatroom[0];
       if (room === undefined) {
         throw 'error: chatroom does not exist';
       }
-      if (room.apps[0] === undefined) {
-        room.apps.push({
+      let apps = room.apps;
+      if (apps[0] === undefined) {
+        apps.push({
           read: {},
           write: {}
         });
       }
-      let apps = room.apps[0];
-      apps.read[app.endpoint.split('.').join('%dot%')] = true;
-      apps.write[app.apiKey] = true;
+      apps[0].read[app.endpoint.split('.').join('%dot%')] = true;
+      apps[0].write[app.apiKey] = true;
 
-      room.save((err, chatroom) => {
-        if (err) { console.log(err); }
+      Chatroom.update(room, () => {
+        res.status(201).end();        
       });
-      console.log(room.apps);
-      res.status(201).end();
     } 
   });
 }
@@ -99,7 +97,7 @@ function getAllApps(req, res) {
 
 function getUserApps(req, res) {
   const user = req.user.username;
-  
+
   App.findByOwner(user, (err, result) => {
     if (err) {
       console.log(err);
