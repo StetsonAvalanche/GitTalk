@@ -6,7 +6,8 @@ const fakeRoom = {
   apps: {
     read: {
       'http://localhost:8002': true,
-      'http://localhost:8003': true
+      'http://localhost:8003': true,
+      'chasebot%dot%herokuapp%dot%com': true
     },
     write: {
       'abc': true,
