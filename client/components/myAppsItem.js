@@ -40,18 +40,16 @@ class MyAppsItem extends React.Component {
                     />;
 
     const appSettings =  <Dialog
-                  title='App Details'
+                  title={app.name}
                   actions={ actions }
                   modal={ false }
                   open={ this.state.open }
                   onRequestClose={ this.handleClose }
                   autoScrollBodyContent={ true }
                 >
-                  {
-                    Object.keys(app).map((item) => {
-                      return (<p key={item}>{item}: {app[item]}</p>);
-                    })
-                  }
+                  <p>Endpoint: {app.endpoint}</p>
+                  <p>API Key:  {app.apiKey}</p>
+                  <p>Category: {app.category}</p>
                 </Dialog>;
 
     return (<ListItem
