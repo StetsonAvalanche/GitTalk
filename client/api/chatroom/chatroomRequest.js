@@ -60,7 +60,7 @@ function sendInvite(chatroomLink, forkedRepoUrl) {
                 reject(err);
               });
             }).catch((err) => {
-              console.log(err)
+              console.log(err);
             }); 
         }).fail((jqXHR, textStatus, err) => {
         reject(err);

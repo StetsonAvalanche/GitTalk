@@ -6,8 +6,9 @@ var chatroomSchema = mongoose.Schema({
 		unique: true
 	}, 
 	members: Array,
-	messages: Array
-}); 
+	messages: Array,
+  apps: Array
+});
 
 var ChatroomModel = mongoose.model('Chatroom', chatroomSchema);
 
