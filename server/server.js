@@ -5,16 +5,16 @@ require('dotenv').config({silent: true, path: path.join(__dirname, '../.env')});
 require('aws-sdk');
 
 const express = require('express');
-const SocketIo = require('socket.io');
 const session = require('express-session');
-const auth = require('./routes/auth.js');
 const passport = require('./passport/config.js');
 const bodyParser = require('body-parser');
-const app = express();
 
 const api = require('./routes/api.js');
 const appRoute = require('./routes/app.js');
-const chatroomCtrl = require('./db/controllers/chatroom.js');
+const auth = require('./routes/auth.js');
+const socket = require('./socket/socket.js');
+const app = express();
+
 
 /* express server */
 app.use(bodyParser.json());
@@ -60,7 +60,8 @@ const server = app.listen(port);
 
 console.log(`🌎  ===> server listening on port ${port}`);
 
-/* database intitialisation */
+/* database intitialization */
+
 const mongoose = require('mongoose'); 
 
 // const uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
@@ -70,36 +71,11 @@ mongoose.connect(uriString, (err, res) => {
   if (err) { 
     console.log ('ERROR connecting to: ' + uriString + '. ' + err);
   } else {
-    console.log ('Succeeded connected to: ' + uriString);    
+    console.log ('Succeeded connected to: ' + uriString);
   }
 });
 
-/* websockets */
-const io = new SocketIo(server, {path: '/api/chat'});
-
-io.on('connection', (socket) => {
-
-  socket.on('join chatroom', function(chatroom) {
-    console.log('joined chatroom', chatroom.id)
-    socket.join(chatroom.id);
-  });
-
-  socket.on('new message', (msg) => {
-    console.log('message received', msg);
-    socket.broadcast.to(msg.chatroom).emit('new bc message', msg);
-    /* store sent message in DB */
-    console.log(msg.chatroom)
-    chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
-      if (err) {throw err;}
-      const room = chatroom[0];
-      if (room === undefined) { throw 'error: chatroom does not exist'; }
-      if (room.members.indexOf(msg.user) === -1) {
-        room.members.push(msg.user);
-      }
-      room.messages.push(msg);
-      room.save();
-    });
-  });
-});
+/* socket initialization */
+socket(server);
 
 module.exports = app;
