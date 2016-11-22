@@ -5,46 +5,22 @@ import Paper from 'material-ui/Paper';
 
 import MyAppsItem from './myAppsItem';
 
-import { getUserApps } from './../api/app/appRequest.js';
+const paperStyle = {
+  width: '60%',
+};
 
-class MyApps extends React.Component {
+const headerStyle = {
+  marginLeft: 15,
+  fontWeight: 'bold',
+};
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      apps: [
-        { name: 'Olegbot', apiKey: '4456789retyu' },
-        { name: 'Fredbot', apiKey: '4rtyuioetyuf' },
-      ]
-    };
-  }
-
-  componentDidMount() {
-    getUserApps()
-    .then(userApps => this.setState({ apps: JSON.parse(userApps)}))
-    .catch(err => console.log('err', err));
-  }
-
-  render() {
-
-    const paperStyle = {
-      width: '60%',
-    };
-
-    const headerStyle = {
-      marginLeft: 15,
-      fontWeight: 'bold',
-    };
-
-    return (<Paper style={paperStyle}>
-              <List>
-                <h8 style={headerStyle}>My Apps</h8>
-                {this.state.apps.map((app) =>
-                  <MyAppsItem key={app.name} app={app} />
-                )}
-              </List>
-            </Paper>);
-  }
-}
+const MyApps = (props) => <Paper style={paperStyle}>
+                            <List>
+                              <h8 style={headerStyle}>My Apps</h8>
+                              {props.apps.map((app) =>
+                                <MyAppsItem key={app.name} app={app} />
+                              )}
+                            </List>
+                          </Paper>;
 
 export default MyApps;
