@@ -6,6 +6,7 @@ import sinon from 'sinon';
 
 import Logout from '../../../client/components/logout';
 import Profile from '../../../client/components/profile';
+import CreateApp from '../../../client/components/createApp.js';
 
 const user = {
   _json: 
@@ -61,6 +62,11 @@ describe('<Profile />', () => {
   it('should render <Logout /> component', () => {
     const wrapper = shallowWithContext(<Profile user={ JSON.stringify(user) } />);
     expect(wrapper.find(Logout)).to.have.length(1);
+  });
+
+  it('should render <CreateApp /> component', () => {
+    const wrapper = shallowWithContext(<Profile user={ JSON.stringify(user) } />);
+    expect(wrapper.find(CreateApp)).to.have.length(1);
   });
 
   it('should render one img element', () => {
