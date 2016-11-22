@@ -1,10 +1,11 @@
 import { ajax } from 'jquery';
 import * as bluebird from 'bluebird';
 
-function _get(url) {
+function _get(url, data) {
   return ajax({
     url: url,
     method: 'GET',
+    data: data
   });
 }
 
@@ -26,16 +27,16 @@ function createApp(app) {
 
 function getAllApps() {
   return new Promise((resolve, reject) => {
-    _get('/app/allapps').done(() => {
-      resolve();
+    _get('/app/allapps').done((data) => {
+      resolve(data);
     }).fail((jqXHR, textStatus, err) => reject(err));
   });
 }
 
-function getUserApps(user) {
+function getUserApps() {
   return new Promise((resolve, reject) => {
-    _get('/app/userapps', user).done(() => {
-      resolve();
+    _get('/app/userapps').done((data) => {
+      resolve(data);
     }).fail((jqXHR, textStatus, err) => reject(err));
   });
 }

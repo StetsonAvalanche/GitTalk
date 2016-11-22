@@ -9,7 +9,7 @@ import { githubGreen, githubBlue } from './../util/colorScheme.js';
 
 const Profile = (props) => {
   const user = JSON.parse(props.user)._json;
-  console.log(user);
+  console.log('user', user);
   return (
     <div>
       <Paper style={ styles.header } zDepth={ 2 }>
