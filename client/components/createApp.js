@@ -57,8 +57,6 @@ class CreateApp extends React.Component {
       && !!this.state.endpoint 
       && !!this.props.login;
 
-    console.log(submittable);
-
     const actions = [
       <FlatButton
         label="Cancel"
