@@ -3,7 +3,7 @@ const request = require('request');
 function send(room, message) {
   const endpoints = Object.keys(room.apps.read);
   endpoints.forEach(endpoint => {
-
+    const parsedEndpoint = endpoint.split('%dot%').join('.');
     const payload = {
       user: message.user,
       text: message.text,
@@ -11,11 +11,12 @@ function send(room, message) {
       room: room.id
     };
 
-    request.post({ url: endpoint, json: payload }, function(err, resp) {
+    request.post({ url: parsedEndpoint, json: payload }, function(err, resp) {
       if (err) {
-        // handle err
+        console.log(err);
         // if an endpoint errs too often, alert owner
       }
+      // handle err resp codes and act accordingly
     });
   });
 }
