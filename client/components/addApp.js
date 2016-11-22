@@ -42,9 +42,10 @@ class AddApp extends React.Component {
 
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.updateSubscriptions = this.updateSubscriptions.bind(this);
   }
 
-  componentDidMount() {
+  updateSubscriptions() {
     getAllApps()
     .then(appdata => {
       getSubscriptions(this.props.reponame)
@@ -65,6 +66,14 @@ class AddApp extends React.Component {
       .catch(err => console.log('subscriptions not merging with apps data', err));
     })
     .catch(err => console.log(err));
+  }
+
+  componentDidMount() {
+    this.updateSubscriptions();
+  }
+
+  componentDidUpdate() {
+    this.updateSubscriptions();
   }
 
   handleOpen() {
