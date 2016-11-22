@@ -3,16 +3,21 @@ import { ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import ChatIcon from 'material-ui/svg-icons/communication/chat';
 
+import IconButton from 'material-ui/IconButton';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
+
 import { githubBlue } from './../util/colorScheme.js';
+
+import AddApp from './addApp.js';
 
 const RepoListEntry = (props) => (
   <div>
     <ListItem
-      onClick={props.navToChatroom.bind(this, props.repo)}
-      primaryText={ <span style={styles.primaryLink} >{props.repo.name}</span> }
+      primaryText={ <span style={styles.primaryLink} onClick={props.navToChatroom.bind(this, props.repo.full_name)} >{props.repo.name}</span> }
       secondaryText={ props.repo.description }
       secondaryTextLines={ 1 }
       leftIcon={<ChatIcon />}
+      rightIcon={<AddApp reponame={props.repo.full_name} />}
     />
     <Divider />
   </div>
