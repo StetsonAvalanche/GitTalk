@@ -11,14 +11,20 @@ function send(room, message) {
       room: room.id
     };
 
-    request.post({ url: parsedEndpoint, json: payload }, function(err, resp) {
-      if (err) {
-        console.log(err);
-        // if an endpoint errs too often, alert owner
-      }
-      // handle err resp codes and act accordingly
-    });
+    _outboundRequest(parsedEndpoint, payload, _handleAppResponse);
   });
+}
+
+function _outboundRequest(url, payload, cb) {
+  request.post({ url: url, json: payload }, cb);
+}
+
+function _handleAppResponse(err, resp) {
+  if (err) {
+    console.log(err);
+    // alert owner if endpoint errs to often
+  }
+  // append resp to app log?
 }
 
 module.exports = {
