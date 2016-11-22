@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 const api = require('./routes/api.js');
 const appRoute = require('./routes/app.js');
 const auth = require('./routes/auth.js');
-const apps = require('./handlers/inboundAppsHandler.js');
+const apps = require('./devApi/inboundController.js');
 const socket = require('./socket/socket.js');
 const app = express();
 
