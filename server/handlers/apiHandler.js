@@ -16,7 +16,6 @@ function getMessages (req, res) {
       throw err;
     } else {
       if (chatroom[0] === undefined) {
-        console.log('length', chatroom);
         throw 'error: chatroom does not exist';
       } else if (chatroom[0].messages === undefined) {
         chatroom[0].messages = [];
