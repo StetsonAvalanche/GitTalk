@@ -23,8 +23,6 @@ function createApp(req, res) {
   });
 }
 
-// { app: app, repo: repo }
-
 function subscribeApp(req, res) {
   const app = req.body.app;
   const chatroomId = req.body.reponame;
@@ -76,6 +74,8 @@ function unsubscribeApp(req, res) {
       delete apps.read[app.endpoint.split('.').join('%dot%')];
       delete apps.write[app.apiKey];
 
+      // database save is working strange, cannot append new objects
+
       room.save((err, chatroom) => {
         if (err) { console.log(err); }
       });
@@ -86,40 +86,26 @@ function unsubscribeApp(req, res) {
 }
 
 function getAllApps(req, res) {
-  const app = {
-    name: req.body.name,
-    category: req.body.category,
-    endpoint: req.body.endpoint,
-    owner: req.body.owner
-  };
-
-  App.insertOne(app, (err, result) => {
+  App.findAll((err, result) => {
     if (err) {
       console.log(err);
       res.status(400).end();
     }
-
-    res.status(201).end();
+    res.status(200).send(JSON.stringify(result));
   });
 }
 
 // user
 
 function getUserApps(req, res) {
-  const app = {
-    name: req.body.name,
-    category: req.body.category,
-    endpoint: req.body.endpoint,
-    owner: req.body.owner
-  };
-
-  App.insertOne(app, (err, result) => {
+  const user = req.user.username;
+  
+  App.findByOwner(user, (err, result) => {
     if (err) {
       console.log(err);
       res.status(400).end();
     }
-
-    res.status(201).end();
+    res.status(200).send(JSON.stringify(result));
   });
 }
 

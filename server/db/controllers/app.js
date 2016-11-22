@@ -2,6 +2,10 @@ const AppModel = require('../models/app.js');
 const hat = require('hat');
 const rack = hat.rack();
 
+function findAll(cb) {
+  AppModel.find({}, cb);
+}
+
 function findByOwner(owner, cb) {
   AppModel.find({ owner: owner }, cb);
 }
@@ -40,6 +44,7 @@ function updateOneByKey(app, cb) {
 }
 
 module.exports = {
+  findAll,
   findByOwner,
   findByCategory,
   findOneByName,
