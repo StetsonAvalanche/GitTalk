@@ -24,8 +24,14 @@ module.exports = function(server) {
         const fakeRoom = {
           id: room.id,
           apps: {
-            read: ['http://localhost:8002', 'http://localhost:8003'],
-            write: ['abc', '123']
+            read: {
+              'http://localhost:8002': true,
+              'http://localhost:8003': true
+            },
+            write: {
+              'abc': true,
+              '123': true
+            }
           }
         }
         outbound.send(fakeRoom, msg);
