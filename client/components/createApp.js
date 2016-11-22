@@ -38,6 +38,9 @@ class CreateApp extends React.Component {
       category: this.state.category,
       endpoint: this.state.endpoint,
       owner: this.props.login
+    })
+    .then(() => {
+      this.props.updateUserApps();
     });
 
     this.handleClose();
