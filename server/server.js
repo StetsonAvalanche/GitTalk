@@ -16,7 +16,6 @@ const apps = require('./devApi/inboundController.js');
 const socket = require('./socket/socket.js');
 const app = express();
 
-
 /* express server */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

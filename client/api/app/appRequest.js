@@ -24,6 +24,34 @@ function createApp(app) {
   });
 }
 
+function getAllApps() {
+  return new Promise((resolve, reject) => {
+    _get('/app/allapps').done(() => {
+      resolve();
+    }).fail((jqXHR, textStatus, err) => reject(err));
+  });
+}
+
+function getUserApps(user) {
+  return new Promise((resolve, reject) => {
+    _get('/app/userapps', user).done(() => {
+      resolve();
+    }).fail((jqXHR, textStatus, err) => reject(err));
+  });
+}
+
+function subscribeApp(app, reponame) {
+  console.log('in appRequest.js, subscribing app', app, reponame);
+  return new Promise((resolve, reject) => {
+    _post('/app/subscribe', { app: app, reponame: reponame }).done(() => {
+      resolve();
+    }).fail((jqXHR, textStatus, err) => reject(err));
+  });
+}
+
 module.exports = {
-  createApp
+  createApp,
+  getAllApps,
+  getUserApps,
+  subscribeApp,
 }
