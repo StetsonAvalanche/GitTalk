@@ -74,9 +74,9 @@ function emailInvite (req, res) {
 } 
 
 module.exports = {
-	getMessages: getMessages,
   chatroomInit: chatroomInit,
+  emailInvite: emailInvite,
   getMemberRepos: getMemberRepos,
-  emailInvite: emailInvite
+  getMessages: getMessages
 }
 
