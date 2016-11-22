@@ -7,27 +7,29 @@ import CheckIcon from 'material-ui/svg-icons/action/check-circle';
 
 import { githubGreen, githubBlue } from './../util/colorScheme.js';
 
-import { subscribeApp } from './../api/app/appRequest.js';
+import { subscribeApp, unsubscribeApp } from './../api/app/appRequest.js';
 
 class AddAppItem extends React.Component {
   constructor(props) {
     super(props);
 
     this.addApp = this.addApp.bind(this);
-    // this.removeApp = this.removeApp.bind(this);
+    this.removeApp = this.removeApp.bind(this);
   }
 
   addApp() {
-    // fillme: add app to repo
     console.log('add app to repo', this.props.reponame);
     subscribeApp(this.props.app, this.props.reponame)
-    .then((response) => console.log(response))
+    .then((response) => console.log('added app to repo', response))
     .catch((err) => console.log(err));
   }
 
-  // removeApp() {
-  //   // fillme: add app to repo
-  // }
+  removeApp() {
+    console.log('remove app', this.props.app, 'from repo', this.props.reponame);
+    unsubscribeApp(this.props.app, this.props.reponame)
+    .then((response) => console.log('unsubscribed app from repo', response))
+    .catch((err) => console.log(err));
+  }
 
   render() {
     // const style = { position: 'absolute', right: 0, top: 0, };
