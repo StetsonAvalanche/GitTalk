@@ -42,6 +42,37 @@ function getUserRepos() {
   });
 }
 
+function getRepoInfo() {
+  return new Promise((resolve, reject) => {
+    _get('/auth/user').done(data => {
+      const reposUrl = JSON.parse(data)._json.repos_url;
+      _get(`${reposUrl}?per_page=100`).done(repos => {
+        let repoLinks = {};
+        const p = repos.map(repo => {
+          return new Promise((res, rej) => {
+            let currentRepoLink = repo.url;
+            _get(`${currentRepoLink}`).done(repo => {
+              if (repo.fork == true) {
+                repoLinks[repo.id] = repo.parent.full_name;
+              } else {
+                repoLinks[repo.id] = repo.full_name;
+              }
+              res();
+            }).fail((jqXHR, textStatus, err) => {
+              rej(err);
+            });
+          });
+        });
+        Promise.all(p).then(() => {resolve(repoLinks)}).catch(reject);
+      }).fail((jqXHR, textStatus, err) => {
+        reject(err);
+      });
+    }).fail((jqXHR, textStatus, err) => {
+        reject(err);
+    });
+  });
+}
+
 function getMemberRepos(username) {
   return new Promise((resolve, reject) => {
     _get(`/api/memberrepos/${username}`).done(channels => {
@@ -56,6 +87,7 @@ function getMemberRepos(username) {
 export {
   getUser,
   getUserRepos,
-  getMemberRepos
+  getMemberRepos,
+  getRepoInfo
 }
 

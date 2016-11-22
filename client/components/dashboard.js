@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import RepoList from './repoList.js';
 import Profile from './profile.js';
-import {getUser, getUserRepos } from './../api/user/userRequest.js';
+import {getUser, getUserRepos, getRepoInfo } from './../api/user/userRequest.js';
 import { init } from '../api/chatroom/chatroomRequest.js';
 
 import Paper from 'material-ui/Paper';
@@ -21,23 +21,27 @@ class Dashboard extends React.Component {
     this.navToChatroom = this.navToChatroom.bind(this);
   }
 
-  navToChatroom(name) {
-    // Initiate chatroom
-    init(name).then(() => {
-      browserHistory.push(`/rooms/${name}`);
-    }).catch(err => { 
-      console.log(err); 
-    });
+  navToChatroom(repo) {
+      // Initiate chatroom
+      init(repo).then(() => {
+        browserHistory.push(`/rooms/${repo.path}`);
+      }).catch(err => { 
+        console.log(err); 
+      });
   }
 
   componentDidMount() {
-    /* Fetch all user public repos */
-    getUserRepos().then(repos => {
-      this.setState({ repos: repos });
-    }).catch(err => console.log(err));
-
     getUser().then(user => {
       this.setState({ user: user });
+    }).catch(err => console.log(err));
+
+    getRepoInfo().then(reposPaths => {
+      this.reposPaths = reposPaths;
+      getUserRepos().then(repos => {
+        this.setState({ 
+          repos: repos.map(repo => ({ path: this.reposPaths[repo.id], ...repo })) 
+        });
+      }).catch(err => console.log(err));        
     }).catch(err => console.log(err));
   }
 
@@ -45,7 +49,7 @@ class Dashboard extends React.Component {
     return (
       <div style={ styles.dashboardContainer } >
         <Paper style={ styles.listContainer } zDepth={ 2 }>
-          <RepoList navToChatroom={this.navToChatroom} repos={this.state.repos}/>
+          <RepoList navToChatroom={this.navToChatroom.bind(this)} repos={this.state.repos} />
         </Paper>
         <Paper style={ styles.profileContainer } zDepth={ 2 }>
           { this.state.user ? <Profile user={ this.state.user } /> : null }

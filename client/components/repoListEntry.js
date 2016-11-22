@@ -8,7 +8,7 @@ import { githubBlue } from './../util/colorScheme.js';
 const RepoListEntry = (props) => (
   <div>
     <ListItem
-      onClick={props.navToChatroom.bind(this, props.repo.full_name)}
+      onClick={props.navToChatroom.bind(this, props.repo)}
       primaryText={ <span style={styles.primaryLink} >{props.repo.name}</span> }
       secondaryText={ props.repo.description }
       secondaryTextLines={ 1 }
