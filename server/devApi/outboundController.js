@@ -1,7 +1,7 @@
 const request = require('request');
 
 function send(room, message) {
-  const endpoints = room.apps.read;
+  const endpoints = Object.keys(room.apps.read);
   endpoints.forEach(endpoint => {
 
     const payload = {

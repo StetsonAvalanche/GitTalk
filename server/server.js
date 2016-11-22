@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const api = require('./routes/api.js');
 const appRoute = require('./routes/app.js');
 const auth = require('./routes/auth.js');
+const apps = require('./handlers/inboundAppsHandler.js');
 const socket = require('./socket/socket.js');
 const app = express();
 
@@ -45,6 +46,9 @@ app.get('/dashboard', function(req, res) {
 app.get('/rooms/:username/:reponame', function(req, res) {
   res.sendFile(path.resolve(__dirname, '../public', 'index.html'));   
 });
+
+// process 3rd party inbound payloads
+app.post('/apps', apps.inbound);
 
 // s3 middleware
 app.use('/s3', require('react-s3-uploader/s3router')({
