@@ -53,6 +53,7 @@ class Chatroom extends React.Component {
   }
 
   componentDidMount() {
+    socket.emit('join chatroom', {id: this.state.chatroomId});
     this.updateUser();
     this.updateMessages();
   }
