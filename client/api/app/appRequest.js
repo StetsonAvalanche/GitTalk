@@ -33,6 +33,15 @@ function getAllApps() {
   });
 }
 
+function getSubscriptions(chatroomId) {
+  return new Promise((resolve, reject) => {
+    // chatroomId is translated into :username and :repo in the routes
+    _get(`/app/subscriptions/${chatroomId}`).done((data) => {
+      resolve(data);
+    }).fail((jqXHR, textStatus, err) => reject(err));
+  });
+}
+
 function getUserApps() {
   return new Promise((resolve, reject) => {
     _get('/app/userapps').done((data) => {
@@ -42,9 +51,16 @@ function getUserApps() {
 }
 
 function subscribeApp(app, reponame) {
-  console.log('in appRequest.js, subscribing app', app, reponame);
   return new Promise((resolve, reject) => {
     _post('/app/subscribe', { app: app, reponame: reponame }).done(() => {
+      resolve();
+    }).fail((jqXHR, textStatus, err) => reject(err));
+  });
+}
+
+function unsubscribeApp(app, reponame) {
+  return new Promise((resolve, reject) => {
+    _post('/app/unsubscribe', { app: app, reponame: reponame }).done(() => {
       resolve();
     }).fail((jqXHR, textStatus, err) => reject(err));
   });
@@ -53,6 +69,8 @@ function subscribeApp(app, reponame) {
 module.exports = {
   createApp,
   getAllApps,
+  getSubscriptions,
   getUserApps,
   subscribeApp,
+  unsubscribeApp,
 }
