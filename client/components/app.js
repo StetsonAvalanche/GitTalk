@@ -65,8 +65,5 @@ class App extends React.Component {
   }
 }
 
-const styles = {
-};
-
 
 export default App;
