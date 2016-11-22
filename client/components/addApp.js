@@ -10,7 +10,7 @@ import AddAppItem from './addAppItem.js';
 
 import { githubGreen, githubBlue } from './../util/colorScheme.js';
 
-import { getAllApps } from './../api/app/appRequest.js';
+import { getAllApps, getSubscriptions } from './../api/app/appRequest.js';
 
 class AddApp extends React.Component {
   constructor(props) {
@@ -46,10 +46,24 @@ class AddApp extends React.Component {
 
   componentDidMount() {
     getAllApps()
-    .then(data => 
-      this.setState({
-        apps: JSON.parse(data) 
-      }))
+    .then(appdata => {
+      getSubscriptions(this.props.reponame)
+      .then(subsdata => {
+        subsdata = JSON.parse(subsdata);
+        appdata = JSON.parse(appdata);
+        for (var i = 0; i < appdata.length; i++) {
+          if (subsdata.write[appdata[i].apiKey]) {
+            appdata[i].added = true;
+          } else {
+            appdata[i].added = false;
+          }
+        }
+        this.setState({
+          apps: appdata 
+        });
+      })
+      .catch(err => console.log('subscriptions not merging with apps data', err));
+    })
     .catch(err => console.log(err));
   }
 
