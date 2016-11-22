@@ -6,8 +6,14 @@ const appSchema = mongoose.Schema({
     unique: true
   },
   owner: String,
-  apiKey: String,
-  endpoint: String,
+  apiKey: {
+    type: String,
+    unique: true
+  },
+  endpoint: {
+    type: String,
+    unique: true
+  },
   category: String
 });
 
