@@ -7,7 +7,7 @@ function findAll(member, callback) {
 
 // findOne retrieves a chatroom with the associated id 
 function findOne(id, callback) {
-	ChatroomModel.find({id: id}, callback);
+	ChatroomModel.find({id: id}).lean().exec(callback);
 }
 
 // updates current chatroom; creates one if it doesn't exist
