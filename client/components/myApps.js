@@ -5,6 +5,8 @@ import Paper from 'material-ui/Paper';
 
 import MyAppsItem from './myAppsItem';
 
+import { getUserApps } from './../api/app/appRequest.js';
+
 class MyApps extends React.Component {
 
   constructor(props) {
@@ -15,6 +17,12 @@ class MyApps extends React.Component {
         { name: 'Fredbot', apiKey: '4rtyuioetyuf' },
       ]
     };
+  }
+
+  componentDidMount() {
+    getUserApps()
+    .then(userApps => this.setState({ apps: JSON.parse(userApps)}))
+    .catch(err => console.log('err', err));
   }
 
   render() {

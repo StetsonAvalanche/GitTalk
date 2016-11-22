@@ -10,6 +10,8 @@ import AddAppItem from './addAppItem.js';
 
 import { githubGreen, githubBlue } from './../util/colorScheme.js';
 
+import { getAllApps } from './../api/app/appRequest.js';
+
 class AddApp extends React.Component {
   constructor(props) {
     super(props);
@@ -40,6 +42,15 @@ class AddApp extends React.Component {
 
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+  }
+
+  componentDidMount() {
+    getAllApps()
+    .then(data => 
+      this.setState({
+        apps: JSON.parse(data) 
+      }))
+    .catch(err => console.log(err));
   }
 
   handleOpen() {
