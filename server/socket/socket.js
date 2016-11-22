@@ -24,6 +24,7 @@ module.exports = function(server) {
           room.messages = [];
         }
         room.messages.push(msg);
+
         // room.save();
         chatroomCtrl.update(room, () => {
           outbound.send(room, msg);
