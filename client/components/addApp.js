@@ -17,9 +17,24 @@ class AddApp extends React.Component {
     this.state = {
       open: false,
       apps: [ 
-        { name: 'weather', added: true}, 
-        { name: 'giffy', added: false}, 
-        { name: 'olegbot', added: false}, 
+        { name: 'Giffy', 
+          category: 'utility',
+          endpoint: 'giffy.herokuapp.com', 
+          owner: 'gifcat', 
+          apiKey: '345catcat9dd053f663b8ed496d2a'
+        },
+        { name: 'Weather', 
+          category: 'utility',
+          endpoint: 'weather.herokuapp.com', 
+          owner: 'weatherChannel', 
+          apiKey: '34567rainrain5c99dd053f663b8ed496d2a'
+        },
+        { name: 'OlegBot', 
+          category: 'chatbot',
+          endpoint: 'olegbot.herokuapp.com', 
+          owner: 'tankwan', 
+          apiKey: '3456olegoleg95c99dd053f663b8ed496d2a'
+        }
       ]
     };
 

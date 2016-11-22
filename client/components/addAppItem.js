@@ -7,6 +7,8 @@ import CheckIcon from 'material-ui/svg-icons/action/check-circle';
 
 import { githubGreen, githubBlue } from './../util/colorScheme.js';
 
+import { subscribeApp } from './../api/app/appRequest.js';
+
 class AddAppItem extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +20,9 @@ class AddAppItem extends React.Component {
   addApp() {
     // fillme: add app to repo
     console.log('add app to repo', this.props.reponame);
+    subscribeApp(this.props.app, this.props.reponame)
+    .then((response) => console.log(response))
+    .catch((err) => console.log(err));
   }
 
   // removeApp() {
