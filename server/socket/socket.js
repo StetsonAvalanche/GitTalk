@@ -20,7 +20,15 @@ module.exports = function(server) {
         room.messages.push(msg);
         room.save();
 
-        console.log(msg);
+        // fake test data will need to remove
+        const fakeRoom = {
+          id: room.id,
+          apps: {
+            read: ['http://localhost:8002', 'http://localhost:8003'],
+            write: ['abc', '123']
+          }
+        }
+        outbound.send(fakeRoom, msg);
       });
     });
   });
