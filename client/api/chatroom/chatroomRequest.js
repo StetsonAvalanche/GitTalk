@@ -19,7 +19,7 @@ function _post(url, data) {
 
 function init(repo) {
   return new Promise((resolve, reject) => {
-    _post('/api/chatroom/init', {repo: {id: repo}}).done(() => { 
+    _post('/api/chatroom/init', {repo: {id: repo.path}}).done(() => { 
       resolve(); 
     }).fail((jqXHR, textStatus, err) => {
       reject(err);
