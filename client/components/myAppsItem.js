@@ -3,7 +3,6 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import { ListItem } from 'material-ui/List';
 import FlatButton from 'material-ui/FlatButton';
-import IconButton from 'material-ui/IconButton';
 import ExtensionIcon from 'material-ui/svg-icons/action/extension';
 
 class MyAppsItem extends React.Component {
