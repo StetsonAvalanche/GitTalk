@@ -111,6 +111,8 @@ function getSubscriptions(req, res) {
             write: {}
           });
           res.status(200).send(JSON.stringify(apps[0]));        
+        } else {
+          res.status(200).send(JSON.stringify(apps[0])); 
         }
       }
     } 
