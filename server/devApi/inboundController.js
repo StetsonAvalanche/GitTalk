@@ -1,5 +1,9 @@
 const Chatroom = require('./../db/controllers/chatroom.js');
 const App = require('./../db/controllers/app.js');
+const SocketIo = require('socket.io');
+const server = require('./../server.js').server;
+
+const io = new SocketIo(server, {path: '/api/chat'});
 
 function inbound(req, res) {
   const payload = req.body;
