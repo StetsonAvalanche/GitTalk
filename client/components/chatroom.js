@@ -21,11 +21,8 @@ class Chatroom extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      username: '',
-      userAvatarUrl: '',
       chatroomId: this.props.params.username + '/' + this.props.params.reponame,
       channels: [],
-      messages:[],
       inviteSent: false,
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
@@ -39,7 +36,6 @@ class Chatroom extends React.Component {
     }; 
 
     /* this bindings for methods */
-    // this.updateUser = this.updateUser.bind(this);
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
     this.updateMessages = this.updateMessages.bind(this);
     // this.sendEmailInvite = this.sendEmailInvite.bind(this);
@@ -55,28 +51,10 @@ class Chatroom extends React.Component {
   }
 
   componentWillMount() {
-    // socket.emit('join chatroom', {id: this.state.chatroomId});
+    socket.emit('join chatroom', {id: this.state.chatroomId});
     // this.updateUser();
     this.updateMessages();
-    console.log(this.props.repos)
   }
-
-  // updateUser() {
-  //   getUser()
-  //   .then((data) => {
-  //     const username = JSON.parse(data).username;
-  //     const userAvatarUrl = JSON.parse(data)._json.avatar_url;
-  //     this.setState({ 
-  //       username: username,
-  //       userAvatarUrl: userAvatarUrl
-  //     });
-  //     return username;
-  //   })
-  //   .then(username => {
-  //     this.updateMemberRepos();
-  //   })
-  //   .catch(err => console.log('error in getUser', err));
-  // }
 
   // updateMemberRepos() {
   //   getMemberRepos(this.state.username)
@@ -119,7 +97,7 @@ class Chatroom extends React.Component {
   render() {
     return (
       <div>
-        {/*<NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
+        <NavBar username={this.props.authUser.username} photo={this.props.authUser._json.avatar_url} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
         <TopBar reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} /> */}
         
        
@@ -127,10 +105,10 @@ class Chatroom extends React.Component {
           <Messages messages={this.props.messages} windowWidth={this.state.windowWidth} windowHeight={this.state.windowHeight}/>
         : null}
 
-        {/*{(this.state.username !== '') ? 
-          <EnterMessage username={this.state.username} chatroomId={this.state.chatroomId} userAvatarUrl={this.state.userAvatarUrl} reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} renderSentMessage={this.renderSentMessage}/>
+        {(this.props.authUser.username !== '') ? 
+          <EnterMessage username={this.props.authUser.username} chatroomId={this.state.chatroomId} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} renderSentMessage={this.renderSentMessage}/>
           : null
-        } */}
+        }
       </div>
     );
   }
