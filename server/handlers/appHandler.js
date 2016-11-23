@@ -22,32 +22,23 @@ function createApp(req, res) {
 function subscribeApp(req, res) {
   const app = req.body.app;
   const chatroomId = req.body.reponame;
-  Chatroom.findOne(chatroomId, (err, chatroom) => {
+  Chatroom.findOneByIdJSON(chatroomId, (err, chatroom) => {
+    // method returns JSON instead of mongoose document
+    // so that existing fields can be edited
     if (err) { 
       throw err;
     } else {
       let room = chatroom[0];
       if (room === undefined) {
-        throw 'error: chatroom does not exist';
-      }
-      // let apps = room.apps;
-      if (room.apps === undefined) {
-        room.apps = [{
-          read: {},
-          write: {}
-        }];
-      }else if (room.apps[0] === undefined) {
-        room.apps.push({
-          read: {},
-          write: {}
-        });
-      }
-      room.apps[0].read[app.endpoint.split('.').join('%dot%')] = true;
-      room.apps[0].write[app.apiKey] = true;
+        res.status(400).end();
+      } else {
+        room.apps[0].read[app.endpoint.split('.').join('%dot%')] = true;
+        room.apps[0].write[app.apiKey] = true;
 
-      Chatroom.update(room, () => {
-        res.status(201).end();        
-      });
+        Chatroom.update(room, () => {
+          res.status(201).end();        
+        });        
+      }
     } 
   });
 }
@@ -55,27 +46,23 @@ function subscribeApp(req, res) {
 function unsubscribeApp(req, res) {
   const app = req.body.app;
   const chatroomId = req.body.reponame;
-  Chatroom.findOne(chatroomId, (err, chatroom) => {
+  Chatroom.findOneByIdJSON(chatroomId, (err, chatroom) => {
+    // method returns JSON instead of mongoose document
+    // so that existing fields can be edited
     if (err) { 
       throw err;
     } else {
       let room = chatroom[0];
       if (room === undefined) {
-        throw 'error: chatroom does not exist';
-      }
-      let apps = room.apps;
-      if (apps[0] === undefined) {
-        apps.push({
-          read: {},
-          write: {}
-        });
-      }
-      delete apps[0].read[app.endpoint.split('.').join('%dot%')];
-      delete apps[0].write[app.apiKey];
+        res.status(400).end();
+      } else {
+        delete room.apps[0].read[app.endpoint.split('.').join('%dot%')];
+        delete room.apps[0].write[app.apiKey];
 
-      Chatroom.update(room, () => {
-        res.status(201).end();        
-      });
+        Chatroom.update(room, () => {
+          res.status(201).end();        
+        });        
+      }
     } 
   });
 }
@@ -98,22 +85,9 @@ function getSubscriptions(req, res) {
     } else {
       let room = chatroom[0];
       if (room === undefined) {
-        // refactor: attempt again to store apps in object? create chatrooms ahead of time?
-        res.status(200).send(JSON.stringify({ read: {}, write: {} }));
-        // throw 'error: chatroom does not exist';
+        res.status(400).end();
       } else {
-        let apps = room.apps;
-        if (apps === undefined) {
-          res.status(200).send(JSON.stringify({ read: {}, write: {} }));
-        } else if (apps[0] === undefined) {
-          apps.push({
-            read: {},
-            write: {}
-          });
-          res.status(200).send(JSON.stringify(apps[0]));        
-        } else {
-          res.status(200).send(JSON.stringify(apps[0])); 
-        }
+        res.status(200).send(JSON.stringify(room.apps[0])); 
       }
     } 
   });
