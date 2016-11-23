@@ -3,8 +3,10 @@ const SocketIo = require('socket.io');
 const chatroomCtrl = require('./../db/controllers/chatroom.js');
 const outbound = require('./../devApi/outboundController.js');
 
-module.exports = function(server) {
-  const io = new SocketIo(server, {path: '/api/chat'});
+let io;
+
+function listen(server) {
+  io = new SocketIo(server, {path: '/api/chat'});
 
   io.on('connection', (socket) => {
     socket.on('new message', (msg) => {
@@ -27,10 +29,19 @@ module.exports = function(server) {
 
         room.save();
         // chatroomCtrl.update(room, () => {
-        if (room.apps.read) outbound.send(room, msg);
+        if (room.apps[0].read) outbound.send(room, msg);
         // });
       });
     });
   });
-
 };
+
+function updateMessage(message) {
+  io.sockets.emit('new bc message', message);
+}
+
+module.exports = {
+  io,
+  listen,
+  updateMessage
+}
