@@ -19,11 +19,25 @@ function _post(url, data) {
 
 function init(repo) {
   return new Promise((resolve, reject) => {
-    _post('/api/chatroom/init', {repo: {id: repo}}).done(() => { 
+    _post('/api/chatroom/init', {repo: {
+        id: repo, 
+        messages: [{ 
+          type: 'message', 
+          chatroom: repo,
+          image: null, 
+          text: 'Welcome to GitTalk, chat away!', 
+          userAvatarUrl: '/assets/GitTalkLogo.png', 
+          user: 'GitTalk' 
+        }], 
+        apps: [{
+          read: { initPlaceholder: true },
+          write: { initPlaceholder: true }
+        }]
+      }}).done(() => { 
       resolve(); 
     }).fail((jqXHR, textStatus, err) => {
       reject(err);
-    })
+    });
   });
 }
 
