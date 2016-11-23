@@ -23,14 +23,14 @@ class Dashboard extends React.Component {
   //   this.navToChatroom = this.navToChatroom.bind(this);
   // }
 
-  navToChatroom(repo) {
-      // Initiate chatroom
-      init(repo).then(() => {
-        browserHistory.push(`/rooms/${repo.path}`);
-      }).catch(err => { 
-        console.log(err); 
-      });
-  }
+  // navToChatroom(repo) {
+  //     // Initiate chatroom
+  //     init(repo).then(() => {
+  //       browserHistory.push(`/rooms/${repo.path}`);
+  //     }).catch(err => { 
+  //       console.log(err); 
+  //     });
+  // }
 
   componentWillMount() {
     const { dispatch } = this.props;

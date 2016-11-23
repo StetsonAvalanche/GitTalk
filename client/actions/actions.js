@@ -19,3 +19,9 @@ export function updateMessages(messages) {
   }
 }
 
+export function selectChatroom(repo) {
+  return {
+  	type: 'SET_ACTIVE_CHATROOM',
+  	payload: repo
+  }
+}
