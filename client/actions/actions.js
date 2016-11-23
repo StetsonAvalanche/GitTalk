@@ -12,10 +12,10 @@ export function updateRepos(repos) {
   }
 }
 
-export function updateMessages(repos) {
+export function updateMessages(messages) {
   return {
     type: 'UPDATE_MESSAGES',
-    repos
+    messages
   }
 }
 
