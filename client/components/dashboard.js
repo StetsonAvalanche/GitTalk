@@ -35,7 +35,7 @@ class Dashboard extends React.Component {
   componentWillMount() {
     const { dispatch } = this.props;
     getUser().then(user => {
-      dispatch(actions.getAuthUser(user));
+      dispatch(actions.getAuthUser(JSON.parse(user)));
     }).catch(err => console.log(err));
 
     getRepoInfo().then(reposPaths => {
