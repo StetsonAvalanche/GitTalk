@@ -6,13 +6,14 @@ function findAll(member, callback) {
 }
 
 // findOne retrieves a chatroom with the associated id 
-function findOne(id, callback) {
+function findOneByIdJSON(id, callback) {
 	ChatroomModel.find({id: id}).lean().exec(callback);
-}
+} // lean().exec() returns data as JSON instead of mongoose document, needed for amending of existing fields
 
+// findOne retrieves a chatroom with the associated id 
 function findOneById(id, callback) {
-	ChatroomModel.find({id: id}, callback)
-}
+	ChatroomModel.find({id: id}, callback);
+} // returns mongoose document
 
 // updates current chatroom; creates one if it doesn't exist
 function update(chatroom, callback) {
@@ -43,7 +44,7 @@ function insertOne(chatroom, callback) {
 // }
 
 exports.findAll = findAll;
-exports.findOne = findOne;
+exports.findOneByIdJSON = findOneByIdJSON;
 exports.findOneById = findOneById;
 exports.insertOne = insertOne;
 exports.update = update;
