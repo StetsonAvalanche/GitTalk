@@ -10,7 +10,7 @@ module.exports = function(server) {
     socket.on('new message', (msg) => {
       console.log('message received', msg);
       io.sockets.emit('new bc message', msg);
-      chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
+      chatroomCtrl.findOneById(msg.chatroom, (err, chatroom) => {
         if (err) {throw err;}
         const room = chatroom[0];
         if (room === undefined) { throw 'error: chatroom does not exist'; }
@@ -25,10 +25,10 @@ module.exports = function(server) {
         }
         room.messages.push(msg);
 
-        // room.save();
-        chatroomCtrl.update(room, () => {
-          outbound.send(room, msg);
-        });
+        room.save();
+        // chatroomCtrl.update(room, () => {
+        if (room.apps.read) outbound.send(room, msg);
+        // });
       });
     });
   });
