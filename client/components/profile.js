@@ -6,7 +6,7 @@ import Divider from 'material-ui/Divider';
 import { githubGreen, githubBlue } from './../util/colorScheme.js';
 
 const Profile = (props) => {
-  const user = JSON.parse(props.user)._json;
+  const user = props.user._json;
   return (
     <div>
       <Paper style={ styles.header } zDepth={ 2 }>
