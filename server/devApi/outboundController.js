@@ -1,7 +1,6 @@
 const request = require('request');
 
 function send(room, message) {
-  console.log(room, 'room');
   const endpoints = Object.keys(room.apps[0].read);
   endpoints.forEach(endpoint => {
     const parsedEndpoint = endpoint.split('%dot%').join('.');

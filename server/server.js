@@ -79,7 +79,7 @@ mongoose.connect(uriString, (err, res) => {
 });
 
 /* socket initialization */
-socket(server);
+socket.listen(server);
 
 module.exports = {
   app,
