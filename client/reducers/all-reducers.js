@@ -9,6 +9,7 @@ const allReducers = combineReducers({
     repos: ReposReducer,
     messages: MessagesReducer,
     activeChatroomId: ActiveChatroomReducer
+
 });
 
 export default allReducers;
