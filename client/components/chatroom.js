@@ -41,7 +41,7 @@ class Chatroom extends React.Component {
     /* this bindings for methods */
     // this.updateUser = this.updateUser.bind(this);
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
-    this.updateMessages = this.updateMessages.bind(this);
+    // this.updateMessages = this.updateMessages.bind(this);
     // this.sendEmailInvite = this.sendEmailInvite.bind(this);
     
 
@@ -54,11 +54,11 @@ class Chatroom extends React.Component {
     });
   }
 
-  componentWillMount() {
-    socket.emit('join chatroom', {id: this.state.chatroomId});
-    // this.updateUser();
-    // this.updateMessages();
-  }
+  // componentDidMount() {
+  //   // socket.emit('join chatroom', {id: this.state.chatroomId});
+  //   // this.updateUser();
+  //   this.updateMessages();
+  // }
 
   // updateUser() {
   //   getUser()
@@ -87,17 +87,17 @@ class Chatroom extends React.Component {
   //   .catch(err => console.log('error in getMemberRepos', err));
   // }
 
-  updateMessages() {
-    // fetch all messages from DB
-    const { dispatch } = this.props;
-    getMessages(this.state.chatroomId)
-    .then(messages => {
-      console.log(messages)
-      dispatch(actions.updateMessages(messages));
-      // this.setState({ messages: JSON.parse(messages) });
-    })
-    .catch(err => console.log(err));
-  }
+  // updateMessages() {
+  //   // fetch all messages from DB
+  //   const { dispatch } = this.props;
+  //   getMessages('anicknam/GitTalk')
+  //   .then(messages => {
+  //     console.log(messages)
+  //     // dispatch(actions.updateMessages(messages));
+  //     this.setState({ messages: JSON.parse(messages) });
+  //   })
+  //   .catch(err => console.log(err));
+  // }
 
   // sendEmailInvite() {
   //   // Send email invitation to collaborators
@@ -116,12 +116,6 @@ class Chatroom extends React.Component {
   //   }).catch(err => console.log(err));
   // }
 
-  function mapStateToProps(state) {
-      return {
-          authUser: state.authUser,
-          messages: state.messages
-      };
-  }
 
   render() {
     return (
@@ -129,7 +123,7 @@ class Chatroom extends React.Component {
         {/*<NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
         <TopBar reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} /> */}
         {/*{(this.state.username !== '') ? */}
-        
+
           <Messages messages={this.props.messages} windowWidth={this.state.windowWidth} windowHeight={this.state.windowHeight}/>
           {/*: null} */}
 
@@ -142,5 +136,12 @@ class Chatroom extends React.Component {
   }
 }
 
+  function mapStateToProps(state) {
+      return {
+          authUser: state.authUser,
+          messages: state.messages
+      };
+  }
+  
 export default connect(mapStateToProps)(Chatroom);
 // export default Chatroom;
