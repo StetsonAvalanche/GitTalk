@@ -24,4 +24,12 @@ const styles = {
   }
 };
 
-export default RepoListEntry;
+// container "glue"
+function mapStatetoProps(state) {
+  return {
+    repo: state.repo
+  }
+}
+
+// exporting container
+export default connect(mapStateToProps)(RepoListEntry);
