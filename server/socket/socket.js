@@ -18,9 +18,10 @@ module.exports = function(server) {
           room.members.push(msg.user);
         }
         room.messages.push(msg);
-        room.save();
-
-        outbound.send(room, msg);
+        // room.save();
+        chatroomCtrl.update(room, () => {
+          outbound.send(room, msg);
+        });
       });
     });
   });
