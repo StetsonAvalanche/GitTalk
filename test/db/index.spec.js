@@ -75,7 +75,7 @@ describe('Chatroom Model', () => {
 
   it('should find a chatroom by id', done => {
     ChatroomController.insertOne(chat1, () => {
-      ChatroomController.findOne('DYWXaStMxp/GypORHVxal', (err, res) => {
+      ChatroomController.findOneById('DYWXaStMxp/GypORHVxal', (err, res) => {
         expect(err).to.not.exist;
         expect(res[0].id).to.equal('DYWXaStMxp/GypORHVxal');
         done();
