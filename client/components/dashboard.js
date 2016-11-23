@@ -3,7 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import RepoList from './repoList.js';
 import Profile from './profile.js';
 import {getUser, getUserRepos } from './../api/user/userRequest.js';
-import { init } from '../api/chatroom/chatroomRequest.js';
+import { init, getChatroom } from '../api/chatroom/chatroomRequest.js';
 
 import Paper from 'material-ui/Paper';
 import { grey200 } from './../util/colorScheme';
@@ -23,7 +23,14 @@ class Dashboard extends React.Component {
 
   navToChatroom(name) {
     // Initiate chatroom
-    init(name).then(() => {
+    getChatroom(name) // check if chatroom exists
+    .then(chatroom => {
+      console.log('chatroom', chatroom);
+      if (chatroom === null) {
+        return init(name);
+      }
+    })
+    .then(() => {
       browserHistory.push(`/rooms/${name}`);
     }).catch(err => { 
       console.log(err); 
