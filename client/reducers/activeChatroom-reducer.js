@@ -1,7 +1,7 @@
 export default function (state = null, action) {
   switch (action.type) {
-    case 'GET_AUTH_USER':
-      return action.user;
+    case 'SET_ACTIVE_CHATROOM':
+      return action.chatroomId;
     default:
       return state;
   }

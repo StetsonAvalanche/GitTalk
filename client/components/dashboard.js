@@ -34,17 +34,14 @@ class Dashboard extends React.Component {
 
   componentWillMount() {
     const { dispatch } = this.props;
-    // getUser().then(user => {
-    //   this.setState({ user: user });
-    // }).catch(err => console.log(err));
+    getUser().then(user => {
+      dispatch(actions.getAuthUser(JSON.parse(user)));
+    }).catch(err => console.log(err));
 
     getRepoInfo().then(reposPaths => {
       this.reposPaths = reposPaths;
       getUserRepos().then(repos => {
         dispatch(actions.updateRepos(repos.map(repo => ({ path: this.reposPaths[repo.id], ...repo }))))
-        // this.setState({ 
-        //   repos: repos.map(repo => ({ path: this.reposPaths[repo.id], ...repo })) 
-        // });
       }).catch(err => console.log(err));        
     }).catch(err => console.log(err));
   }
@@ -55,9 +52,9 @@ class Dashboard extends React.Component {
         <Paper style={ styles.listContainer } zDepth={ 2 }>
           <RepoList navToChatroom={this.navToChatroom} repos={this.props.repos} />
         </Paper>
-        {/*<Paper style={ styles.profileContainer } zDepth={ 2 }>
-          { this.state.user ? <Profile user={ this.state.user } /> : null }
-        </Paper>*/}
+        <Paper style={ styles.profileContainer } zDepth={ 2 }>
+          { (this.props.authUser) ? <Profile user={ this.props.authUser } /> : null }
+        </Paper>
       </div>
     )
   }
@@ -65,7 +62,8 @@ class Dashboard extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        repos: state.repos
+        repos: state.repos,
+        authUser: state.authUser
     };
 }
 
