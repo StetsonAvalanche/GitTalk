@@ -112,8 +112,8 @@ class Chatroom extends React.Component {
   function mapStateToProps(state) {
       return {
           authUser: state.authUser,
-          messages: state.messages,
-          repos: state.repos
+          repos: state.repos,
+          messages: state.messages
       };
   }
 

@@ -7,21 +7,3 @@ export default function (state = [], action) {
       return state;
   }
 }
-
-
-// export default function () {
-//     return [ { "type" : "text", 
-//                "user" : "anicknam", 
-//                "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
-//                "chatroom" : "anicknam/GitTalk", 
-//                "image" : null, 
-//                "text" : "hello" 
-// 		      }, 
-// 		      { "type" : "text", 
-// 		      "user" : "anicknam", 
-// 		      "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
-// 		      "chatroom" : "anicknam/GitTalk", 
-// 		      "image" : null, 
-// 		      "text" : "this is a test" 
-// 		      } ];
-// }
