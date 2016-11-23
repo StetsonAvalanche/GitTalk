@@ -41,7 +41,7 @@ class Chatroom extends React.Component {
     this.updateMemberRepos = this.updateMemberRepos.bind(this);
     this.updateMessages = this.updateMessages.bind(this);
     this.sendEmailInvite = this.sendEmailInvite.bind(this);
-    // this.renderSentMessage = this.renderSentMessage.bind(this);
+    
 
     /* websockets */
     socket.on('new bc message', (message) => {
@@ -57,12 +57,6 @@ class Chatroom extends React.Component {
     this.updateUser();
     this.updateMessages();
   }
-
-  // renderSentMessage(message){
-  //   this.setState({
-  //     messages: [...this.state.messages, message]
-  //   });
-  // }
 
   updateUser() {
     getUser()
