@@ -90,7 +90,7 @@ class Chatroom extends React.Component {
   updateMessages() {
     // fetch all messages from DB
     const { dispatch } = this.props;
-    getMessages('anicknam/GitTalk')
+    getMessages(this.state.chatroomId)
     .then(messages => {
       dispatch(actions.updateMessages(JSON.parse(messages)));
     })
