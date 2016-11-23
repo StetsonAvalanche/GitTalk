@@ -30,11 +30,22 @@ function init(repo) {
           user: 'GitTalk' 
         }], 
         apps: [{  // add placeholder app subscription for data field creation
-          read: { initPlaceholder: true },
+          read: { 'http://initPlaceholder': true },
           write: { initPlaceholder: true }
         }]
       }}).done(() => { 
       resolve(); 
+    }).fail((jqXHR, textStatus, err) => {
+      reject(err);
+    });
+  });
+}
+
+function getChatroom(repo) {
+  return new Promise((resolve, reject) => {
+    _get(`/api/chatroom/${repo}`)
+    .done((data) => { 
+      resolve(data); 
     }).fail((jqXHR, textStatus, err) => {
       reject(err);
     });
@@ -87,5 +98,6 @@ function sendInvite(chatroomLink, forkedRepoUrl) {
 
 module.exports = {
   init: init,
+  getChatroom: getChatroom,
   sendInvite: sendInvite
 }
