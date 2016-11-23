@@ -80,4 +80,7 @@ mongoose.connect(uriString, (err, res) => {
 /* socket initialization */
 socket(server);
 
-module.exports = app;
+module.exports = {
+  app,
+  server
+}
