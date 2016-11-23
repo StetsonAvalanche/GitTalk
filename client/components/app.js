@@ -44,7 +44,6 @@ class App extends React.Component {
   render(){
     // if user is authenticated
     if (this.state.loggedIn) {
-    // if (true) {
       document.body.style.backgroundColor = fullWhite;
       return (
         <MuiThemeProvider>
