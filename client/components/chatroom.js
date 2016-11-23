@@ -43,16 +43,13 @@ class Chatroom extends React.Component {
 
     /* websockets */
     socket.on('new bc message', (message) => {
-      this.setState({
-        messages: [...this.state.messages, message]
-      });
+      this.props.dispatch(actions.updateMessages(message));
       // this.updateMemberRepos();
     });
   }
 
   componentWillMount() {
     socket.emit('join chatroom', {id: this.state.chatroomId});
-    // this.updateUser();
     this.updateMessages();
   }
 
@@ -68,10 +65,9 @@ class Chatroom extends React.Component {
 
   updateMessages() {
     // fetch all messages from DB
-    const { dispatch } = this.props;
     getMessages(this.state.chatroomId)
     .then(messages => {
-      dispatch(actions.updateMessages(JSON.parse(messages)));
+      this.props.dispatch(actions.updateMessages(JSON.parse(messages)));
     })
     .catch(err => console.log(err));
   }
@@ -98,8 +94,7 @@ class Chatroom extends React.Component {
     return (
       <div>
         <NavBar username={this.props.authUser.username} photo={this.props.authUser._json.avatar_url} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
-        <TopBar reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} /> */}
-        
+        <TopBar reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} />
        
         {(this.props.messages.length > 0) ?
           <Messages messages={this.props.messages} windowWidth={this.state.windowWidth} windowHeight={this.state.windowHeight}/>
