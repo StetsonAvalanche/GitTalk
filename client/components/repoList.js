@@ -1,20 +1,35 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
+import { init } from '../api/chatroom/chatroomRequest.js';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { selectChatroom } from '../actions/actions';
 import { ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import ChatIcon from 'material-ui/svg-icons/communication/chat';
 
 import { githubBlue } from './../util/colorScheme.js';
 
+
 class RepoList extends React.Component {
+
+	navToChatroom(repo) {
+    // Initiate chatroom
+    init(repo).then(() => {
+      browserHistory.push(`/rooms/${repo.path}`);
+    }).catch(err => { 
+      console.log(err); 
+    });
+  }
 
 	createListItems() {
 		return this.props.repos.map((repo) => {
-			return (
+			return ( 
 				<div>
 			    <ListItem
-			      onClick={props.navToChatroom.bind(this, props.repo)}
-			      primaryText={ <span style={styles.primaryLink} >{props.repo.name}</span> }
-			      secondaryText={ props.repo.description }
+			      onClick={this.navToChatroom.bind(this, repo)}
+			      primaryText={ <span style={styles.primaryLink} >{repo.name}</span> }
+			      secondaryText={ repo.description }
 			      secondaryTextLines={ 1 }
 			      leftIcon={<ChatIcon />}
 			    />
@@ -27,25 +42,30 @@ class RepoList extends React.Component {
 	render() {
 		return (
 		  <div>
-		    {this.props.repos.map((repo) => {
-		      return <RepoListEntry key={repo.id} repo={repo} navToChatroom={this.props.navToChatroom}/>
-		    })}
+		    {this.createListItems()}
 		  </div>
 		)
 	}
 
 }
 
-
-
 const styles = {
+  primaryLink: {
+    color: githubBlue
+  }
 };
 
 // container "glue"
-function mapStatetoProps(state) {
+function mapStateToProps(state) {
 	return {
 		repos: state.repos,
-		navToChatroom: state.navToChatroom
 	};
 }
-export default RepoList;
+
+function matchDispatchToProps(dispatch) {
+	return bindActionCreators({selectChatroom: selectChatroom}, dispatch)
+}
+
+// exporting container
+export default connect(mapStateToRepos, matchDispatchToProps)(RepoList);
+
