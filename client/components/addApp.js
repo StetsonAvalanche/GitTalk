@@ -48,8 +48,14 @@ class AddApp extends React.Component {
   updateSubscriptions() {
     getAllApps()
     .then(appdata => {
+      if (this.props.reponame === 'tankwan/GitTalk') {
+        console.log('update subscriptions', this.props.reponame);
+      }
       getSubscriptions(this.props.reponame)
       .then(subsdata => {
+        if (this.props.reponame === 'tankwan/GitTalk') {
+          console.log('update subscriptions - get subsdata', this.props.reponame);
+        }
         subsdata = JSON.parse(subsdata);
         appdata = JSON.parse(appdata);
         for (var i = 0; i < appdata.length; i++) {
@@ -69,10 +75,6 @@ class AddApp extends React.Component {
   }
 
   componentDidMount() {
-    this.updateSubscriptions();
-  }
-
-  componentDidUpdate() {
     this.updateSubscriptions();
   }
 
@@ -104,7 +106,7 @@ class AddApp extends React.Component {
                     >
                       {  
                         this.state.apps.map((app) => {
-                          return (<AddAppItem app={app} reponame={this.props.reponame}/>);
+                          return (<AddAppItem app={app} reponame={this.props.reponame} updateSubscriptions={this.updateSubscriptions} />);
                         })
                       }
                     </Dialog>;

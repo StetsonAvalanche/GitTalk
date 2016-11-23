@@ -28,7 +28,8 @@ function inbound(req, res) {
       const room = chatroom[0];
       console.log(room, 'room');
       room.messages.push(message);
-      io.on('connection', socket => {
+      io.on('connection', (socket) => {
+        console.log('connected to sockets');
         io.sockets.emit('new bc message', message);
       });
 

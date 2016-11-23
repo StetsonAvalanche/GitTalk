@@ -25,7 +25,10 @@ class AddAppItem extends React.Component {
     this.setState({ added: true });
 
     subscribeApp(this.props.app, this.props.reponame)
-    .then((response) => console.log('subscribed app to repo', response))
+    .then((response) => {
+      console.log('subscribed app to repo', response);
+      this.props.updateSubscriptions();
+    })
     .catch((err) => console.log(err));
   }
 
@@ -34,7 +37,10 @@ class AddAppItem extends React.Component {
     this.setState({ added: false });
 
     unsubscribeApp(this.props.app, this.props.reponame)
-    .then((response) => console.log('unsubscribed app from repo', response))
+    .then((response) => {
+      console.log('unsubscribed app from repo', response);
+      this.props.updateSubscriptions();
+    })
     .catch((err) => console.log(err));
   }
 
