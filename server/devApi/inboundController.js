@@ -1,21 +1,6 @@
 const Chatroom = require('./../db/controllers/chatroom.js');
 const App = require('./../db/controllers/app.js');
 
-const fakeRoom = {
-  id: 'chasestarr/GitTalk',
-  apps: {
-    read: {
-      'http://localhost:8002': true,
-      'http://localhost:8003': true,
-      'chasebot%dot%herokuapp%dot%com': true
-    },
-    write: {
-      'abc': true,
-      '123': true
-    }
-  }
-}
-
 function inbound(req, res) {
   const payload = req.body;
   const err = _ensureRequired(payload);
@@ -25,8 +10,7 @@ function inbound(req, res) {
     if (err) res.status(400).json(err);
 
     App.findOneByKey(payload.apiKey, (err, app) => {
-      // if (err) res.status(400).json({ err: 'app not found' });
-      if (err) console.log(err);
+      if (err) res.status(400).json({ err: 'app not found' });
 
       const message = {
         type: !!payload.action.image ? 'image': 'text',
@@ -63,15 +47,9 @@ function _verifyRoomWriteAccess(room, key, cb) {
   Chatroom.findOne(room, (err, chatroom) => {
     if (err) cb({ err: `${room} not found` }, null);
 
-    // will replace this code with real check
-    if (!fakeRoom.apps.write[key]) {
-      if (err) cb({err: `not authorized to write to ${ room }` }, null);
+    if (!chatroom.apps.write[payload.apiKey]) {
+      res.status(400).json({ err: `not authorized to write to ${payload.room}` });
     }
-
-    // real lookup... commented out for now while chatroom schema is updated
-    // if (!chatroom.apps.write[payload.apiKey]) {
-    //   res.status(400).json({ err: `not authorized to write to ${payload.room}` });
-    // }
 
     cb(null, chatroom);
   });
