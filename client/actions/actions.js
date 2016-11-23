@@ -12,3 +12,10 @@ export function updateRepos(repos) {
   }
 }
 
+export function updateMessages(repos) {
+  return {
+    type: 'UPDATE_MESSAGES',
+    repos
+  }
+}
+
