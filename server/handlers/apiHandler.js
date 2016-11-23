@@ -17,10 +17,9 @@ function getMessages (req, res) {
     } else {
       if (chatroom[0] === undefined) {
         throw 'error: chatroom does not exist';
-      } else if (chatroom[0].messages === undefined) {
-        chatroom[0].messages = [];
+      } else {
+    	  res.status(200).send(JSON.stringify(chatroom[0].messages));      
       }
-  	  res.status(200).send(JSON.stringify(chatroom[0].messages));
     } 
   });
 }

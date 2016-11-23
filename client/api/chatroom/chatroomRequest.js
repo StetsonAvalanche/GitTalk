@@ -21,7 +21,7 @@ function init(repo) {
   return new Promise((resolve, reject) => {
     _post('/api/chatroom/init', {repo: {
         id: repo, 
-        messages: [{ 
+        messages: [{ // add placeholder message for user delight and data field creation
           type: 'message', 
           chatroom: repo,
           image: null, 
@@ -29,7 +29,7 @@ function init(repo) {
           userAvatarUrl: '/assets/GitTalkLogo.png', 
           user: 'GitTalk' 
         }], 
-        apps: [{
+        apps: [{  // add placeholder app subscription for data field creation
           read: { initPlaceholder: true },
           write: { initPlaceholder: true }
         }]
