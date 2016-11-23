@@ -1,6 +1,9 @@
 const Chatroom = require('./../db/controllers/chatroom.js');
 const App = require('./../db/controllers/app.js');
 
+// const SocketIo = require('socket.io');
+// const io = new SocketIo(server, {path: '/api/chat'});
+
 function inbound(req, res) {
   const payload = req.body;
   const err = _ensureRequired(payload);
@@ -18,11 +21,15 @@ function inbound(req, res) {
         image: payload.action.image,
         text: payload.action.text,
         userAvatarUrl: payload.action.avatar
-      }
+      };
 
-      const room = chatroom[0];
+      const room = chatroom;
       room.messages.push(message);
-      room.save();
+
+      // io.sockets.emit('new bc message', msg);
+
+      Chatroom.update(room, () => {});
+      // room.save();
     });
 
     res.status(201).end();
@@ -46,12 +53,15 @@ function _ensureRequired(payload) {
 function _verifyRoomWriteAccess(room, key, cb) {
   Chatroom.findOne(room, (err, chatroom) => {
     if (err) cb({ err: `${room} not found` }, null);
+    console.log('chatroom', chatroom[0]);
+    console.log('apps', chatroom[0].apps[0]);
+    console.log('key', key);
 
-    if (!chatroom.apps.write[payload.apiKey]) {
-      res.status(400).json({ err: `not authorized to write to ${payload.room}` });
+    if (!chatroom[0].apps[0].write[key]) {
+      cb({ err: `not authorized to write to ${room}` }, null);
     }
 
-    cb(null, chatroom);
+    cb(null, chatroom[0]);
   });
 }
 

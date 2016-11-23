@@ -30,15 +30,20 @@ function subscribeApp(req, res) {
       if (room === undefined) {
         throw 'error: chatroom does not exist';
       }
-      let apps = room.apps;
-      if (apps[0] === undefined) {
-        apps.push({
+      // let apps = room.apps;
+      if (room.apps === undefined) {
+        room.apps = [{
+          read: {},
+          write: {}
+        }];
+      }else if (room.apps[0] === undefined) {
+        room.apps.push({
           read: {},
           write: {}
         });
       }
-      apps[0].read[app.endpoint.split('.').join('%dot%')] = true;
-      apps[0].write[app.apiKey] = true;
+      room.apps[0].read[app.endpoint.split('.').join('%dot%')] = true;
+      room.apps[0].write[app.apiKey] = true;
 
       Chatroom.update(room, () => {
         res.status(201).end();        
@@ -98,13 +103,15 @@ function getSubscriptions(req, res) {
         // throw 'error: chatroom does not exist';
       } else {
         let apps = room.apps;
-        if (apps[0] === undefined) {
+        if (apps === undefined) {
+          res.status(200).send(JSON.stringify({ read: {}, write: {} }));
+        } else if (apps[0] === undefined) {
           apps.push({
             read: {},
             write: {}
           });
+          res.status(200).send(JSON.stringify(apps[0]));        
         }
-        res.status(200).send(JSON.stringify(apps[0]));        
       }
     } 
   });
