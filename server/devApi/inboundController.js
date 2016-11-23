@@ -21,12 +21,19 @@ function inbound(req, res) {
         chatroom: payload.room,
         image: payload.action.image,
         text: payload.action.text,
-        userAvatarUrl: payload.action.avatar
-      }
+        userAvatarUrl: payload.action.avatar,
+        user: app.name
+      };
 
       const room = chatroom[0];
+      console.log(room, 'room');
       room.messages.push(message);
-      room.save();
+      io.on('connection', socket => {
+        io.sockets.emit('new bc message', message);
+      });
+
+      Chatroom.update(room, () => {});
+      // room.save();
     });
 
     res.status(201).end();
@@ -51,8 +58,8 @@ function _verifyRoomWriteAccess(room, key, cb) {
   Chatroom.findOne(room, (err, chatroom) => {
     if (err) cb({ err: `${room} not found` }, null);
 
-    if (!chatroom.apps.write[payload.apiKey]) {
-      res.status(400).json({ err: `not authorized to write to ${payload.room}` });
+    if (!chatroom[0].apps[0].write[key]) {
+      cb({ err: `not authorized to write to ${room}` }, null);
     }
 
     cb(null, chatroom);
