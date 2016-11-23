@@ -20,22 +20,7 @@ module.exports = function(server) {
         room.messages.push(msg);
         room.save();
 
-        // fake test data will need to remove
-        const fakeRoom = {
-          id: room.id,
-          apps: {
-            read: {
-              'http://localhost:8002': true,
-              'http://localhost:8003': true,
-              'chasebot%dot%herokuapp%dot%com': true
-            },
-            write: {
-              'abc': true,
-              '123': true
-            }
-          }
-        }
-        outbound.send(fakeRoom, msg);
+        outbound.send(room, msg);
       });
     });
   });
