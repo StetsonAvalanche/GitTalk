@@ -15,7 +15,7 @@ function getMessages(chatroomid) {
       resolve(data);
     })
     .fail((jqXHR, textStatus, err) => {
-      console.log('error in getMessges', jqXHR, err);
+      console.log('error in getMessages', jqXHR, err);
       reject(err);
     });
   });

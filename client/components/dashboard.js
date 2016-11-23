@@ -4,12 +4,10 @@ import Profile from './profile.js';
 import { getUser } from './../api/user/userRequest.js';
 import {connect} from 'react-redux';
 import * as actions from '../actions/actions';
+import { init, getChatroom } from '../api/chatroom/chatroomRequest.js';
 
 /* Material-UI components */
 import Paper from 'material-ui/Paper';
-
-/* Color Scheme */
-import { grey200 } from './../util/colorScheme';
 
 const Dashboard = (props) => (
       <div style={ styles.dashboardContainer } >

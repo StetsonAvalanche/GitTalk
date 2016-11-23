@@ -9,9 +9,24 @@ function chatroomInit(req, res) {
   });
 }
 
+function getChatroom (req, res) {
+  const chatroomId = req.params.username + '/' + req.params.chatroom; 
+  chatroomCtrl.findOneById(chatroomId, (err, chatroom) => {
+    if (err) { 
+      throw err;
+    } else {
+      if (chatroom[0] === undefined) {
+        res.status(200).send(JSON.stringify(null));
+      } else {
+        res.status(200).send(JSON.stringify(chatroom[0]));      
+      }
+    } 
+  });
+}
+
 function getMessages (req, res) {
   const chatroomId = req.params.username + '/' + req.params.chatroom; 
-  chatroomCtrl.findOne(chatroomId, (err, chatroom) => {
+  chatroomCtrl.findOneById(chatroomId, (err, chatroom) => {
     if (err) { 
       throw err;
     } else {
@@ -75,6 +90,7 @@ function emailInvite (req, res) {
 module.exports = {
   chatroomInit: chatroomInit,
   emailInvite: emailInvite,
+  getChatroom: getChatroom,
   getMemberRepos: getMemberRepos,
   getMessages: getMessages
 }
