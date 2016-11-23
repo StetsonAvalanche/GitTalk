@@ -21,24 +21,20 @@ class AddAppItem extends React.Component {
   }
   
   addApp() {
-    console.log('add app to repo', this.props.reponame);
     this.setState({ added: true });
 
     subscribeApp(this.props.app, this.props.reponame)
     .then((response) => {
-      console.log('subscribed app to repo', response);
       this.props.updateSubscriptions();
     })
     .catch((err) => console.log(err));
   }
 
   removeApp() {
-    console.log('remove app', this.props.app, 'from repo', this.props.reponame);
     this.setState({ added: false });
 
     unsubscribeApp(this.props.app, this.props.reponame)
     .then((response) => {
-      console.log('unsubscribed app from repo', response);
       this.props.updateSubscriptions();
     })
     .catch((err) => console.log(err));

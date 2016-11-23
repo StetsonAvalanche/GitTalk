@@ -48,14 +48,8 @@ class AddApp extends React.Component {
   updateSubscriptions() {
     getAllApps()
     .then(appdata => {
-      if (this.props.reponame === 'tankwan/GitTalk') {
-        console.log('update subscriptions', this.props.reponame);
-      }
       getSubscriptions(this.props.reponame)
       .then(subsdata => {
-        if (this.props.reponame === 'tankwan/GitTalk') {
-          console.log('update subscriptions - get subsdata', this.props.reponame);
-        }
         subsdata = JSON.parse(subsdata);
         appdata = JSON.parse(appdata);
         for (var i = 0; i < appdata.length; i++) {
@@ -79,7 +73,6 @@ class AddApp extends React.Component {
   }
 
   handleOpen() {
-    console.log('handleopen addApp');
     this.setState({open: true});
   }
 
