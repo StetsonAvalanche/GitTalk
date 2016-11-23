@@ -1,5 +1,11 @@
 var mongoose = require('mongoose');
 
+// starting to work on db schema refactor
+// var appsSchema = mongoose.Schema({
+//   read: Array,
+//   write: Array
+// });
+
 var chatroomSchema = mongoose.Schema({
 	id: {
 		type: String, 
