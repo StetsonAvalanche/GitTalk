@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
-// import TopBar from './topbar';
-// import NavBar from './navbar';
-// import Messages from './messages';
-// import EnterMessage from './entermessage';
+import TopBar from './topbar';
+import NavBar from './navbar';
+import Messages from './messages';
+import EnterMessage from './entermessage';
 
 import { getUser, getMemberRepos } from './../api/user/userRequest';
 import { getMessages } from './../api/chatroom/messageRequest';
