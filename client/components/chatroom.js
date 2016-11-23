@@ -58,6 +58,7 @@ class Chatroom extends React.Component {
     // socket.emit('join chatroom', {id: this.state.chatroomId});
     // this.updateUser();
     this.updateMessages();
+    console.log(this.props.repos)
   }
 
   // updateUser() {
@@ -121,6 +122,7 @@ class Chatroom extends React.Component {
         {/*<NavBar username={this.state.username} photo={this.state.userAvatarUrl} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
         <TopBar reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} /> */}
         
+       
         {(this.props.messages.length > 0) ?
           <Messages messages={this.props.messages} windowWidth={this.state.windowWidth} windowHeight={this.state.windowHeight}/>
         : null}
@@ -137,7 +139,8 @@ class Chatroom extends React.Component {
   function mapStateToProps(state) {
       return {
           authUser: state.authUser,
-          messages: state.messages
+          messages: state.messages,
+          repos: state.repos
       };
   }
 
