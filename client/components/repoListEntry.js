@@ -13,10 +13,10 @@ import AddApp from './addApp.js';
 const RepoListEntry = (props) => (
   <div>
     <ListItem
-      primaryText={ <span style={styles.primaryLink} onClick={props.navToChatroom.bind(this, props.repo.full_name)} >{props.repo.name}</span> }
+      primaryText={ <span style={styles.primaryLink} onTouchTap={props.navToChatroom.bind(this, props.repo.full_name)}>{props.repo.name}</span> }
       secondaryText={ props.repo.description }
       secondaryTextLines={ 1 }
-      leftIcon={<ChatIcon />}
+      leftIcon={<ChatIcon onTouchTap={props.navToChatroom.bind(this, props.repo.full_name)}/>}
       rightIcon={<AddApp reponame={props.repo.full_name} />}
     />
     <Divider />

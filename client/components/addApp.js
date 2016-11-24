@@ -12,6 +12,8 @@ import { githubGreen, githubBlue } from './../util/colorScheme.js';
 
 import { getAllApps, getSubscriptions } from './../api/app/appRequest.js';
 
+import { init, getChatroom } from './../api/chatroom/chatroomRequest.js';
+
 class AddApp extends React.Component {
   constructor(props) {
     super(props);
@@ -19,18 +21,6 @@ class AddApp extends React.Component {
     this.state = {
       open: false,
       apps: [ 
-        { name: 'Giffy', 
-          category: 'utility',
-          endpoint: 'giffy.herokuapp.com', 
-          owner: 'gifcat', 
-          apiKey: '345catcat9dd053f663b8ed496d2a'
-        },
-        { name: 'Weather', 
-          category: 'utility',
-          endpoint: 'weather.herokuapp.com', 
-          owner: 'weatherChannel', 
-          apiKey: '34567rainrain5c99dd053f663b8ed496d2a'
-        },
         { name: 'OlegBot', 
           category: 'chatbot',
           endpoint: 'olegbot.herokuapp.com', 
@@ -46,7 +36,15 @@ class AddApp extends React.Component {
   }
 
   updateSubscriptions() {
-    getAllApps()
+    getChatroom(this.props.reponame) // check if chatroom exists
+    .then(chatroom => {
+      if (chatroom === null) {
+        return init(this.props.reponame); // if not, initialize chatroom
+      } else {
+        return 'chatroom exists';
+      }
+    })
+    .then(() => getAllApps())
     .then(appdata => {
       getSubscriptions(this.props.reponame)
       .then(subsdata => {
@@ -81,7 +79,7 @@ class AddApp extends React.Component {
   }
 
   render() {
-    const style = { position: 'absolute', right: 0, top: 0, };
+    const style = { position: 'absolute', right: 0, top: 0, zIndex: 10 };
 
     const actions = <FlatButton
                       label='Done'
@@ -105,7 +103,7 @@ class AddApp extends React.Component {
                     </Dialog>;
 
     return (
-      <IconButton tooltip='SVG Icon' onClick={this.handleOpen} style={style}>
+      <IconButton tooltip='SVG Icon' onTouchTap={this.handleOpen} style={style}>
         <SettingsIcon />
         {dialog}
       </IconButton>
