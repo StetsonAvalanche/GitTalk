@@ -83,10 +83,16 @@ class Chatroom extends React.Component {
     .catch(err => console.log('error in getMemberRepos', err));
   }
 
-  updateMessages() {
+  updateMessages(chatroomId) {
     // fetch all messages from DB
-    getMessages(this.state.chatroomId)
+    if (chatroomId === undefined) {
+      chatroomId = this.state.chatroomId;
+    } else {
+      this.setState({chatroomId: chatroomId});
+    }
+    getMessages(chatroomId)
     .then(messages => {
+      console.log('update messages to', chatroomId);
       this.setState({ messages: JSON.parse(messages) });
     })
     .catch(err => console.log(err));
