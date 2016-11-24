@@ -72,7 +72,7 @@ class NavBar extends React.Component {
                             {channel}
                           </Link>}
                         innerDivStyle={listItemStyle}
-                        onClick={this.props.changeChannel}
+                        onClick={() => this.props.changeChannel(channel)}
                       />);
             })}
           </List>
