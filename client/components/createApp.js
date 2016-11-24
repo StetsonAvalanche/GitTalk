@@ -28,9 +28,8 @@ class CreateApp extends React.Component {
   };
 
   handleChange = (param, event) => {
-    console.log(this.state);
     this.setState({ [param]: event.target.value });
-  }
+  };
 
   saveApp = () => {
     createApp({
