@@ -13,15 +13,14 @@ import { getUserRepos } from './../api/user/userRequest.js';
 import { grey200 } from './../util/colorScheme';
 import {Card, CircularProgress} from 'material-ui';
 
-/* Websocket */
-import io from 'socket.io-client';
-const socket = io('', { path: '/api/chat'});
+// /* Websocket */
+// import io from 'socket.io-client';
+// const socket = io('', { path: '/api/chat'});
 
 class Chatroom extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      chatroomId: this.props.params.username + '/' + this.props.params.reponame,
       channels: [],
       inviteSent: false,
       windowWidth: window.innerWidth,
@@ -35,22 +34,23 @@ class Chatroom extends React.Component {
       });
     }; 
 
+    // console.log(this.props.params.username + '/' + this.props.params.reponame)
     /* this bindings for methods */
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
-    this.updateMessages = this.updateMessages.bind(this);
+    this.fetchMessages = this.fetchMessages.bind(this);
     // this.sendEmailInvite = this.sendEmailInvite.bind(this);
     
 
-    /* websockets */
-    socket.on('new bc message', (message) => {
-      this.props.dispatch(actions.updateMessages(message));
-      // this.updateMemberRepos();
-    });
+
   }
 
   componentWillMount() {
-    socket.emit('join chatroom', {id: this.state.chatroomId});
-    this.updateMessages();
+    /* websockets */
+    // socket.emit('join chatroom', {id: this.props.chatroomId});
+    /* update active chatroom id in global store object */
+    /* fetch messages for this (=active) chatroom from DB */
+    
+    this.fetchMessages(this.props.params.username + '/' + this.props.params.reponame);
   }
 
   // updateMemberRepos() {
@@ -63,11 +63,12 @@ class Chatroom extends React.Component {
   //   .catch(err => console.log('error in getMemberRepos', err));
   // }
 
-  updateMessages() {
+  fetchMessages(chatroomId) {
     // fetch all messages from DB
-    getMessages(this.state.chatroomId)
+    getMessages(chatroomId)
     .then(messages => {
       this.props.dispatch(actions.updateMessages(JSON.parse(messages)));
+      this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
     })
     .catch(err => console.log(err));
   }
@@ -99,9 +100,9 @@ class Chatroom extends React.Component {
         {(this.props.messages.length > 0) ?
           <Messages messages={this.props.messages} windowWidth={this.state.windowWidth} windowHeight={this.state.windowHeight}/>
         : null}
-
-        {(this.props.authUser.username !== '') ? 
-          <EnterMessage username={this.props.authUser.username} chatroomId={this.state.chatroomId} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} renderSentMessage={this.renderSentMessage}/>
+        {console.log(this.props.chatroomId)}
+        {(this.props.chatroomId) ? 
+          <EnterMessage username={this.props.authUser.username} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} renderSentMessage={this.renderSentMessage}/>
           : null
         }
       </div>
@@ -113,7 +114,8 @@ class Chatroom extends React.Component {
       return {
           authUser: state.authUser,
           repos: state.repos,
-          messages: state.messages
+          messages: state.messages,
+          chatroomId: state.activeChatroomId
       };
   }
 
