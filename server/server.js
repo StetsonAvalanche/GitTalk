@@ -89,6 +89,7 @@ io.on('connection', (socket) => {
     console.log('message received', msg);
     socket.broadcast.to(msg.chatroom).emit('new bc message', msg);
     /* store sent message in DB */
+    console.log(msg.chatroom)
     chatroomCtrl.findOne(msg.chatroom, (err, chatroom) => {
       if (err) {throw err;}
       const room = chatroom[0];
