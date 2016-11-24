@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
 import AddImage from './addImage';
+import {connect} from 'react-redux';
+import * as actions from '../actions/actions';
 
 /* Color Scheme */
 import {
@@ -26,12 +28,18 @@ class EnterMessage extends React.Component {
     super(props);
     this.state = {
       value: '',
-      chatroom: this.props.chatroomId,
+      // chatroom: this.props.chatroomId,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+
+    /* websockets */
+    socket.on('new bc message', (message) => {
+      this.props.dispatch(actions.updateMessages(message));
+      // this.updateMemberRepos();
+    });
   }
 
   handleChange(event) {
@@ -51,14 +59,15 @@ class EnterMessage extends React.Component {
       type: image ? 'image': 'text',
       user: this.props.username,
       userAvatarUrl: this.props.userAvatarUrl,
-      chatroom: this.state.chatroom,
+      chatroom: this.props.chatroomId,
       image: image,
       text: image ? null : this.state.value
     };
 
     console.log('message sent', newMessage);
+    socket.emit('join chatroom', {id: this.props.chatroomId});
     socket.emit('new message', newMessage);
-    // this.props.renderSentMessage(newMessage);
+    this.props.dispatch(actions.updateMessages(newMessage));
     if (!image) this.setState({ value: '' });
   }
 
@@ -131,4 +140,13 @@ class EnterMessage extends React.Component {
   }
 }
 
-export default EnterMessage;
+function mapStateToProps(state) {
+    return {
+        authUser: state.authUser,
+        repos: state.repos,
+        messages: state.messages,
+        chatroomId: state.activeChatroomId
+    };
+}
+
+export default connect(mapStateToProps)(EnterMessage);

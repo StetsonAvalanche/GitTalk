@@ -5,6 +5,13 @@ export function getAuthUser(user) {
   }
 }
 
+export function setActiveChatroom(chatroomId) {
+  return {
+    type: 'SET_ACTIVE_CHATROOM',
+    chatroomId
+  }
+}
+
 export function updateRepos(repos) {
   return {
     type: 'UPDATE_REPOS',
