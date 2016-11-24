@@ -79,7 +79,7 @@ function getAllApps(req, res) {
 
 function getSubscriptions(req, res) {
   const chatroomId = req.params.username + '/' + req.params.chatroom;
-  Chatroom.findOne(chatroomId, (err, chatroom) => {
+  Chatroom.findOneById(chatroomId, (err, chatroom) => {
     if (err) { 
       throw err;
     } else {

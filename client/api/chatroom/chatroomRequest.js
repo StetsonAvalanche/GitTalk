@@ -27,12 +27,13 @@ function init(repo) {
           image: null, 
           text: 'Welcome to GitTalk, chat away!', 
           userAvatarUrl: '/assets/GitTalkLogo.png', 
-          user: 'GitTalk' 
+          user: 'GitTalk'
         }], 
         apps: [{  // add placeholder app subscription for data field creation
           read: { 'http://initPlaceholder': true },
           write: { initPlaceholder: true }
-        }]
+        }],
+        members: ['placeholder'] // add member for data field creation
       }}).done(() => { 
       resolve(); 
     }).fail((jqXHR, textStatus, err) => {
