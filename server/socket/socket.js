@@ -16,21 +16,14 @@ function listen(server) {
         if (err) {throw err;}
         const room = chatroom[0];
         if (room === undefined) { throw 'error: chatroom does not exist'; }
-        if (room.members === undefined) {
-          room.members = [];
-        }
         if (room.members.indexOf(msg.user) === -1) {
           room.members.push(msg.user);
         }
-        if (room.messages === undefined) {
-          room.messages = [];
-        }
         room.messages.push(msg);
-
         room.save();
-        // chatroomCtrl.update(room, () => {
+
         if (room.apps[0].read) outbound.send(room, msg);
-        // });
+
       });
     });
   });
