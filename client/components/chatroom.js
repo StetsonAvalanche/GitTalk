@@ -39,7 +39,7 @@ class Chatroom extends React.Component {
 
     /* this binding for methods */
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
-    
+
     /* update active chatroom id in global store object */
     this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
   }
@@ -65,7 +65,7 @@ class Chatroom extends React.Component {
       <div>
         <NavBar channels={this.state.channels} changeChannel={this.updateMessages} />
         <TopBar reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} />
-       
+
         <Messages windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height}/>
 
         {(this.props.chatroomId) ? 
