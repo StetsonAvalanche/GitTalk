@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import RepoList from './repoList.js';
 import Profile from './profile.js';
-import {getUser, getUserRepos } from './../api/user/userRequest.js';
+import { getUser, getUserRepos } from './../api/user/userRequest.js';
 import { init, getChatroom } from '../api/chatroom/chatroomRequest.js';
 
 import Paper from 'material-ui/Paper';
@@ -25,7 +25,6 @@ class Dashboard extends React.Component {
     // Initiate chatroom
     getChatroom(name) // check if chatroom exists
     .then(chatroom => {
-      console.log('chatroom', chatroom);
       if (chatroom === null) {
         return init(name);
       }
