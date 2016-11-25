@@ -3,6 +3,7 @@ import AddImage from './addImage';
 import {connect} from 'react-redux';
 import * as actions from '../actions/actions';
 
+
 /* Color Scheme */
 import {
   githubLightGreen,
@@ -35,11 +36,6 @@ class EnterMessage extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
 
-    /* websockets */
-    socket.on('new bc message', (message) => {
-      this.props.dispatch(actions.updateMessages(message));
-      // this.updateMemberRepos();
-    });
   }
 
   handleChange(event) {
@@ -143,7 +139,6 @@ class EnterMessage extends React.Component {
 function mapStateToProps(state) {
     return {
         authUser: state.authUser,
-        repos: state.repos,
         messages: state.messages,
         chatroomId: state.activeChatroomId
     };
