@@ -13,9 +13,9 @@ import { getUserRepos } from './../api/user/userRequest.js';
 import { grey200 } from './../util/colorScheme';
 import {Card, CircularProgress} from 'material-ui';
 
-// /* Websocket */
-// import io from 'socket.io-client';
-// const socket = io('', { path: '/api/chat'});
+/* Websocket */
+import io from 'socket.io-client';
+const socket = io('', { path: '/api/chat'});
 
 class Chatroom extends React.Component {
   constructor(props){
@@ -34,22 +34,27 @@ class Chatroom extends React.Component {
       });
     }; 
 
-    // console.log(this.props.params.username + '/' + this.props.params.reponame)
     /* this bindings for methods */
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
     this.fetchMessages = this.fetchMessages.bind(this);
     // this.sendEmailInvite = this.sendEmailInvite.bind(this);
     
-
+    /* update active chatroom id in global store object */
+    this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
+    
+    /* websockets */
+    socket.on('new bc message', (message) => {
+      this.props.dispatch(actions.updateMessages(message));
+      // this.updateMemberRepos();
+    });
 
   }
 
-  componentWillMount() {
+  componentDidMount() {
     /* websockets */
     // socket.emit('join chatroom', {id: this.props.chatroomId});
-    /* update active chatroom id in global store object */
-    /* fetch messages for this (=active) chatroom from DB */
     
+    /* fetch messages for this (=active) chatroom from DB */
     this.fetchMessages(this.props.params.username + '/' + this.props.params.reponame);
   }
 
@@ -68,7 +73,6 @@ class Chatroom extends React.Component {
     getMessages(chatroomId)
     .then(messages => {
       this.props.dispatch(actions.updateMessages(JSON.parse(messages)));
-      this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
     })
     .catch(err => console.log(err));
   }
@@ -100,7 +104,7 @@ class Chatroom extends React.Component {
         {(this.props.messages.length > 0) ?
           <Messages messages={this.props.messages} windowWidth={this.state.windowWidth} windowHeight={this.state.windowHeight}/>
         : null}
-        {console.log(this.props.chatroomId)}
+        {console.log('INSIDE RENDER',this.props.chatroomId)}
         {(this.props.chatroomId) ? 
           <EnterMessage username={this.props.authUser.username} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} renderSentMessage={this.renderSentMessage}/>
           : null
