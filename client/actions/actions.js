@@ -26,9 +26,13 @@ export function updateMessages(messages) {
   }
 }
 
-export function selectChatroom(chatroomId) {
+
+export function updateWindowSize(newWindow) {
   return {
-  	type: 'SET_ACTIVE_CHATROOM',
-  	chatroomId
+    type: 'RESIZE_WINDOW',
+    windowWidth: newWindow.width,
+    windowHeight: newWindow.height
   }
 }
+
+
