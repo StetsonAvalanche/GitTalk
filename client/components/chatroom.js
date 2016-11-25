@@ -20,18 +20,28 @@ const socket = io('', { path: '/api/chat'});
 class Chatroom extends React.Component {
   constructor(props){
     super(props);
+
+    this.props.dispatch(actions.updateWindowSize({ 
+      width: window.innerWidth, 
+      height: window.innerHeight
+    }));
+
     this.state = {
       channels: [],
       inviteSent: false,
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
+      // windowWidth: window.innerWidth,
+      // windowHeight: window.innerHeight,
     };
 
     window.onresize = () => {
-      this.setState({
-        windowWidth: window.innerWidth,
-        windowHeight: window.innerHeight,
-      });
+      this.props.dispatch(actions.updateWindowSize({ 
+        width: window.innerWidth, 
+        height: window.innerHeight
+      }));
+      // this.setState({
+      //   windowWidth: window.innerWidth,
+      //   windowHeight: window.innerHeight,
+      // });
     }; 
 
     /* this bindings for methods */
@@ -99,14 +109,14 @@ class Chatroom extends React.Component {
     return (
       <div>
         <NavBar username={this.props.authUser.username} photo={this.props.authUser._json.avatar_url} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
-        <TopBar reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} />
+        <TopBar reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} />
        
         {(this.props.messages.length > 0) ?
-          <Messages messages={this.props.messages} windowWidth={this.state.windowWidth} windowHeight={this.state.windowHeight}/>
+          <Messages messages={this.props.messages} windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height}/>
         : null}
         {console.log('INSIDE RENDER',this.props.chatroomId)}
         {(this.props.chatroomId) ? 
-          <EnterMessage username={this.props.authUser.username} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.state.windowWidth} renderSentMessage={this.renderSentMessage}/>
+          <EnterMessage username={this.props.authUser.username} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} renderSentMessage={this.renderSentMessage}/>
           : null
         }
       </div>
@@ -119,7 +129,8 @@ class Chatroom extends React.Component {
           authUser: state.authUser,
           repos: state.repos,
           messages: state.messages,
-          chatroomId: state.activeChatroomId
+          chatroomId: state.activeChatroomId,
+          windowSize: state.windowSize
       };
   }
 
