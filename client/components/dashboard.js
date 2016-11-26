@@ -1,13 +1,14 @@
 import React from 'react';
-import { Link, browserHistory } from 'react-router';
 import RepoList from './repoList.js';
 import Profile from './profile.js';
 import { getUser } from './../api/user/userRequest.js';
-import { init } from '../api/chatroom/chatroomRequest.js';
 import {connect} from 'react-redux';
 import * as actions from '../actions/actions';
 
+/* Material-UI components */
 import Paper from 'material-ui/Paper';
+
+/* Color Scheme */
 import { grey200 } from './../util/colorScheme';
 
 class Dashboard extends React.Component {

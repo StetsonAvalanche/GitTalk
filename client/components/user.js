@@ -1,5 +1,8 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
+
+/* Material-UI components */
+import Avatar from 'material-ui/Avatar';
 import FontIcon from 'material-ui/FontIcon';
 import ActionHome from 'material-ui/svg-icons/action/home';
 
@@ -13,8 +16,6 @@ import {
   grey200,
 } from './../util/colorScheme.js';
 
-/* Material-UI components */
-import Avatar from 'material-ui/Avatar';
 
 class User extends React.Component {
   constructor(props){

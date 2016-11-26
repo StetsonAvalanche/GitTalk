@@ -1,6 +1,10 @@
 import React from 'react';
+
+/* Material-UI components */
 import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
+
+/* Color Scheme */
 import {
   githubLightGreen,
   githubGreen,
@@ -9,6 +13,25 @@ import {
   fullWhite,
   grey200,
 } from './../util/colorScheme.js';
+
+const Login = () => (
+    <div style={styles.box}>
+      <img src='/assets/GitTalkLogo.png' style={styles.logo}/>
+      <h1 style={styles.title}>GitTalk</h1>
+      <div style={{textAlign: 'center'}}>
+        <RaisedButton 
+          className="raised-button"
+          href="/auth/github"
+          label="Login with GitHub"
+          secondary={false}
+          style={styles.button}
+          icon={<FontIcon className="muidocs-icon-custom-github" />}
+          backgroundColor="#8cc665"
+          labelColor="white"
+        />
+      </div>
+    </div>
+);
 
 const styles = {
   button: {
@@ -28,30 +51,6 @@ const styles = {
   box: {
     backgroundColor: fullWhite,
   }
-};
-
-
-const Login = () => {
-
-  return (
-    <div style={styles.box}>
-      <img src='/assets/GitTalkLogo.png' style={styles.logo}/>
-      <h1 style={styles.title}>GitTalk</h1>
-      <div style={{textAlign: 'center'}}>
-        <RaisedButton 
-          className="raised-button"
-		      href="/auth/github"
-		      label="Login with GitHub"
-		      secondary={false}
-		      style={styles.button}
-		      icon={<FontIcon className="muidocs-icon-custom-github" />}
-		      backgroundColor="#8cc665"
-		      labelColor="white"
-    		/>
-      </div>
-    </div>
-  )
-
 };
 
 export default Login;
