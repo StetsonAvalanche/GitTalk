@@ -36,28 +36,17 @@ class Chatroom extends React.Component {
       }));
     }; 
 
-    /* this bindings for methods */
+    /* this binding for methods */
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
-    this.fetchMessages = this.fetchMessages.bind(this);
-    
     
     /* update active chatroom id in global store object */
     this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
-    
-    /* websockets */
-    socket.on('new bc message', (message) => {
-      this.props.dispatch(actions.updateMessages(message));
-      // this.updateMemberRepos();
-    });
-
   }
 
   // componentWillMount() {
     /* websockets */
     // socket.emit('join chatroom', {id: this.props.chatroomId});
-    
-    /* fetch messages for this (=active) chatroom from DB */
-    // this.fetchMessages(this.props.params.username + '/' + this.props.params.reponame);
+
   // }
 
   // updateMemberRepos() {
@@ -69,16 +58,6 @@ class Chatroom extends React.Component {
   //   })
   //   .catch(err => console.log('error in getMemberRepos', err));
   // }
-
-  fetchMessages(chatroomId) {
-    // fetch all messages from DB
-    getMessages(chatroomId)
-    .then(messages => {
-      this.props.dispatch(actions.updateMessages(JSON.parse(messages)));
-    })
-    .catch(err => console.log(err));
-  }
-
 
   render() {
     return (
@@ -103,7 +82,6 @@ class Chatroom extends React.Component {
       return {
           authUser: state.authUser,
           repos: state.repos,
-          messages: state.messages,
           chatroomId: state.activeChatroomId,
           windowSize: state.windowSize
       };
