@@ -19,9 +19,9 @@ export function updateMessages(messages) {
   }
 }
 
-export function selectChatroom(repo) {
+export function selectChatroom(chatroomId) {
   return {
   	type: 'SET_ACTIVE_CHATROOM',
-  	payload: repo
+  	chatroomId
   }
 }

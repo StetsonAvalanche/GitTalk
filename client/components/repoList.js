@@ -24,7 +24,7 @@ class RepoList extends React.Component {
 
 	createListItems() {
 		return this.props.repos.map((repo) => {
-			return ( 
+			return (
 				<div>
 			    <ListItem
 			      onClick={this.navToChatroom.bind(this, repo)}
@@ -42,11 +42,10 @@ class RepoList extends React.Component {
 	render() {
 		return (
 		  <div>
-		    {this.createListItems()}
+				{this.createListItems()}
 		  </div>
 		)
 	}
-
 }
 
 const styles = {
@@ -67,5 +66,5 @@ function matchDispatchToProps(dispatch) {
 }
 
 // exporting container
-export default connect(mapStateToRepos, matchDispatchToProps)(RepoList);
+export default connect(mapStateToProps, matchDispatchToProps)(RepoList);
 
