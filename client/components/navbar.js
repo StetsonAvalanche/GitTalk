@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 import User from './user';
 import Logout from './logout';
+import {connect} from 'react-redux';
 
 
 /* Color Scheme */
@@ -28,6 +29,26 @@ const socket = io('', { path: '/api/chat'});
 class NavBar extends React.Component {
   constructor(props){
     super(props);
+
+    this.sendEmailInvite = this.sendEmailInvite.bind(this);
+  }
+
+
+  sendEmailInvite() {
+    // // Send email invitation to collaborators
+    // const chatroomLink = '/rooms/' + this.state.chatroomId;
+    // const currRepoName = this.props.params.reponame;
+    // getUserRepos().then(repos => { 
+    //   const forkedRepoUrl = repos.reduce((targetUrl, repo) => {
+    //     if (repo.name === currRepoName) {targetUrl = repo.url;}
+    //     return targetUrl;
+    //   });
+    //   sendInvite(chatroomLink, forkedRepoUrl).then(() => {
+    //     this.setState({inviteSent: true});
+    //   }).catch(err => { 
+    //     console.log('ERROR',err); 
+    //   });
+    // }).catch(err => console.log(err));
   }
 
   render() {
@@ -39,6 +60,7 @@ class NavBar extends React.Component {
         style={drawerStyle}
         containerStyle={drawerContainerStyle}
       >
+      
         <div>
           <User username={username} photo={photo} style={userStyle} />
 
@@ -60,13 +82,20 @@ class NavBar extends React.Component {
             })}
           </List>
 
-          <RaisedButton label='Send Invite' disabled={this.props.inviteSent} onClick={this.props.sendEmailInvite}/>
+          <RaisedButton label='Send Invite' disabled={this.props.inviteSent} onClick={this.sendEmailInvite}/>
           <br /><br />
           <Logout />
         </div>
       </Drawer>
     );
   }
+}
+
+function mapStateToProps(state) {
+  return {
+    inviteSent: state.inviteSent,
+    chatroomId: state.activeChatroomId
+  };
 }
 
 const userStyle = { marginTop: '40px', fontWeight: 'bold' };
@@ -77,4 +106,4 @@ const linkStyle = { color: 'inherit', textDecoration: 'none' };
 const listHeaderStyle = { color: githubBlue };
 const listItemStyle = { padding: '5px', fontStyle: 'italic', fontSize: '14px' };
 
-export default NavBar;
+export default connect(mapStateToProps)(NavBar);
