@@ -34,7 +34,6 @@ export function addMessages(message) {
   }
 }
 
-
 export function updateWindowSize(newWindow) {
   return {
     type: 'RESIZE_WINDOW',
