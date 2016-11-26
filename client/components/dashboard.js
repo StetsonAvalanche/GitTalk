@@ -50,7 +50,7 @@ class Dashboard extends React.Component {
     return (
       <div style={ styles.dashboardContainer } >
         <Paper style={ styles.listContainer } zDepth={ 2 }>
-          <RepoList navToChatroom={this.navToChatroom} repos={this.props.repos} />
+          <RepoList />
         </Paper>
         <Paper style={ styles.profileContainer } zDepth={ 2 }>
           { (this.props.authUser) ? <Profile user={ this.props.authUser } /> : null }
