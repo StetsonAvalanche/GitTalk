@@ -15,6 +15,12 @@ class Messages extends React.Component {
     /* this binding of methods */
     this.updateScroll = this.updateScroll.bind(this);
     this.fetchMessages = this.fetchMessages.bind(this);
+
+    /* websockets */
+    socket.on('new bc message', (message) => {
+      this.props.dispatch(actions.updateMessages(message));
+      // this.updateMemberRepos();
+    });
   }
 
   componentWillMount() {
