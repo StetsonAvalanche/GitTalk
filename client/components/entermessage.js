@@ -52,8 +52,8 @@ class EnterMessage extends React.Component {
 
     const newMessage = {
       type: image ? 'image': 'text',
-      user: this.props.username,
-      userAvatarUrl: this.props.userAvatarUrl,
+      user: this.props.authUser.username,
+      userAvatarUrl: this.props.authUser._json.avatar_url,
       chatroom: this.props.chatroomId,
       image: image,
       text: image ? null : this.state.value
@@ -101,7 +101,7 @@ class EnterMessage extends React.Component {
       right:'10px',
     };
 
-    const reponame = this.props.reponame;
+    const reponame = this.props.chatroomId.split('/')[1];
 
     return (
       <div style={divStyle}>
