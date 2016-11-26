@@ -16,7 +16,6 @@ const api = require('./routes/api.js');
 const chatroomCtrl = require('./db/controllers/chatroom.js');
 
 /* express server */
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ 
@@ -60,7 +59,6 @@ const server = app.listen(port);
 console.log(`🌎  ===> server listening on port ${port}`);
 
 /* database intitialisation */
-
 const mongoose = require('mongoose'); 
 
 // const uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
@@ -75,7 +73,6 @@ mongoose.connect(uriString, (err, res) => {
 });
 
 /* websockets */
-// FIXME -> all socketEvents should be moved to a seperate file
 const io = new SocketIo(server, {path: '/api/chat'});
 
 io.on('connection', (socket) => {
