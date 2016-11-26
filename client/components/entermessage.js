@@ -28,8 +28,7 @@ class EnterMessage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      value: '',
-      // chatroom: this.props.chatroomId,
+      value: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -139,7 +138,6 @@ class EnterMessage extends React.Component {
 function mapStateToProps(state) {
     return {
         authUser: state.authUser,
-        messages: state.messages,
         chatroomId: state.activeChatroomId
     };
 }
