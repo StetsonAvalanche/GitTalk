@@ -7,7 +7,6 @@ import Messages from './messages';
 import EnterMessage from './entermessage';
 
 import { getUser, getMemberRepos } from './../api/user/userRequest';
-import { getMessages } from './../api/chatroom/messageRequest';
 import { sendInvite } from '../api/chatroom/chatroomRequest.js';
 import { grey200 } from './../util/colorScheme';
 import {Card, CircularProgress} from 'material-ui';
@@ -62,15 +61,13 @@ class Chatroom extends React.Component {
   render() {
     return (
       <div>
-        <NavBar username={this.props.authUser.username} photo={this.props.authUser._json.avatar_url} channels={this.state.channels} changeChannel={this.updateMessages} />
+        <NavBar channels={this.state.channels} changeChannel={this.updateMessages} />
         <TopBar reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} />
        
-        {/*{(this.props.messages.length > 0) ? */}
-          <Messages windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height}/>
-        {/*: null} */}
+        <Messages windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height}/>
 
         {(this.props.chatroomId) ? 
-          <EnterMessage username={this.props.authUser.username} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} renderSentMessage={this.renderSentMessage}/>
+          <EnterMessage username={this.props.authUser.username} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} />
           : null
         }
       </div>
