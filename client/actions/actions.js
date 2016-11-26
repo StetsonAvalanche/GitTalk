@@ -27,6 +27,14 @@ export function updateMessages(messages) {
 }
 
 
+export function addMessages(message) {
+  return {
+    type: 'ADD_MESSAGE',
+    message
+  }
+}
+
+
 export function updateWindowSize(newWindow) {
   return {
     type: 'RESIZE_WINDOW',
