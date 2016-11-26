@@ -52,7 +52,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const {username, photo, channels} = this.props;
+    const {channels} = this.props;
     return (
       <Drawer
         docked={true}
@@ -60,9 +60,9 @@ class NavBar extends React.Component {
         style={drawerStyle}
         containerStyle={drawerContainerStyle}
       >
-      
+
         <div>
-          <User username={username} photo={photo} style={userStyle} />
+          <User username={this.props.authUser.username} photo={this.props.authUser._json.avatar_url} style={userStyle} />
 
           <h8 style={listHeaderStyle}>Channels</h8>
           <List>
@@ -94,7 +94,8 @@ class NavBar extends React.Component {
 function mapStateToProps(state) {
   return {
     inviteSent: state.inviteSent,
-    chatroomId: state.activeChatroomId
+    chatroomId: state.activeChatroomId,
+    authUser: state.authUser
   };
 }
 

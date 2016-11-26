@@ -37,8 +37,8 @@ class Messages extends React.Component {
     element.scrollTop = element.scrollHeight;
   }
 
+  /* fetch all messages from DB */
   fetchMessages(chatroomId) {
-    // fetch all messages from DB
     getMessages(chatroomId)
     .then(messages => {
       this.props.dispatch(actions.updateMessages(JSON.parse(messages)));
@@ -77,11 +77,9 @@ class Messages extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        authUser: state.authUser,
         repos: state.repos,
         messages: state.messages,
-        chatroomId: state.activeChatroomId,
-        windowSize: state.windowSize
+        chatroomId: state.activeChatroomId
     };
 }
 
