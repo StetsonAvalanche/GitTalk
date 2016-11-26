@@ -59,7 +59,6 @@ class EnterMessage extends React.Component {
       text: image ? null : this.state.value
     };
 
-    console.log('message sent', newMessage);
     socket.emit('join chatroom', {id: this.props.chatroomId});
     socket.emit('new message', newMessage);
     this.props.dispatch(actions.updateMessages(newMessage));

@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
-
+import {connect} from 'react-redux';
+import * as actions from '../actions/actions';
 import Message from './message';
+import { getMessages } from './../api/chatroom/messageRequest';
 
 /* Websocket */
 import io from 'socket.io-client';
@@ -12,6 +14,11 @@ class Messages extends React.Component {
 
     /* this binding of methods */
     this.updateScroll = this.updateScroll.bind(this);
+    this.fetchMessages = this.fetchMessages.bind(this);
+  }
+
+  componentWillMount() {
+    this.fetchMessages(this.props.chatroomId);
   }
 
   componentDidUpdate() {
@@ -22,6 +29,15 @@ class Messages extends React.Component {
   updateScroll() {
     let element = document.getElementById('messageBox');
     element.scrollTop = element.scrollHeight;
+  }
+
+  fetchMessages(chatroomId) {
+    // fetch all messages from DB
+    getMessages(chatroomId)
+    .then(messages => {
+      this.props.dispatch(actions.updateMessages(JSON.parse(messages)));
+    })
+    .catch(err => console.log(err));
   }
 
   render() {    
@@ -53,4 +69,14 @@ class Messages extends React.Component {
   }
 }
 
-export default Messages;
+function mapStateToProps(state) {
+    return {
+        authUser: state.authUser,
+        repos: state.repos,
+        messages: state.messages,
+        chatroomId: state.activeChatroomId,
+        windowSize: state.windowSize
+    };
+}
+
+export default connect(mapStateToProps)(Messages);
