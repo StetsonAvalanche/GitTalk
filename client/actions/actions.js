@@ -35,4 +35,11 @@ export function updateWindowSize(newWindow) {
   }
 }
 
+export function sendInvite() {
+	return {
+		type: 'SEND_INVITE',
+		sentInvite: true
+	}
+}
+
 
