@@ -24,10 +24,6 @@ import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton';
 
 
-/* Websocket */
-import io from 'socket.io-client';
-const socket = io('', { path: '/api/chat'});
-
 class NavBar extends React.Component {
   constructor(props){
     super(props);

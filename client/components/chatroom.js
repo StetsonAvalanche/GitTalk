@@ -6,8 +6,8 @@ import NavBar from './navbar';
 import Messages from './messages';
 import EnterMessage from './entermessage';
 
-import { getUser, getMemberRepos } from './../api/user/userRequest';
-import { sendInvite } from '../api/chatroom/chatroomRequest.js';
+import { getMemberRepos } from './../api/user/userRequest';
+
 import { grey200 } from './../util/colorScheme';
 import {Card, CircularProgress} from 'material-ui';
 
@@ -77,7 +77,6 @@ class Chatroom extends React.Component {
 
   function mapStateToProps(state) {
       return {
-          authUser: state.authUser,
           repos: state.repos,
           chatroomId: state.activeChatroomId,
           windowSize: state.windowSize
