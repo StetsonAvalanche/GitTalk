@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import RepoList from './repoList.js';
 import Profile from './profile.js';
-import {getUser, getUserRepos, getRepoInfo } from './../api/user/userRequest.js';
+import { getUser } from './../api/user/userRequest.js';
 import { init } from '../api/chatroom/chatroomRequest.js';
 import {connect} from 'react-redux';
 import * as actions from '../actions/actions';
@@ -11,38 +11,11 @@ import Paper from 'material-ui/Paper';
 import { grey200 } from './../util/colorScheme';
 
 class Dashboard extends React.Component {
-  // constructor(props){
-  //   super(props)
-
-  //   // this.state = {
-  //   //   repos: [],
-  //   //   user: null
-  //   // }
-
-  //   /* this bindings for methods */
-  //   this.navToChatroom = this.navToChatroom.bind(this);
-  // }
-
-  // navToChatroom(repo) {
-  //     // Initiate chatroom
-  //     init(repo).then(() => {
-  //       browserHistory.push(`/rooms/${repo.path}`);
-  //     }).catch(err => { 
-  //       console.log(err); 
-  //     });
-  // }
 
   componentWillMount() {
     const { dispatch } = this.props;
     getUser().then(user => {
       dispatch(actions.getAuthUser(JSON.parse(user)));
-    }).catch(err => console.log(err));
-
-    getRepoInfo().then(reposPaths => {
-      this.reposPaths = reposPaths;
-      getUserRepos().then(repos => {
-        dispatch(actions.updateRepos(repos.map(repo => ({ path: this.reposPaths[repo.id], ...repo }))))
-      }).catch(err => console.log(err));        
     }).catch(err => console.log(err));
   }
 
@@ -62,7 +35,6 @@ class Dashboard extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        repos: state.repos,
         authUser: state.authUser
     };
 }
