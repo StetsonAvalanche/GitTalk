@@ -9,7 +9,6 @@ import EnterMessage from './entermessage';
 import { getUser, getMemberRepos } from './../api/user/userRequest';
 import { getMessages } from './../api/chatroom/messageRequest';
 import { sendInvite } from '../api/chatroom/chatroomRequest.js';
-import { getUserRepos } from './../api/user/userRequest.js';
 import { grey200 } from './../util/colorScheme';
 import {Card, CircularProgress} from 'material-ui';
 
@@ -27,10 +26,7 @@ class Chatroom extends React.Component {
     }));
 
     this.state = {
-      channels: [],
-      inviteSent: false,
-      // windowWidth: window.innerWidth,
-      // windowHeight: window.innerHeight,
+      channels: []
     };
 
     window.onresize = () => {
@@ -38,16 +34,12 @@ class Chatroom extends React.Component {
         width: window.innerWidth, 
         height: window.innerHeight
       }));
-      // this.setState({
-      //   windowWidth: window.innerWidth,
-      //   windowHeight: window.innerHeight,
-      // });
     }; 
 
     /* this bindings for methods */
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
     this.fetchMessages = this.fetchMessages.bind(this);
-    // this.sendEmailInvite = this.sendEmailInvite.bind(this);
+    
     
     /* update active chatroom id in global store object */
     this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
@@ -87,34 +79,17 @@ class Chatroom extends React.Component {
     .catch(err => console.log(err));
   }
 
-  // sendEmailInvite() {
-  //   // Send email invitation to collaborators
-  //   const chatroomLink = '/rooms/' + this.state.chatroomId;
-  //   const currRepoName = this.props.params.reponame;
-  //   getUserRepos().then(repos => { 
-  //     const forkedRepoUrl = repos.reduce((targetUrl, repo) => {
-  //       if (repo.name === currRepoName) {targetUrl = repo.url;}
-  //       return targetUrl;
-  //     });
-  //     sendInvite(chatroomLink, forkedRepoUrl).then(() => {
-  //       this.setState({inviteSent: true});
-  //     }).catch(err => { 
-  //       console.log('ERROR',err); 
-  //     });
-  //   }).catch(err => console.log(err));
-  // }
-
 
   render() {
     return (
       <div>
-        <NavBar username={this.props.authUser.username} photo={this.props.authUser._json.avatar_url} channels={this.state.channels} changeChannel={this.updateMessages} sendEmailInvite={this.sendEmailInvite} inviteSent={this.state.inviteSent}/>
+        <NavBar username={this.props.authUser.username} photo={this.props.authUser._json.avatar_url} channels={this.state.channels} changeChannel={this.updateMessages} />
         <TopBar reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} />
        
         {(this.props.messages.length > 0) ?
           <Messages messages={this.props.messages} windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height}/>
         : null}
-        {console.log('INSIDE RENDER',this.props.chatroomId)}
+
         {(this.props.chatroomId) ? 
           <EnterMessage username={this.props.authUser.username} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} renderSentMessage={this.renderSentMessage}/>
           : null
@@ -135,4 +110,4 @@ class Chatroom extends React.Component {
   }
 
 export default connect(mapStateToProps)(Chatroom);
-// export default Chatroom;
+
