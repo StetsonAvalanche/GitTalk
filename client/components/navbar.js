@@ -3,6 +3,8 @@ import {Link} from 'react-router';
 import User from './user';
 import Logout from './logout';
 import {connect} from 'react-redux';
+import * as actions from '../actions/actions';
+import { sendInvite } from '../api/chatroom/chatroomRequest.js';
 
 
 /* Color Scheme */
@@ -35,20 +37,19 @@ class NavBar extends React.Component {
 
 
   sendEmailInvite() {
-    // // Send email invitation to collaborators
-    // const chatroomLink = '/rooms/' + this.state.chatroomId;
-    // const currRepoName = this.props.params.reponame;
-    // getUserRepos().then(repos => { 
-    //   const forkedRepoUrl = repos.reduce((targetUrl, repo) => {
-    //     if (repo.name === currRepoName) {targetUrl = repo.url;}
-    //     return targetUrl;
-    //   });
-    //   sendInvite(chatroomLink, forkedRepoUrl).then(() => {
-    //     this.setState({inviteSent: true});
-    //   }).catch(err => { 
-    //     console.log('ERROR',err); 
-    //   });
-    // }).catch(err => console.log(err));
+    // Send email invitation to collaborators
+    const chatroomLink = 'http://gittalk.co/rooms/' + this.props.chatroomId;
+    const currRepoName = this.props.chatroomId.split('/')[1];
+    const forkedRepoUrl = this.props.repos.reduce((targetUrl, repo) => {
+      if (repo.name === currRepoName) {targetUrl = repo.url;}
+      return targetUrl;
+    });
+    sendInvite(chatroomLink, forkedRepoUrl).then(() => {
+      this.props.dispatch(actions.sendInvite());
+    }).catch(err => { 
+      console.log('ERROR',err); 
+    });
+    
   }
 
   render() {
@@ -95,7 +96,8 @@ function mapStateToProps(state) {
   return {
     inviteSent: state.inviteSent,
     chatroomId: state.activeChatroomId,
-    authUser: state.authUser
+    authUser: state.authUser,
+    repos: state.repos
   };
 }
 
