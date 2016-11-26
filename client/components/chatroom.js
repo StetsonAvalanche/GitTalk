@@ -67,7 +67,7 @@ class Chatroom extends React.Component {
         <Messages windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height}/>
 
         {(this.props.chatroomId) ? 
-          <EnterMessage username={this.props.authUser.username} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} />
+          <EnterMessage reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} />
           : null
         }
       </div>
