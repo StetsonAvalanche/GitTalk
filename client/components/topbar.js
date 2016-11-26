@@ -1,5 +1,10 @@
 import React, {PropTypes} from 'react';
 
+/* Material-UI components */
+import AppBar from 'material-ui/AppBar';
+import AutoComplete from 'material-ui/AutoComplete';
+import FontIcon from 'material-ui/FontIcon';
+
 /* Color Scheme */
 import {
   githubLightGreen,
@@ -11,11 +16,6 @@ import {
   grey200,
   grey100
 } from './../util/colorScheme.js';
-
-/* Material-UI components */
-import AppBar from 'material-ui/AppBar';
-import AutoComplete from 'material-ui/AutoComplete';
-import FontIcon from 'material-ui/FontIcon';
 
 const TopBar = (props) => {
 

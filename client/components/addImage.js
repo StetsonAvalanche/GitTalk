@@ -1,6 +1,8 @@
 import React from 'react';
 import S3Uploader from 'react-s3-uploader';
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader';
+
+/* Material-UI components */
 import UploadFileIcon from 'material-ui/svg-icons/file/file-upload';
 import IconButton from 'material-ui/IconButton';
 

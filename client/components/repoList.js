@@ -3,13 +3,15 @@ import { browserHistory } from 'react-router';
 import { init } from '../api/chatroom/chatroomRequest.js';
 import { getUserRepos, getRepoInfo } from './../api/user/userRequest.js';
 import { connect } from 'react-redux';
+import * as actions from '../actions/actions';
+
+/* Material-UI components */
 import { ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import ChatIcon from 'material-ui/svg-icons/communication/chat';
-import * as actions from '../actions/actions';
 
+/* Color Scheme */
 import { githubBlue } from './../util/colorScheme.js';
-
 
 class RepoList extends React.Component {
 
@@ -23,7 +25,7 @@ class RepoList extends React.Component {
   }
 
 	navToChatroom(repo) {
-    // Initiate chatroom
+    /* Initiate chatroom */
     init(repo).then(() => {
       browserHistory.push(`/rooms/${repo.path}`);
     }).catch(err => { 
@@ -57,18 +59,19 @@ class RepoList extends React.Component {
 	}
 }
 
+
+function mapStateToProps(state) {
+	return {
+		repos: state.repos,
+	};
+}
+
 const styles = {
   primaryLink: {
     color: githubBlue
   }
 };
 
-// container "glue"
-function mapStateToProps(state) {
-	return {
-		repos: state.repos,
-	};
-}
 
 // exporting container
 export default connect(mapStateToProps)(RepoList);

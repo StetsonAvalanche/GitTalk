@@ -3,6 +3,10 @@ import AddImage from './addImage';
 import {connect} from 'react-redux';
 import * as actions from '../actions/actions';
 
+/* Material-UI components */
+import TextField from 'material-ui/TextField';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentSend from 'material-ui/svg-icons/content/send';
 
 /* Color Scheme */
 import {
@@ -14,11 +18,6 @@ import {
   grey200,
   grey100,
 } from './../util/colorScheme';
-
-/* Material-UI components */
-import TextField from 'material-ui/TextField';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentSend from 'material-ui/svg-icons/content/send';
 
 /* Websocket */
 import io from 'socket.io-client';

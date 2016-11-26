@@ -26,7 +26,6 @@ export function updateMessages(messages) {
   }
 }
 
-
 export function addMessages(message) {
   return {
     type: 'ADD_MESSAGE',

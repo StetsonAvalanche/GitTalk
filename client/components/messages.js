@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
+import Message from './message';
 import {connect} from 'react-redux';
 import * as actions from '../actions/actions';
-import Message from './message';
 import { getMessages } from './../api/chatroom/messageRequest';
 
 /* Websocket */

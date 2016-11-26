@@ -6,6 +6,11 @@ import {connect} from 'react-redux';
 import * as actions from '../actions/actions';
 import { sendInvite } from '../api/chatroom/chatroomRequest.js';
 
+/* Material-UI components */
+import Avatar from 'material-ui/Avatar';
+import Drawer from 'material-ui/Drawer';
+import {List, ListItem} from 'material-ui/List';
+import RaisedButton from 'material-ui/RaisedButton';
 
 /* Color Scheme */
 import {
@@ -17,12 +22,6 @@ import {
   grey200,
 } from './../util/colorScheme';
 
-/* Material-UI components */
-import Avatar from 'material-ui/Avatar';
-import Drawer from 'material-ui/Drawer';
-import {List, ListItem} from 'material-ui/List';
-import RaisedButton from 'material-ui/RaisedButton';
-
 
 class NavBar extends React.Component {
   constructor(props){
@@ -30,7 +29,6 @@ class NavBar extends React.Component {
 
     this.sendEmailInvite = this.sendEmailInvite.bind(this);
   }
-
 
   sendEmailInvite() {
     // Send email invitation to collaborators
