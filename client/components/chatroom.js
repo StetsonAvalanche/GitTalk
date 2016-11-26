@@ -52,13 +52,13 @@ class Chatroom extends React.Component {
 
   }
 
-  componentDidMount() {
+  // componentWillMount() {
     /* websockets */
     // socket.emit('join chatroom', {id: this.props.chatroomId});
     
     /* fetch messages for this (=active) chatroom from DB */
-    this.fetchMessages(this.props.params.username + '/' + this.props.params.reponame);
-  }
+    // this.fetchMessages(this.props.params.username + '/' + this.props.params.reponame);
+  // }
 
   // updateMemberRepos() {
   //   getMemberRepos(this.state.username)
@@ -86,9 +86,9 @@ class Chatroom extends React.Component {
         <NavBar username={this.props.authUser.username} photo={this.props.authUser._json.avatar_url} channels={this.state.channels} changeChannel={this.updateMessages} />
         <TopBar reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} />
        
-        {(this.props.messages.length > 0) ?
-          <Messages messages={this.props.messages} windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height}/>
-        : null}
+        {/*{(this.props.messages.length > 0) ? */}
+          <Messages windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height}/>
+        {/*: null} */}
 
         {(this.props.chatroomId) ? 
           <EnterMessage username={this.props.authUser.username} userAvatarUrl={this.props.authUser._json.avatar_url} reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} renderSentMessage={this.renderSentMessage}/>
