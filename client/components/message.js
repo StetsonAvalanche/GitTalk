@@ -1,5 +1,9 @@
 import React, {PropTypes} from 'react';
+
+/* Material-UI components */
 import {Avatar, ListItem, Paper} from 'material-ui';
+
+/* Color Scheme */
 import { grey700 } from './../util/colorScheme';
 import MarkdownElement from './markdownelement';
 
@@ -14,24 +18,6 @@ class Message extends React.Component {
     const { image } = this.props;
     const avatar = <Avatar src={this.props.userAvatarUrl} />;
 
-    const styles = {
-      box: {
-        position: 'relative',
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 10, 
-        marginRight: 10,
-      },
-      author: {
-        color: grey700,
-        fontSize: '16px',
-        fontWeight: 'bold',
-      },
-      text: {
-        fontSize: '13px',
-      },
-    };
-
     return (
       <Paper style={styles.box} zDepth={1}>
         <ListItem leftAvatar={avatar}>
@@ -44,5 +30,23 @@ class Message extends React.Component {
     );
   } 
 }
+
+const styles = {
+  box: {
+    position: 'relative',
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 10, 
+    marginRight: 10,
+  },
+  author: {
+    color: grey700,
+    fontSize: '16px',
+    fontWeight: 'bold',
+  },
+  text: {
+    fontSize: '13px',
+  },
+};
 
 export default Message;

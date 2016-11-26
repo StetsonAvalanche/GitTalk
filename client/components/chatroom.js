@@ -5,11 +5,13 @@ import TopBar from './topbar';
 import NavBar from './navbar';
 import Messages from './messages';
 import EnterMessage from './entermessage';
-
 import { getMemberRepos } from './../api/user/userRequest';
 
-import { grey200 } from './../util/colorScheme';
+/* Material-UI components */
 import {Card, CircularProgress} from 'material-ui';
+
+/* Color Scheme */
+import { grey200 } from './../util/colorScheme';
 
 /* Websocket */
 import io from 'socket.io-client';
@@ -75,13 +77,13 @@ class Chatroom extends React.Component {
   }
 }
 
-  function mapStateToProps(state) {
-      return {
-          repos: state.repos,
-          chatroomId: state.activeChatroomId,
-          windowSize: state.windowSize
-      };
-  }
+function mapStateToProps(state) {
+    return {
+        repos: state.repos,
+        chatroomId: state.activeChatroomId,
+        windowSize: state.windowSize
+    };
+}
 
 export default connect(mapStateToProps)(Chatroom);
 
