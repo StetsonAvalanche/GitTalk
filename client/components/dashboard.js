@@ -13,13 +13,6 @@ import { grey200 } from './../util/colorScheme';
 
 class Dashboard extends React.Component {
 
-  componentWillMount() {
-    const { dispatch } = this.props;
-    getUser().then(user => {
-      dispatch(actions.getAuthUser(JSON.parse(user)));
-    }).catch(err => console.log(err));
-  }
-
   render () {
     return (
       <div style={ styles.dashboardContainer } >
