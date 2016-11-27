@@ -11,21 +11,16 @@ import Paper from 'material-ui/Paper';
 /* Color Scheme */
 import { grey200 } from './../util/colorScheme';
 
-class Dashboard extends React.Component {
-
-  render () {
-    return (
+const Dashboard = (props) => (
       <div style={ styles.dashboardContainer } >
         <Paper style={ styles.listContainer } zDepth={ 2 }>
           <RepoList />
         </Paper>
         <Paper style={ styles.profileContainer } zDepth={ 2 }>
-          { (this.props.authUser) ? <Profile user={ this.props.authUser } /> : null }
+          { (props.authUser) ? <Profile user={ props.authUser } /> : null }
         </Paper>
       </div>
-    )
-  }
-}
+)
 
 function mapStateToProps(state) {
     return {
