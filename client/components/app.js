@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import * as actions from '../actions/actions';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import Login from './login.js';
 import Chatroom from './chatroom.js';
@@ -30,20 +32,17 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    // Needed for onTouchTap
+    getUser().then(user => {
+      this.props.dispatch(actions.getAuthUser(JSON.parse(user)));
+    }).catch(err => console.log(err));
+    /* Needed for onTouchTap */
     // http://stackoverflow.com/a/34015469/988941
     injectTapEventPlugin();
   }
 
-  componentDidMount(){
-    getUser().then(() => {
-      this.setState({ loggedIn: true });
-    }).catch(err => console.log(err));
-  }
-
   render(){
     // if user is authenticated
-    if (this.state.loggedIn) {
+    if (this.props.authUser) {
       document.body.style.backgroundColor = fullWhite;
       return (
         <MuiThemeProvider>
@@ -65,5 +64,10 @@ class App extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+    return {
+        authUser: state.authUser
+    };
+}
 
-export default App;
+export default connect(mapStateToProps)(App);
