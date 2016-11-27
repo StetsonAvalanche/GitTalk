@@ -23,13 +23,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
-
-    this.state = {
-      loggedIn: null
-    };
-  }
 
   componentWillMount() {
     getUser().then(user => {
