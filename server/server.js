@@ -14,6 +14,7 @@ const appRoute = require('./routes/app.js');
 const auth = require('./routes/auth.js');
 const apps = require('./devApi/inboundController.js');
 const socket = require('./socket/socket.js');
+const db = require('./db/init.js');
 const app = express();
 
 /* express server */
@@ -64,20 +65,7 @@ const server = app.listen(port);
 console.log(`🌎  ===> server listening on port ${port}`);
 
 /* database intitialization */
-
-const mongoose = require('mongoose'); 
-
-// const uriString = process.env.MONGODB_URI || 'mongodb://localhost/gittalk';
-const uriString = 'mongodb://localhost/gittalk';
-
-mongoose.connect(uriString, (err, res) => {
-  if (err) { 
-    console.log ('ERROR connecting to: ' + uriString + '. ' + err);
-  } else {
-    console.log ('Succeeded connected to: ' + uriString);
-  }
-});
-
+db.init();
 /* socket initialization */
 socket.listen(server);
 
