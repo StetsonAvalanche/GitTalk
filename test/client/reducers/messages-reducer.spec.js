@@ -4,32 +4,30 @@ const expect = chai.expect;
 import MessagesReducer from '../../../client/reducers/messages-reducer';
 // import * as actions from '../../../client/reducers/messages-reducer';
 
+const fetchedMessages = [ { "type" : "text", 
+				  	  "user" : "anicknam", 
+				  	  "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
+				  	  "chatroom" : "StetsonAvalanche/GitTalk", 
+				  	  "image" : null, 
+				  	  "text" : "Hi" }
+					    , 
+					    { "type" : "text", 
+					    "user" : "anicknam", 
+					    "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
+					    "chatroom" : "StetsonAvalanche/GitTalk", 
+					    "image" : null, 
+					    "text" : "Testing" } ];
 
 describe('Messages reducer', () => {
 
   it('should return the initial state', () => {
     expect(MessagesReducer(undefined, {})
     ).to.eql([])
-  })
-
-  
+  });
 
   it('should handle UPDATE_MESSAGES', () => {
 
-    const initialState = [];
-  	const fetchedMessages = [ { "type" : "text", 
-						  	  "user" : "anicknam", 
-						  	  "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
-						  	  "chatroom" : "anicknam/GitTalk", 
-						  	  "image" : null, 
-						  	  "text" : "Hi" }
-							  , 
-							  { "type" : "text", 
-							  "user" : "anicknam", 
-							  "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
-							  "chatroom" : "anicknam/GitTalk", 
-							  "image" : null, 
-							  "text" : "Testing" } ];
+    let initialState = [];
 
     expect(MessagesReducer(initialState, {
       type: 'UPDATE_MESSAGES',
@@ -38,42 +36,55 @@ describe('Messages reducer', () => {
     )).to.eql([ { "type" : "text", 
 		  	   "user" : "anicknam", 
 		  	   "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
-		  	   "chatroom" : "anicknam/GitTalk", 
+		  	   "chatroom" : "StetsonAvalanche/GitTalk", 
 		  	   "image" : null, 
 		  	   "text" : "Hi" }
-			   , 
-			   { "type" : "text", 
-			   "user" : "anicknam", 
-			   "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
-			   "chatroom" : "anicknam/GitTalk", 
-			   "image" : null, 
-			   "text" : "Testing" } ]);
+			     , 
+			     { "type" : "text", 
+			     "user" : "anicknam", 
+		  	   "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
+		  	   "chatroom" : "StetsonAvalanche/GitTalk", 
+			     "image" : null, 
+			     "text" : "Testing" } ]);
   });
 
 
-  // it('should handle ADD_MESSAGE', () => {
+  it('should handle ADD_MESSAGE', () => {
 
-  // 	const newMessage = ['pull request made'];
+  	let initialState = fetchedMessages;
+
+  	const newMessage = { "type" : "text", 
+						  	         "user" : "f-fong", 
+						  	         "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
+						  	         "chatroom" : "StetsonAvalanche/GitTalk", 
+						  	         "image" : null, 
+						  	         "text" : "pull request made" };
   	
-  //   expect(reducer(initialState, {
-  //     type: types.ADD_MESSAGE,
-  //     message: {
-  //       channelID: 0,
-  //       text: 'testing 101',
-  //       user: 'TestMan',
-  //       time: 500
-  //     }
-  //   })
-  // ).toEqual({
-  //     data: [{
-  //       id: 0,
-  //       channelID: 0,
-  //       text: 'testing 101',
-  //       user: 'TestMan',
-  //       time: 500
-  //     }],
-  //     loaded: false
-  //   })
-  // })
+    expect(MessagesReducer(initialState, {
+      type: 'ADD_MESSAGE',
+      message: newMessage
+    }
+  )).to.eql([ { "type" : "text", 
+		  	   "user" : "anicknam", 
+		  	   "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
+		  	   "chatroom" : "StetsonAvalanche/GitTalk", 
+		  	   "image" : null, 
+		  	   "text" : "Hi" }
+			     , 
+			     { "type" : "text", 
+			     "user" : "anicknam", 
+		  	   "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
+		  	   "chatroom" : "StetsonAvalanche/GitTalk", 
+			     "image" : null, 
+			     "text" : "Testing" } 
+			     ,
+			     { "type" : "text", 
+			     "user" : "f-fong", 
+			     "userAvatarUrl" : "https://avatars.githubusercontent.com/u/16872422?v=3", 
+			     "chatroom" : "StetsonAvalanche/GitTalk", 
+			     "image" : null, 
+			     "text" : "pull request made" }
+			     ]);
+  });
 
-})
+});
