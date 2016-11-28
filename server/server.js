@@ -2,17 +2,18 @@
 const path = require('path');
 // import env variables from .env - if not found, fallback to OS env vars
 require('dotenv').config({silent: true, path: path.join(__dirname, '../.env')});
-require('aws-sdk');
+require('aws-sdk'); // Load S3 api keys
 
 const express = require('express');
 const session = require('express-session');
-const passport = require('./passport/config.js');
 const bodyParser = require('body-parser');
 
 const api = require('./routes/api.js');
 const appRoute = require('./routes/app.js');
 const auth = require('./routes/auth.js');
 const apps = require('./devApi/inboundController.js');
+
+const passport = require('./passport/config.js');
 const socket = require('./socket/socket.js');
 const db = require('./db/init.js');
 const app = express();
@@ -35,15 +36,15 @@ app.use('/app', appRoute);
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', function(req, res) {
-  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));   
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
 });
 
 app.get('/dashboard', function(req, res) {
-  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));   
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
 });
 
 app.get('/rooms/:username/:reponame', function(req, res) {
-  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));   
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
 });
 
 // process 3rd party inbound payloads
@@ -56,7 +57,7 @@ app.use('/s3', require('react-s3-uploader/s3router')({
 }));
 
 app.get('*', function(req, res) {
-  res.redirect('/');	  
+  res.redirect('/');
 });
 
 const port = process.env.PORT || 8000;
