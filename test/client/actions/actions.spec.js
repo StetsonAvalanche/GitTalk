@@ -10,17 +10,6 @@ describe('actions', () => {
       type: 'ADD_MESSAGE',
       message
     }
-
     expect(actions.addMessages(message)).to.eql(expectedAction);
   });
-
-  // it('should receive a channel', () => {
-  //   const channel = 'Test';
-  //   const expectedAction = {
-  //     type: types.RECEIVE_CHANNEL,
-  //     channel
-  //   }
-
-  //   expect(actions.receiveRawChannel(channel)).toEqual(expectedAction);
-  // });
 });
