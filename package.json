@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test/helpers/browser.js test/client/components/*.spec.js test/server/*.spec.js test/server/*.spec.js test/db/*.spec.js",
+    "test": "mocha test/helpers/browser.js test/client/components/*.spec.js test/server/*.spec.js test/server/*.spec.js test/db/*.spec.js test/client/actions/*.spec.js test/client/reducers/*.spec.js",
     "test-all": "mocha test/helpers/browser.js test/client/*/*.spec.js test/server/*.spec.js test/server/*/*.spec.js test/db/*.spec.js",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --display-error-details --display-cached --content-base ./",
     "start-dev": "webpack -w | nodemon server/server.js",
