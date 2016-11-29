@@ -2,9 +2,13 @@ import React from 'react';
 import Logout from './logout.js';
 import CreateApp from './createApp';
 import MyApps from './myApps';
+import { getUserApps } from './../api/app/appRequest.js';
 
+/* Material-UI components */
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
+
+/* Color Scheme */
 import { githubGreen, githubBlue } from './../util/colorScheme.js';
 
 // const Profile = (props) => {
@@ -34,7 +38,6 @@ import { githubGreen, githubBlue } from './../util/colorScheme.js';
 //   );
 // }
 
-import { getUserApps } from './../api/app/appRequest.js';
 
 class Profile extends React.Component {
   constructor(props) {

@@ -5,6 +5,7 @@ import MessagesReducer from './messages-reducer';
 import ActiveChatroomReducer from './activeChatroom-reducer';
 import WindowSizeReducer from './windowSize-reducer';
 import SendInviteReducer from './sendInvite-reducer';
+// import 
 
 const allReducers = combineReducers({
     authUser: AuthUserReducer,
@@ -12,7 +13,8 @@ const allReducers = combineReducers({
     messages: MessagesReducer,
     activeChatroomId: ActiveChatroomReducer,
     windowSize: WindowSizeReducer,
-    inviteSent: SendInviteReducer
+    inviteSent: SendInviteReducer,
+    // myApps: MyAppsReducer
 });
 
 export default allReducers;
