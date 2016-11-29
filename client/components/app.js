@@ -26,7 +26,6 @@ class App extends React.Component {
 
   componentWillMount() {
     getUser().then(user => {
-      console.log(typeof user);
       this.props.dispatch(actions.getAuthUser(JSON.parse(user)));
     }).catch(err => console.log(err));
     /* Needed for onTouchTap */
@@ -36,7 +35,6 @@ class App extends React.Component {
 
   render(){
     // if user is authenticated
-    console.log(this.props.authUser);
     if (this.props.authUser) {
       document.body.style.backgroundColor = fullWhite;
       return (
