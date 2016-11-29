@@ -55,4 +55,11 @@ export function updateMyApps(apps) {
   }
 }
 
+export function addSubscriptions(subscriptions) {
+  return {
+    type: 'ADD_SUBSCRIPTIONS',
+    subscriptions
+  }
+}
+
 
