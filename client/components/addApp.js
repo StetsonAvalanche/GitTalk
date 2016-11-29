@@ -14,21 +14,27 @@ import { getAllApps, getSubscriptions } from './../api/app/appRequest.js';
 
 import { init, getChatroom } from './../api/chatroom/chatroomRequest.js';
 
+import { connect } from 'react-redux';
+
+import * as actions from '../actions/actions';
+
 class AddApp extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      open: false,
-      apps: [ 
-        { name: 'OlegBot', 
-          category: 'chatbot',
-          endpoint: 'olegbot.herokuapp.com', 
-          owner: 'tankwan', 
-          apiKey: '3456olegoleg95c99dd053f663b8ed496d2a'
-        }
-      ]
+      open: false
+  //     apps: [ 
+  //       { name: 'OlegBot', 
+  //         category: 'chatbot',
+  //         endpoint: 'olegbot.herokuapp.com', 
+  //         owner: 'tankwan', 
+  //         apiKey: '3456olegoleg95c99dd053f663b8ed496d2a'
+  //       }
+  //     ]
     };
+
+  // TODO: change this.state.apps to this.state.subscriptions
 
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -57,9 +63,10 @@ class AddApp extends React.Component {
             appdata[i].added = false;
           }
         }
-        this.setState({
-          apps: appdata 
-        });
+        // this.setState({
+        //   apps: appdata 
+        this.props.dispatch(actions.addSubscriptions(appdata));
+        // });
       })
       .catch(err => console.log('subscriptions not merging with apps data', err));
     })
@@ -96,7 +103,7 @@ class AddApp extends React.Component {
                       autoScrollBodyContent={ true }
                     >
                       {  
-                        this.state.apps.map((app) => {
+                        this.props.subscriptions.map((app) => {
                           return (<AddAppItem app={app} reponame={this.props.reponame} updateSubscriptions={this.updateSubscriptions} />);
                         })
                       }
@@ -111,4 +118,12 @@ class AddApp extends React.Component {
   }
 }
 
-export default AddApp;
+function mapStateToProps(state) {
+  return {
+    subscriptions: state.subscriptions
+  };
+}
+
+
+// exporting container
+export default connect(mapStateToProps)(AddApp);
