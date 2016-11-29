@@ -48,4 +48,11 @@ export function sendInvite() {
 	}
 }
 
+export function updateMyApps(apps) {
+  return {
+    type: 'UPDATE_MY_APPS',
+    apps
+  }
+}
+
 

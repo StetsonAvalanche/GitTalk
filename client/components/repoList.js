@@ -27,7 +27,6 @@ class RepoList extends React.Component {
 
   navToChatroom(repoName) {
     // Initiate chatroom
-    console.log(repoName);
     getChatroom(repoName) // check if chatroom exists
       .then(chatroom => {
         console.log('chatroom', chatroom);
