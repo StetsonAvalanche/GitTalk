@@ -6,7 +6,7 @@ const outbound = require('./../devApi/outboundController.js');
 let io;
 
 function listen(server) {
-  io = new SocketIo(server, {path: '/api/chat'});
+  io = new SocketIo(server, {path: '/chat'});
 
   io.on('connection', (socket) => {
     socket.on('new message', (msg) => {

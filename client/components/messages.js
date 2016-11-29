@@ -6,7 +6,7 @@ import { getMessages } from './../api/chatroom/messageRequest';
 
 /* Websocket */
 import io from 'socket.io-client';
-const socket = io('', { path: '/api/chat'});
+const socket = io('', { path: '/chat'});
 
 class Messages extends React.Component {
   constructor(props){
