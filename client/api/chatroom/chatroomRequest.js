@@ -18,6 +18,7 @@ function _post(url, data) {
 }
 
 function init(repo) {
+  console.log('init');
   return new Promise((resolve, reject) => {
     _post('/api/chatroom/init', {repo: {
         id: repo, 
