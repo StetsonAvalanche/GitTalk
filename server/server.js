@@ -52,7 +52,7 @@ app.post('/apps', apps.inbound);
 
 // s3 middleware
 app.use('/s3', require('react-s3-uploader/s3router')({
-  bucket: "gittalk",
+  bucket: 'gittalk',
   headers: {'Access-Control-Allow-Origin': '*'}
 }));
 
