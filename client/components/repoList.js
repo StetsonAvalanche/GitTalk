@@ -29,7 +29,6 @@ class RepoList extends React.Component {
     // Initiate chatroom
     getChatroom(repoName) // check if chatroom exists
       .then(chatroom => {
-        console.log('chatroom', chatroom);
         if (chatroom === null) {
           console.log('chatroom is null');
           return init(repoName);
@@ -47,6 +46,7 @@ class RepoList extends React.Component {
       return (
         <div>
           <ListItem
+            key={repo.name}
             primaryText={ <span style={styles.primaryLink} onTouchTap={this.navToChatroom.bind(this, repo.path)}>{repo.name}</span> }
             secondaryText={ repo.description }
             secondaryTextLines={ 1 }

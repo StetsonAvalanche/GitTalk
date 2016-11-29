@@ -90,8 +90,8 @@ class AddApp extends React.Component {
                       autoScrollBodyContent={ true }
                     >
                       {  
-                        this.props.subscriptions.map((app) => {
-                          return (<AddAppItem app={app} reponame={this.props.reponame} updateSubscriptions={this.updateSubscriptions} />);
+                        this.state.apps.map((app) => {
+                          return (<AddAppItem key={app.name} app={app} reponame={this.props.reponame} updateSubscriptions={this.updateSubscriptions} />);
                         })
                       }
                     </Dialog>;
