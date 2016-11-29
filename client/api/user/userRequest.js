@@ -31,7 +31,7 @@ function getUserRepos() {
   return new Promise((resolve, reject) => {
     _get('/auth/user').done(data => {
       const reposUrl = JSON.parse(data)._json.repos_url;
-      _get(`${reposUrl}?per_page=100`).done(repos => {
+      _get(`${reposUrl}?per_page=100&client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}`).done(repos => {
         resolve(repos);
       }).fail((jqXHR, textStatus, err) => {
         reject(err);
@@ -46,7 +46,7 @@ function getRepoInfo() {
   return new Promise((resolve, reject) => {
     _get('/auth/user').done(data => {
       const reposUrl = JSON.parse(data)._json.repos_url;
-      _get(`${reposUrl}?per_page=100`).done(repos => {
+      _get(`${reposUrl}?per_page=100&client_id=${process.env.GITHUB_CLIENT_ID}&client_secret=${process.env.GITHUB_CLIENT_SECRET}`).done(repos => {
         let repoLinks = {};
         const p = repos.map(repo => {
           return new Promise((res, rej) => {
