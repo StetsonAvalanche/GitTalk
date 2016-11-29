@@ -55,9 +55,9 @@ export function updateMyApps(apps) {
   }
 }
 
-export function addSubscriptions(subscriptions) {
+export function updateSubscriptions(subscriptions) {
   return {
-    type: 'ADD_SUBSCRIPTIONS',
+    type: 'UPDATE_SUBSCRIPTIONS',
     subscriptions
   }
 }
