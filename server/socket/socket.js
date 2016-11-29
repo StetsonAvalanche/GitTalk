@@ -22,7 +22,9 @@ function listen(server) {
         room.messages.push(msg);
         room.save();
 
-        if (room.apps[0].read) outbound.send(room, msg);
+        if (room.apps) {
+          if (room.apps[0].read) outbound.send(room, msg);
+        }
 
       });
     });

@@ -14,7 +14,7 @@ import { githubGreen, githubBlue } from './../util/colorScheme.js';
 //       <Paper style={ styles.header } zDepth={ 2 }>
 //       </Paper>
 //       <Paper style={ styles.avatarContainer }>
-//           <img style={ styles.avatar }  src={user.avatar_url} />
+//         <img style={ styles.avatar }  src={user.avatar_url} />
 //       </Paper>
 //       <div style={ styles.info }>
 //         <h1>{ user.name }</h1>
@@ -29,6 +29,11 @@ import { githubGreen, githubBlue } from './../util/colorScheme.js';
 //         <MyApps />
 //         <br />
 //         <Logout />
+//       </div>
+//     </div>
+//   );
+// }
+
 import { getUserApps } from './../api/app/appRequest.js';
 
 class Profile extends React.Component {
@@ -47,8 +52,8 @@ class Profile extends React.Component {
 
   updateUserApps() {
     getUserApps()
-    .then(userApps => this.setState({ apps: JSON.parse(userApps)}))
-    .catch(err => console.log('err', err));
+      .then(userApps => this.setState({ apps: JSON.parse(userApps)}))
+      .catch(err => console.log('err', err));
   }
 
   componentDidMount() {
@@ -56,13 +61,13 @@ class Profile extends React.Component {
   }
 
   render() {
-    const user = JSON.parse(this.props.user)._json;
+    const user = this.props.user._json;
     return (
       <div>
         <Paper style={ styles.header } zDepth={ 2 }>
         </Paper>
         <Paper style={ styles.avatarContainer }>
-            <img style={ styles.avatar }  src={user.avatar_url} />
+          <img style={ styles.avatar }  src={user.avatar_url} />
         </Paper>
         <div style={ styles.info }>
           <h1>{ user.name }</h1>
