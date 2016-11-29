@@ -18,7 +18,7 @@ class Messages extends React.Component {
 
     /* websockets */
     socket.on('new bc message', (message) => {
-      this.props.dispatch(actions.updateMessages(message));
+      this.props.dispatch(actions.addMessages(message));
       // this.updateMemberRepos();
     });
   }
@@ -69,7 +69,7 @@ class Messages extends React.Component {
             user={message.user} 
             text={message.text} 
             userAvatarUrl={message.userAvatarUrl}
-            image={ message.image }/>)}
+            image={ message.image } />)}
       </div>
     );
   }
