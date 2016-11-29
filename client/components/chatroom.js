@@ -15,7 +15,7 @@ import { grey200 } from './../util/colorScheme';
 
 /* Websocket */
 import io from 'socket.io-client';
-const socket = io('', { path: '/api/chat'});
+const socket = io('', { path: '/chat'});
 
 class Chatroom extends React.Component {
   constructor(props){
