@@ -5,7 +5,7 @@
 
 export default function (state = [], action) {
   switch (action.type) {
-    case 'UPDATE_MESSAGES':
+    case 'UPDATE_MY_APPS':
       const newState = Object.assign({}, state, {
       	apps: action.apps
       })

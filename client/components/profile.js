@@ -18,20 +18,18 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.state = {
-    //   apps: []
-    // };
-
     this.updateUserApps = this.updateUserApps.bind(this);
   }
 
   updateUserApps() {
     getUserApps()
-      .then(userApps => this.props.dispatch(actions.updateMyApps(userApps)))
+      .then(userApps => {
+        this.props.dispatch(actions.updateMyApps(JSON.parse(userApps)))
+      })
       .catch(err => console.log('err', err));
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.updateUserApps();
   }
 
@@ -54,7 +52,7 @@ class Profile extends React.Component {
           { user.email ? <p>{ user.email }</p> : null }
           <CreateApp login={ user.login } updateUserApps={this.updateUserApps}/>
           <br />
-          <MyApps apps={this.props.myApps} />
+          {this.props.myApps ? <MyApps apps={this.props.myApps} /> : null}
           <br />
           <Logout />
         </div>
@@ -65,7 +63,7 @@ class Profile extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    myApps: state.myApps,
+    myApps: state.myApps
   };
 }
 
