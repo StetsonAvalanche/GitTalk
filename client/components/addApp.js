@@ -24,17 +24,7 @@ class AddApp extends React.Component {
 
     this.state = {
       open: false
-  //     apps: [ 
-  //       { name: 'OlegBot', 
-  //         category: 'chatbot',
-  //         endpoint: 'olegbot.herokuapp.com', 
-  //         owner: 'tankwan', 
-  //         apiKey: '3456olegoleg95c99dd053f663b8ed496d2a'
-  //       }
-  //     ]
     };
-
-  // TODO: change this.state.apps to this.state.subscriptions
 
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -63,17 +53,14 @@ class AddApp extends React.Component {
             appdata[i].added = false;
           }
         }
-        // this.setState({
-        //   apps: appdata 
-        this.props.dispatch(actions.addSubscriptions(appdata));
-        // });
+        this.props.dispatch(actions.updateSubscriptions(appdata));
       })
       .catch(err => console.log('subscriptions not merging with apps data', err));
     })
     .catch(err => console.log(err));
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.updateSubscriptions();
   }
 
