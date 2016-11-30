@@ -48,10 +48,13 @@ class Chatroom extends React.Component {
     /* this binding for methods */
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
 
+  }
+
+
+  componentWillMount() {
     /* update active chatroom id in global store object */
     this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
   }
-
   componentDidMount() {
     /* websockets */
     socket.emit('join chatroom', {id: this.props.chatroomId});
