@@ -40,6 +40,7 @@ class Chatroom extends React.Component {
 
     /* websockets */
     socket.on('new bc message', (message) => {
+      console.log('NEW MESSAGE RECEIVED')
       this.props.dispatch(actions.addMessages(message));
       // this.updateMemberRepos();
     });
