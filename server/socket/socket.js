@@ -9,9 +9,15 @@ function listen(server) {
   io = new SocketIo(server, {path: '/chat'});
 
   io.on('connection', (socket) => {
+    socket.on('join chatroom', function(chatroom) {
+      console.log('joined chatroom', chatroom.id)
+      socket.join(chatroom.id);
+    });
+
     socket.on('new message', (msg) => {
       console.log('message received', msg);
-      io.sockets.emit('new bc message', msg);
+      // io.sockets.emit('new bc message', msg);
+      socket.broadcast.to(msg.chatroom).emit('new bc message', msg);
       chatroomCtrl.findOneById(msg.chatroom, (err, chatroom) => {
         if (err) {throw err;}
         const room = chatroom[0];
