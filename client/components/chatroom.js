@@ -37,9 +37,11 @@ class Chatroom extends React.Component {
       }));
     }; 
 
+    this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
 
     /* websockets */
-    socket.on('new bc message', (message) => {
+    console.log('SET SOCKET LISTENER')
+    socket.on(this.props.params.username + '/' + this.props.params.reponame, (message) => {
       console.log('NEW MESSAGE RECEIVED')
       this.props.dispatch(actions.addMessages(message));
       // this.updateMemberRepos();
@@ -48,15 +50,23 @@ class Chatroom extends React.Component {
     /* this binding for methods */
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
 
+  }
+
+  
+  // componentWillMount() {
+  //   console.log('INSIDE WILL MOUNT')
+  //   socket.connect();
+  // }
+
+  componentWillUnmount() {
+    console.log('INSIDE WILL UNMOUNT')
+    socket.removeListener(this.props.params.username + '/' + this.props.params.reponame);
     /* update active chatroom id in global store object */
-    this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
   }
-
-  componentDidMount() {
-    /* websockets */
-    socket.emit('join chatroom', {id: this.props.chatroomId});
-
-  }
+  // componentDidMount() {
+  //   /* websockets */
+  //   socket.emit('join chatroom', {id: this.props.chatroomId});
+  // }
 
   // updateMemberRepos() {
   //   getMemberRepos(this.state.username)
