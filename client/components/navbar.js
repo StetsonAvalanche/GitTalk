@@ -57,7 +57,7 @@ class NavBar extends React.Component {
       >
 
         <div>
-          <User username={this.props.authUser.username} photo={this.props.authUser._json.avatar_url} style={userStyle} />
+          <User username={this.props.authUser.username} photo={this.props.authUser._json.avatar_url} style={userStyle} showMessages={this.props.showMessages} showSearch={this.props.showSearch}/>
 
           <h8 style={listHeaderStyle}>Channels</h8>
           <List>

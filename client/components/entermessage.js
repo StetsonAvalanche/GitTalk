@@ -38,6 +38,7 @@ class EnterMessage extends React.Component {
 
   handleChange(event) {
     this.setState({ value: event.target.value });
+    console.log('current message is', event.target.value);
   }
 
   handleKeyDown(event) {

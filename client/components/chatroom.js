@@ -5,6 +5,7 @@ import TopBar from './topbar';
 import NavBar from './navbar';
 import Messages from './messages';
 import EnterMessage from './entermessage';
+import Search from './search';
 import { getMemberRepos } from './../api/user/userRequest';
 
 /* Material-UI components */
@@ -22,7 +23,8 @@ class Chatroom extends React.Component {
     super(props);
 
     this.state = {
-      channels: []
+      channels: [],
+      search: false,
     };
 
     this.props.dispatch(actions.updateWindowSize({ 
@@ -49,6 +51,8 @@ class Chatroom extends React.Component {
 
     /* this binding for methods */
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
+    this.showMessages = this.showMessages.bind(this);
+    this.showSearch = this.showSearch.bind(this); 
   }
 
   componentWillUnmount() {
@@ -70,18 +74,33 @@ class Chatroom extends React.Component {
   //   })
   //   .catch(err => console.log('error in getMemberRepos', err));
   // }
+  
+  showMessages() {
+    this.setState({
+      search: false
+    });
+  }
+
+  showSearch() {
+    this.setState({
+      search: true
+    });
+  }
 
   render() {
     return (
       <div>
-        <NavBar channels={this.state.channels} changeChannel={this.updateMessages} />
+        <NavBar channels={this.state.channels} changeChannel={this.updateMessages} showMessages={this.showMessages} showSearch={this.showSearch} />
         <TopBar reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} />
-
-        <Messages windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height}/>
-
-        {(this.props.chatroomId) ? 
-          <EnterMessage reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} />
-          : null
+        {this.state.search ? 
+          <Search windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height} /> :
+          <div>
+            <Messages windowWidth={this.props.windowSize.width} windowHeight={this.props.windowSize.height}/>
+            {(this.props.chatroomId) ? 
+              <EnterMessage reponame={this.props.params.reponame} windowWidth={this.props.windowSize.width} /> :
+              null
+            }
+          </div>
         }
       </div>
     );

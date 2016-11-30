@@ -5,6 +5,10 @@ import {Link} from 'react-router';
 import Avatar from 'material-ui/Avatar';
 import FontIcon from 'material-ui/FontIcon';
 import ActionHome from 'material-ui/svg-icons/action/home';
+import ChatIcon from 'material-ui/svg-icons/communication/chat';
+
+import ActionSearch from 'material-ui/svg-icons/action/search';
+
 
 /* Color Scheme */
 import {
@@ -30,7 +34,10 @@ class User extends React.Component {
       <div style={nameStyle}>
         <div style={style}>
           <Avatar src={photo} size={120}/>
-          <p>{username}</p><Link to="/dashboard"><ActionHome /></Link>
+          <p>{username}</p>
+          <Link to="/dashboard"><ActionHome /></Link>
+          <a href="#"><ChatIcon onClick={this.props.showMessages}/></a>
+          <a href="#"><ActionSearch onClick={this.props.showSearch}/></a>
         </div>
       </div>
     );
