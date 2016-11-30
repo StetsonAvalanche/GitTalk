@@ -29,10 +29,10 @@ class Search extends React.Component {
     };
 
     /* this binding of methods */
-    this.updateScroll = this.updateScroll.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.displayResults = this.displayResults.bind(this);
     this.buildIndex = this.buildIndex.bind(this);
+    this.displayResults = this.displayResults.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.updateScroll = this.updateScroll.bind(this);
 
     // this.props.dispatch(actions.addMessages(message));
   }
@@ -45,13 +45,6 @@ class Search extends React.Component {
     this.updateScroll();
   }
 
-  // Ref: http://stackoverflow.com/questions/18614301/keep-overflow-div-scrolled-to-bottom-unless-user-scrolls-up
-  updateScroll() {
-    let element = document.getElementById('messageBox');
-    element.scrollTop = element.scrollHeight;
-  }
-
-  /* fetch all messages from DB */
   buildIndex() {
     const genIndex = (messages) => {
       let index = {};
@@ -82,7 +75,7 @@ class Search extends React.Component {
     })
     .catch(err => console.log(err));
   }
-  
+
   displayResults(searchTerm) {
     const { index } = this.state;
     if (index[searchTerm] !== undefined) {
@@ -101,8 +94,53 @@ class Search extends React.Component {
     this.displayResults(event.target.value);
   }
 
+  // Ref: http://stackoverflow.com/questions/18614301/keep-overflow-div-scrolled-to-bottom-unless-user-scrolls-up
+  updateScroll() {
+    let element = document.getElementById('messageBox');
+    element.scrollTop = element.scrollHeight;
+  }
+
   render() {    
     let counter = 0;
+    const searchBarHeight = 60;
+
+    const searchBarStyle = {
+      position: 'absolute',
+      left: 300,
+      top: 64,
+      width: this.props.windowWidth - 300,
+      height: searchBarHeight,
+    };
+
+    const hintTextStyle = {
+      display: this.state.searchTerm === '' ? 'initial' : 'none',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translateX(-50%) translateY(-50%)',
+    };
+
+    const textFieldStyle = {
+      position: 'absolute',
+      width: this.props.windowWidth - 400,
+      top: '50%',
+      left: '50%',
+      transform: 'translateX(-50%) translateY(-50%)',
+    };
+
+    const inputStyle = {
+      textAlign: 'center',
+    };
+
+    const underlineStyle = {
+      borderColor: fullWhite,
+      top: 40,
+    };
+
+    const underlineFocusStyle = {
+      borderColor: githubLightGreen,
+      top: 40,
+    };
 
     const messageRoomStyle = {
       backgroundImage: 'url(/assets/chatroomBackgroundLight.png)',
@@ -110,56 +148,47 @@ class Search extends React.Component {
       backgroundRepeat: 'repeat',
       position: 'absolute',
       left: 300,
-      top: 64,
+      top: 64 + searchBarHeight,
       width: this.props.windowWidth - 300,
-      height: this.props.windowHeight - 64,
+      height: this.props.windowHeight - 64 - searchBarHeight,
       overflow: 'auto',
     };
 
-    const textFieldStyle = {
-      position: 'absolute',
-      top: 100,
-      width: this.props.windowWidth - 450,
-    };
-
-    const underlineStyle = {
-      borderColor: 'black', //fullWhite
-    };
-
-    const underlineFocusStyle = {
-      borderColor: githubLightGreen,
-    };
-
     return (
-      <div style={messageRoomStyle} id='messageBox'>
-        <TextField
-          hintText='Enter a search term :)'
-          style={textFieldStyle}
-          underlineStyle={underlineStyle}
-          underlineFocusStyle={underlineFocusStyle}
+      <div>
+        <div style={searchBarStyle}>
+          <TextField
+            hintText={'Enter a search term :)'}
+            hintStyle={hintTextStyle}
+            style={textFieldStyle}
+            inputStyle={inputStyle}
+            underlineStyle={underlineStyle}
+            underlineFocusStyle={underlineFocusStyle}
 
-          onChange={this.handleChange}
-          value={this.state.SearchTerm}
-        />
-
-        {this.state.results.map(message => 
-          <Message 
-            key={counter++}
-            user={message.user} 
-            text={message.text} 
-            userAvatarUrl={message.userAvatarUrl}
-            image={ message.image } />)}
+            onChange={this.handleChange}
+            value={this.state.SearchTerm}
+          />
+        </div>
+        <div style={messageRoomStyle} id='messageBox'>
+          {this.state.results.map(message => 
+            <Message
+              key={counter++}
+              user={message.user} 
+              text={message.text} 
+              userAvatarUrl={message.userAvatarUrl}
+              image={ message.image } />)}
+        </div>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-    return {
-        repos: state.repos,
-        messages: state.messages,
-        authUser: state.authUser
-    };
+  return {
+    repos: state.repos,
+    messages: state.messages,
+    authUser: state.authUser
+  };
 }
 
 export default connect(mapStateToProps)(Search);
