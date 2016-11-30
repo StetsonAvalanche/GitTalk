@@ -49,18 +49,61 @@ class Search extends React.Component {
   buildIndex() {
     const genIndex = (messages) => {
       let index = {};
+      if (messages.length > 0) {
+        console.log(messages[0]);
+      }
+
+      const insertIndex = function(key, message, inserted) {
+        const lowerCaseKey = key.toLowerCase();
+        if (inserted[lowerCaseKey] === undefined) {
+          inserted[lowerCaseKey] = true;
+          if (index[lowerCaseKey] === undefined) {
+            index[lowerCaseKey] = [message];
+          } else {
+            index[lowerCaseKey] = index[lowerCaseKey].concat([message]);
+          }
+        }
+        return inserted;
+      };
+
       messages.forEach((message) => {
+        let inserted = {}; // remove duplicate messages in one key
+        // handle message.chatroom e.g. stetsonAvalanche/GitTalk
+        if (typeof message.chatroom === 'string') {
+          inserted = insertIndex(message.chatroom, message, inserted);
+          var paths = message.chatroom.split('/');
+          paths.forEach((path) => {
+            inserted = insertIndex(path, message, inserted);
+          });
+        }
+        // handle message.image, e.g. /assets/GitTalkLogo.png
+        if (typeof message.image === 'string') {
+          // extract image type
+          let splitImgStr = message.image.split('.');
+          if (splitImgStr.length === 2) {
+            inserted = insertIndex(splitImgStr[1], message, inserted);
+          }
+        }
+        // handle message.text, e.g. Welcome to GitTalk, chat away!
         if (typeof message.text === 'string') {
           let words = message.text.split(' ');
           words.forEach((word) => {
-            if (index[word] === undefined) {
-              index[word] = [message];
-            } else {
-              index[word] = index[word].concat([message]);
-            }
+            const stripPunctuation = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,'');
+            inserted = insertIndex(stripPunctuation, message, inserted);
           });
         }
+        // handle message.type, e.g. message
+        if (typeof message.type === 'string') {
+          inserted = insertIndex(message.type, message, inserted);          
+        }
+        // handle umessage.user, e.g. GitTalk
+        if (typeof message.user === 'string') {
+          inserted = insertIndex(message.user, message, inserted);          
+        }   
+        // no need to handle message.userAvatarUrl
+        // /assets/GitTalkLogo.png
       });
+      
       return index;
     };
 
