@@ -37,9 +37,10 @@ class Chatroom extends React.Component {
       }));
     }; 
 
+    this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
 
     /* websockets */
-    socket.on('new bc message', (message) => {
+    socket.on(this.props.chatroomId, (message) => {
       console.log('NEW MESSAGE RECEIVED')
       this.props.dispatch(actions.addMessages(message));
       // this.updateMemberRepos();
@@ -53,7 +54,6 @@ class Chatroom extends React.Component {
 
   componentWillMount() {
     /* update active chatroom id in global store object */
-    this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
   }
   // componentDidMount() {
   //   /* websockets */
