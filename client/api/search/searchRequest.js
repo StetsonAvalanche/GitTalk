@@ -8,19 +8,18 @@ function _get(url) {
   });
 }
 
-function getAllMessages(username) {
+function getIndex(username) {
   return new Promise((resolve, reject) => {
-    _get(`/search/messages/${username}`)
+    _get(`/search/index/${username}`)
     .done(data => {
       resolve(data);
     })
     .fail((jqXHR, textStatus, err) => {
-      console.log('error in getMessages', jqXHR, err);
-      reject(err);
+      console.log('error in getIndex', jqXHR, err);
     });
   });
 }
 
 module.exports = {
-  getAllMessages: getAllMessages
+  getIndex: getIndex,
 };

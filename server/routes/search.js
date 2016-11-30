@@ -2,6 +2,6 @@ const express = require('express');
 const router = express.Router();
 const searchHandler = require('../handlers/searchHandler.js');
 
-router.get('/messages/:username', searchHandler.getAllMessages);
+router.get('/index/:username', searchHandler.getIndex);
 
 module.exports = router;
