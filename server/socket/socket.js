@@ -36,31 +36,33 @@ function listen(server) {
       });
     });
 
+  
     setInterval(function(){
-        // $.ajax({ url: "server", success: function(data){
-        //     //Update your dashboard gauge
-        //     salesGauge.setValue(data.value);
-        // }, dataType: "json"});
-    let newMessage = {
-      type: 'text',
-      user: '',
-      userAvatarUrl: '',
-      chatroom: this.props.chatroomId,
-      image: image,
-      text: image ? null : this.state.value
-    };
-    console.log('HELLO')
-    }, 3000);
+          // $.ajax({ url: "server", success: function(data){
+          //     //Update your dashboard gauge
+          //     salesGauge.setValue(data.value);
+          // }, dataType: "json"});
+      let newMessage = {
+        type: 'text',
+        user: '',
+        userAvatarUrl: '',
+        chatroom: 'StetsonAvalanche/GitTalk',
+        image: '',
+        text: 'HELLO'
+      };
+      
+      socket.emit(newMessage.chatroom, newMessage);
+      }, 10000);
 
   });
 };
 
-function updateMessage(message) {
-  io.sockets.emit('new bc message', message);
-}
+// function updateMessage(message) {
+//   io.sockets.emit('new bc message', message);
+// }
 
 module.exports = {
   io,
   listen,
-  updateMessage
+  // updateMessage
 }

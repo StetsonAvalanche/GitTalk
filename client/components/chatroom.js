@@ -43,6 +43,7 @@ class Chatroom extends React.Component {
 
     /* websockets */
     socket.on(currChatroomId, (message) => {
+      console.log('MESSAGE RECEIVED')
       this.props.dispatch(actions.addMessages(message));
       // this.updateMemberRepos();
     });
