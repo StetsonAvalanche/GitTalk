@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { init, getChatroom } from '../api/chatroom/chatroomRequest.js';
-import { getUserRepos, getRepoInfo } from './../api/user/userRequest.js';
+import { getUserReposCached, getUserRepos, getRepoInfo } from './../api/user/userRequest.js';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 
@@ -17,6 +17,11 @@ import { githubBlue } from './../util/colorScheme.js';
 class RepoList extends React.Component {
 
   componentWillMount() {
+
+    getUserReposCached().then(data => {
+      console.log(data);
+    }).catch(err => console.log(err));
+
     getRepoInfo().then(reposPaths => {
       this.reposPaths = reposPaths;
       getUserRepos().then(repos => {
