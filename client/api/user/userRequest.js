@@ -49,11 +49,11 @@ function getUserRepos() {
     _get('/auth/user').done(data => {
       const reposUrl = JSON.parse(data)._json.repos_url;
       _get(`${reposUrl}?per_page=100`)
-        .done(repos => {
-          resolve(repos);
-        }).fail((jqXHR, textStatus, err) => {
-          reject(err);
-        });
+      .done(repos => {
+        resolve(repos);
+      }).fail((jqXHR, textStatus, err) => {
+        reject(err);
+      });
     }).fail((jqXHR, textStatus, err) => {
       reject(err);
     });
@@ -69,7 +69,7 @@ function getRepoInfoCached() {
         return new Promise((res, rej) => {
           getRepoParentCached(repo.full_name).then(r => {
             console.log(r);
-            if (r.fork == true) {
+            if (r.fork === true) {
               repoLinks[r.id] = r.parent.full_name;
             } else {
               repoLinks[r.id] = r.full_name;
@@ -80,7 +80,7 @@ function getRepoInfoCached() {
         Promise.all(p).then(() => resolve(repoLinks)).catch(reject());
       });
     }).catch(err => console.log(err));
-  })
+  });
 }
 
 function getRepoInfo() {
@@ -95,7 +95,7 @@ function getRepoInfo() {
             return new Promise((res, rej) => {
               let currentRepoLink = repo.url;
               _get(`${currentRepoLink}`).done(repo => {
-                if (repo.fork == true) {
+                if (repo.fork === true) {
                   repoLinks[repo.id] = repo.parent.full_name;
                 } else {
                   repoLinks[repo.id] = repo.full_name;
@@ -106,7 +106,7 @@ function getRepoInfo() {
               });
             });
           });
-          Promise.all(p).then(() => {resolve(repoLinks)}).catch(reject);
+          Promise.all(p).then(() => {resolve(repoLinks);}).catch(reject);
         }).fail((jqXHR, textStatus, err) => {
           reject(err);
         });
@@ -134,5 +134,5 @@ export {
   getMemberRepos,
   getRepoInfo,
   getRepoInfoCached
-}
+};
 
