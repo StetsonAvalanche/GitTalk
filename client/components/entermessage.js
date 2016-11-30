@@ -58,7 +58,7 @@ class EnterMessage extends React.Component {
       text: image ? null : this.state.value
     };
 
-    socket.emit('join chatroom', {id: this.props.chatroomId});
+    // socket.emit('join chatroom', {id: this.props.chatroomId});
     socket.emit('new message', newMessage);
     // this.props.dispatch(actions.addMessages(newMessage));
     if (!image) this.setState({ value: '' });
