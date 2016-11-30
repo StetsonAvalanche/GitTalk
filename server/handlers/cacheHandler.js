@@ -69,7 +69,7 @@ function getRepo(req, res) {
 }
 
 function repoRequest(repo, etag, cb) {
-  const keys = `&client_id=0a1f44ddf5d9aefe2880&client_secret=2e58fc8d180701020cc86225d352e72a678dd5e2`;
+  const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
 
   if (!etag) {
     const options = {
@@ -92,7 +92,7 @@ function repoRequest(repo, etag, cb) {
 }
 
 function userReposRequest(username, etag, cb) {
-  const keys = `&client_id=0a1f44ddf5d9aefe2880&client_secret=2e58fc8d180701020cc86225d352e72a678dd5e2`;
+  const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
   if (!etag) {
     const options = {
       url: `https://api.github.com/users/${ username }/repos?per_page=100${ keys }`,
