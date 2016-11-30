@@ -21,14 +21,14 @@ class Chatroom extends React.Component {
   constructor(props){
     super(props);
 
+    this.state = {
+      channels: []
+    };
+
     this.props.dispatch(actions.updateWindowSize({ 
       width: window.innerWidth, 
       height: window.innerHeight
     }));
-
-    this.state = {
-      channels: []
-    };
 
     window.onresize = () => {
       this.props.dispatch(actions.updateWindowSize({ 
@@ -37,32 +37,25 @@ class Chatroom extends React.Component {
       }));
     }; 
 
-    this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
+    /* update current chatroom id in global store object */
+    const currChatroomId = this.props.params.username + '/' + this.props.params.reponame;
+    this.props.dispatch(actions.setActiveChatroom(currChatroomId));
 
     /* websockets */
-    console.log('SET SOCKET LISTENER')
-    socket.on(this.props.params.username + '/' + this.props.params.reponame, (message) => {
-      console.log('NEW MESSAGE RECEIVED')
+    socket.on(currChatroomId, (message) => {
       this.props.dispatch(actions.addMessages(message));
       // this.updateMemberRepos();
     });
 
     /* this binding for methods */
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
-
   }
 
-  
-  // componentWillMount() {
-  //   console.log('INSIDE WILL MOUNT')
-  //   socket.connect();
-  // }
-
   componentWillUnmount() {
-    console.log('INSIDE WILL UNMOUNT')
     socket.removeListener(this.props.params.username + '/' + this.props.params.reponame);
     /* update active chatroom id in global store object */
   }
+
   // componentDidMount() {
   //   /* websockets */
   //   socket.emit('join chatroom', {id: this.props.chatroomId});
