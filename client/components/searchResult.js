@@ -1,13 +1,13 @@
 import React, {PropTypes} from 'react';
 
 /* Material-UI components */
-import {Avatar, ListItem, Paper} from 'material-ui';
+import {Avatar, ListItem, Paper, Subheader} from 'material-ui';
 
 /* Color Scheme */
 import { grey700 } from './../util/colorScheme';
 import MarkdownElement from './markdownelement';
 
-class Message extends React.Component {
+class SearchResult extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,9 +17,14 @@ class Message extends React.Component {
     const text = <MarkdownElement text={this.props.text} />;
     const { image } = this.props;
     const avatar = <Avatar src={this.props.userAvatarUrl} />;
+    const chatroom = this.props.chatroom;
+    const subheaderStyle = {
+      fontWeight: 'bold',
+    };
 
     return (
       <Paper style={styles.box} zDepth={1}>
+        <Subheader style={subheaderStyle}>Found in {chatroom}:</Subheader>
         <ListItem leftAvatar={avatar} disabled={true}>
           <span style={styles.author}>{user}</span>
           <br />
@@ -49,4 +54,4 @@ const styles = {
   },
 };
 
-export default Message;
+export default SearchResult;

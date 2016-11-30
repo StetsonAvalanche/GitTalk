@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../actions/actions';
 import { getAllMessages } from './../api/search/searchRequest';
-import Message from './message';
+import SearchResult from './searchResult';
 
 /* Color Scheme */
 import {
@@ -227,12 +227,14 @@ class Search extends React.Component {
         </div>
         <div style={messageRoomStyle} id='messageBox'>
           {this.state.results.map(message => 
-            <Message
+            <SearchResult
               key={counter++}
-              user={message.user} 
-              text={message.text} 
+              user={message.user}
+              text={message.text}
               userAvatarUrl={message.userAvatarUrl}
-              image={ message.image } />)}
+              image={message.image}
+              chatroom={message.chatroom}
+            />)}
         </div>
       </div>
     );
