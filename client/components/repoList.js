@@ -42,7 +42,6 @@ class RepoList extends React.Component {
   }
 
   createListItems() {
-    console.log('INSIDE RENDER', this.props.repos)
     return this.props.repos.map((repo) => {
       return (
         <div>
