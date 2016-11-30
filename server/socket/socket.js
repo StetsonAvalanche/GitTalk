@@ -38,7 +38,7 @@ function listen(server) {
 };
 
 function updateMessage(message) {
-  io.sockets.emit('new bc message', message);
+  io.sockets.emit(message.chatroom, message);
 }
 
 module.exports = {
