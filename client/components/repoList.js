@@ -42,11 +42,11 @@ class RepoList extends React.Component {
   }
 
   createListItems() {
+    console.log('INSIDE RENDER', this.props.repos)
     return this.props.repos.map((repo) => {
       return (
         <div>
           <ListItem
-            key={repo.name}
             primaryText={ <span style={styles.primaryLink} onTouchTap={this.navToChatroom.bind(this, repo.path)}>{repo.name}</span> }
             secondaryText={ repo.description }
             secondaryTextLines={ 1 }
