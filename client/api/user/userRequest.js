@@ -31,8 +31,7 @@ function getUserRepos() {
   return new Promise((resolve, reject) => {
     _get('/auth/user').done(data => {
       const reposUrl = JSON.parse(data)._json.repos_url;
-      // _get(`${reposUrl}?per_page=100`).done(repos => {
-      _get(`${reposUrl}?client_id=0a1f44ddf5d9aefe2880&client_secret=2e58fc8d180701020cc86225d352e72a678dd5e2`).done(repos => {
+      _get(`${reposUrl}?per_page=100`).done(repos => {
         resolve(repos);
       }).fail((jqXHR, textStatus, err) => {
         reject(err);
@@ -47,14 +46,12 @@ function getRepoInfo() {
   return new Promise((resolve, reject) => {
     _get('/auth/user').done(data => {
       const reposUrl = JSON.parse(data)._json.repos_url;
-      // _get(`${reposUrl}?per_page=100`).done(repos => {
-      _get(`${reposUrl}?client_id=0a1f44ddf5d9aefe2880&client_secret=2e58fc8d180701020cc86225d352e72a678dd5e2`).done(repos => {  
+      _get(`${reposUrl}?per_page=100`).done(repos => { 
         let repoLinks = {};
         const p = repos.map(repo => {
           return new Promise((res, rej) => {
             let currentRepoLink = repo.url;
-            // _get(`${currentRepoLink}`).done(repo => {
-              _get(`${currentRepoLink}?client_id=0a1f44ddf5d9aefe2880&client_secret=2e58fc8d180701020cc86225d352e72a678dd5e2`).done(repo => {
+            _get(`${currentRepoLink}`).done(repo => {
               if (repo.fork == true) {
                 repoLinks[repo.id] = repo.parent.full_name;
               } else {
