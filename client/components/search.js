@@ -103,7 +103,7 @@ class Search extends React.Component {
         // no need to handle message.userAvatarUrl
         // /assets/GitTalkLogo.png
       });
-      
+
       return index;
     };
 
@@ -201,12 +201,17 @@ class Search extends React.Component {
       overflow: 'auto',
     };
 
+    const autoCompleteFilter = (searchText, suggestions) => {
+      return searchText !== '' && suggestions.indexOf(searchText.toLowerCase()) !== -1;
+    };
+
     return (
       <div>
         <div style={searchBarStyle}>
           <AutoComplete 
             hintText={'Enter a search term :)'}
             dataSource={this.state.suggestions}
+            filter={autoCompleteFilter}
 
             onUpdateInput={this.handleChange}
 
