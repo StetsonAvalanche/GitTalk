@@ -40,7 +40,7 @@ class Chatroom extends React.Component {
     this.props.dispatch(actions.setActiveChatroom(this.props.params.username + '/' + this.props.params.reponame));
 
     /* websockets */
-    socket.on(this.props.chatroomId, (message) => {
+    socket.on(this.props.params.username + '/' + this.props.params.reponame, (message) => {
       console.log('NEW MESSAGE RECEIVED')
       this.props.dispatch(actions.addMessages(message));
       // this.updateMemberRepos();
