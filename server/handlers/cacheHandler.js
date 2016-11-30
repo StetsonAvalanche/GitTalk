@@ -64,7 +64,6 @@ function getRepo(req, res) {
       });
     }
   });
-
 }
 
 function repoRequest(repo, etag, cb) {
@@ -103,6 +102,29 @@ function userReposRequest(username, etag, cb) {
   } else {
     const options = {
       url: `https://api.github.com/users/${ username }/repos?per_page=100${ keys }`,
+      headers: {
+        'If-None-Match': etag,
+        'User-Agent': 'chasestarr'
+      }
+    }
+    request(options, cb);
+  }
+}
+
+
+function userRepoPulls(userRepo, etag, cb) {
+  const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
+  if (!etag) {
+    const options = {
+      url: `https://api.github.com/repos/${ userRepo }/pulls?per_page=100${ keys }`,
+      headers: {
+        'User-Agent': 'chasestarr'
+      }
+    }
+    request(options, cb);
+  } else {
+    const options = {
+      url: `https://api.github.com/repos/${ userRepo }/pulls?per_page=100${ keys }`,
       headers: {
         'If-None-Match': etag,
         'User-Agent': 'chasestarr'
