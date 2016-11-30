@@ -9,7 +9,7 @@ function getUserRepos(req, res) {
     if (e) console.log(e);
 
     if (!user) {
-      githubRequest(username, null, (e, response, body) => {
+      userReposRequest(username, null, (e, response, body) => {
         if (e) console.log(e);
         res.status(200).json(body);
 
@@ -18,13 +18,13 @@ function getUserRepos(req, res) {
         if (status === '200 OK') updateCache(username, etag, body);
       });
     } else {
-      githubRequest(username, user.etag, (e, response, body) => {
+      userReposRequest(username, user.etag, (e, response, body) => {
         if (e) console.log(e);
 
         const status = response.headers.status;
         const etag = response.headers.etag;
         if (status === '304 Not Modified') {
-          res.status(200).json(user.body);
+          res.status(200).json(JSON.parse(user.body));
         } else {
           res.status(200).json(body);
           if (status === '200 OK') updateCache(username, etag, body);
@@ -34,7 +34,64 @@ function getUserRepos(req, res) {
   });
 }
 
-function githubRequest(username, etag, cb) {
+function getRepo(req, res) {
+  if (!req.isAuthenticated()) return res.status(401).end(); // Bail if not authed
+
+  const repo = `${ req.params.user }/${ req.params.repo }`;
+  redis.hgetall(repo, (e, data) => {
+    if (e) console.log(e);
+
+    if (!data) {
+      repoRequest(repo, null, (e, response, body) => {
+        if (e) console.log(e);
+        res.status(200).json(body);
+
+        const status = response.headers.status;
+        const etag = response.headers.etag;
+        if (status === '200 OK') updateCache(username, etag, body);
+      });
+    } else {
+      repoRequest(repo, data.etag, (e, response, body) => {
+        if (e) console.log(e);
+
+        const status = response.headers.status;
+        const etag = response.headers.etag;
+        if (status === '304 Not Modified') {
+          res.status(200).json(JSON.parse(data.body));
+        } else {
+          res.status(200).json(body);
+          if (status === '200 OK') updateCache(repo, etag, body);
+        }
+      });
+    }
+  });
+
+}
+
+function repoRequest(repo, etag, cb) {
+  const keys = `&client_id=0a1f44ddf5d9aefe2880&client_secret=2e58fc8d180701020cc86225d352e72a678dd5e2`;
+
+  if (!etag) {
+    const options = {
+      url: `https://api.github.com/repos/${ repo }${ keys }`,
+      headers: {
+        'User-Agent': 'chasestarr'
+      }
+    };
+    request(options, cb);
+  } else {
+    const options = {
+      url: `https://api.github.com/repos/${ repo }${ keys }`,
+      headers: {
+        'If-None-Match': etag,
+        'User-Agent': 'chasestarr'
+      }
+    };
+    request(options, cb);
+  }
+}
+
+function userReposRequest(username, etag, cb) {
   const keys = `&client_id=0a1f44ddf5d9aefe2880&client_secret=2e58fc8d180701020cc86225d352e72a678dd5e2`;
   if (!etag) {
     const options = {
@@ -61,5 +118,6 @@ function updateCache(key, etag, body) {
 }
 
 module.exports = {
-  getUserRepos
+  getUserRepos,
+  getRepo
 }

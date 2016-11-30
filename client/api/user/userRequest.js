@@ -29,11 +29,20 @@ function getUser() {
 
 function getUserReposCached() {
   return new Promise((resolve, reject) => {
-    _get('/cached/user/repos').done(data => {
-      resolve(data);
-    }).fail((_, text, err) => reject(err));
+    _get('/cached/user/repos')
+      .done(data => resolve(data))
+      .fail((_, text, err) => reject(err));
   });
 }
+
+function getRepoParentCached(repo) {
+  return new Promise((resolve, reject) => {
+    _get(`/cached/${repo}`)
+      .done(data => resolve(data))
+      .fail((x, t, err) => reject(err));
+  });
+}
+
 
 function getUserRepos() {
   return new Promise((resolve, reject) => {
@@ -51,6 +60,29 @@ function getUserRepos() {
   });
 }
 
+function getRepoInfoCached() {
+  return new Promise((resolve, reject) => {
+    getUserReposCached().then(data => {
+      const repos = JSON.parse(data);
+      let repoLinks = {};
+      const p = repos.forEach(repo => {
+        return new Promise((res, rej) => {
+          getRepoParentCached(repo.full_name).then(r => {
+            console.log(r);
+            if (r.fork == true) {
+              repoLinks[r.id] = r.parent.full_name;
+            } else {
+              repoLinks[r.id] = r.full_name;
+            }
+            res();
+          }).catch(err => rej(err));
+        });
+        Promise.all(p).then(() => resolve(repoLinks)).catch(reject());
+      });
+    }).catch(err => console.log(err));
+  })
+}
+
 function getRepoInfo() {
   return new Promise((resolve, reject) => {
     _get('/auth/user').done(data => {
@@ -58,6 +90,7 @@ function getRepoInfo() {
       _get(`${reposUrl}?per_page=100`)
         .done(repos => {
           let repoLinks = {};
+          // create an array of promises
           const p = repos.map(repo => {
             return new Promise((res, rej) => {
               let currentRepoLink = repo.url;
@@ -99,6 +132,7 @@ export {
   getUserRepos,
   getUserReposCached,
   getMemberRepos,
-  getRepoInfo
+  getRepoInfo,
+  getRepoInfoCached
 }
 
