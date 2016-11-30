@@ -14,7 +14,7 @@ import {
   grey200,
 } from './../util/colorScheme';
 
-import TextField from 'material-ui/TextField';
+import AutoComplete from 'material-ui/AutoComplete';
 
 class Search extends React.Component {
   constructor(props){
@@ -25,7 +25,8 @@ class Search extends React.Component {
         'gittalk': [ { type: 'message', chatroom: 'tankwan/CtCI-6th-Edition-JavaScript', image: '', text: 'Welcome to GitTalk, chat away!', userAvatarUrl: '/assets/GitTalkLogo.png', user: 'GitTalk' } ]
       },
       results: [],
-      searchTerm: ''
+      searchTerm: '',
+      suggestions: [],
     };
 
     /* this binding of methods */
@@ -69,7 +70,8 @@ class Search extends React.Component {
       const messages = JSON.parse(messagesData);
       let index = genIndex(messages);
       this.setState({
-        index: index
+        index: index,
+        suggestions: Object.keys(index),
       });
       console.log('built index!', index);
     })
@@ -88,10 +90,10 @@ class Search extends React.Component {
       });      
     }
   }
-  
-  handleChange(event) {
-    this.setState({ searchTerm: event.target.value });
-    this.displayResults(event.target.value);
+
+  handleChange(value) {
+    this.setState({ searchTerm: value });
+    this.displayResults(value);
   }
 
   // Ref: http://stackoverflow.com/questions/18614301/keep-overflow-div-scrolled-to-bottom-unless-user-scrolls-up
@@ -113,11 +115,9 @@ class Search extends React.Component {
     };
 
     const hintTextStyle = {
-      display: this.state.searchTerm === '' ? 'initial' : 'none',
       position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translateX(-50%) translateY(-50%)',
+      width: '100%',
+      textAlign: 'center',
     };
 
     const textFieldStyle = {
@@ -129,6 +129,10 @@ class Search extends React.Component {
     };
 
     const inputStyle = {
+      textAlign: 'center',
+    };
+
+    const listStyle = {
       textAlign: 'center',
     };
 
@@ -157,16 +161,20 @@ class Search extends React.Component {
     return (
       <div>
         <div style={searchBarStyle}>
-          <TextField
+          <AutoComplete 
             hintText={'Enter a search term :)'}
-            hintStyle={hintTextStyle}
+            dataSource={this.state.suggestions}
+
+            onUpdateInput={this.handleChange}
+
+            fullWidth={true}
             style={textFieldStyle}
+            hintStyle={hintTextStyle}
             inputStyle={inputStyle}
             underlineStyle={underlineStyle}
             underlineFocusStyle={underlineFocusStyle}
 
-            onChange={this.handleChange}
-            value={this.state.SearchTerm}
+            listStyle={listStyle}
           />
         </div>
         <div style={messageRoomStyle} id='messageBox'>
