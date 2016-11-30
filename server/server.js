@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const api = require('./routes/api.js');
 const appRoute = require('./routes/app.js');
 const auth = require('./routes/auth.js');
+const cache = require('./routes/cache.js');
 const apps = require('./devApi/inboundController.js');
 
 const passport = require('./passport/config.js');
@@ -32,6 +33,7 @@ app.use(passport.session());
 // routes
 app.use('/auth', auth);
 app.use('/api', api);
+app.use('/cached', cache);
 app.use('/app', appRoute);
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -56,9 +58,9 @@ app.use('/s3', require('react-s3-uploader/s3router')({
   headers: {'Access-Control-Allow-Origin': '*'}
 }));
 
-app.get('*', function(req, res) {
-  res.redirect('/');
-});
+// app.get('*', function(req, res) {
+//   res.redirect('/');
+// });
 
 const port = process.env.PORT || 8000;
 const server = app.listen(port);
