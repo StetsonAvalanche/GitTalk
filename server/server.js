@@ -12,6 +12,7 @@ const api = require('./routes/api.js');
 const appRoute = require('./routes/app.js');
 const auth = require('./routes/auth.js');
 const cache = require('./routes/cache.js');
+const search = require('./routes/search.js');
 const apps = require('./devApi/inboundController.js');
 
 const passport = require('./passport/config.js');
@@ -34,6 +35,7 @@ app.use(passport.session());
 app.use('/auth', auth);
 app.use('/api', api);
 app.use('/cached', cache);
+app.use('/search', search);
 app.use('/app', appRoute);
 app.use(express.static(path.join(__dirname, '../public')));
 
