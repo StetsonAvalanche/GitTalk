@@ -10,7 +10,11 @@ services:
       - "80:8000"
     depends_on:
       - mongo
+      - redis
     command: npm run docker
   mongo:
     image: mongo
     command: mongod
+  redis:
+    image: redis
+    command: redis-server
