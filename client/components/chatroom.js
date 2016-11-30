@@ -37,6 +37,13 @@ class Chatroom extends React.Component {
       }));
     }; 
 
+
+    /* websockets */
+    socket.on('new bc message', (message) => {
+      this.props.dispatch(actions.addMessages(message));
+      // this.updateMemberRepos();
+    });
+
     /* this binding for methods */
     // this.updateMemberRepos = this.updateMemberRepos.bind(this);
 
