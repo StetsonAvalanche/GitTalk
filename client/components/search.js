@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../actions/actions';
-// import { getMessages } from './../api/chatroom/messageRequest';
+import { getAllMessages } from './../api/search/searchRequest';
 import Message from './message';
 
 /* Color Scheme */
@@ -32,13 +32,13 @@ class Search extends React.Component {
     this.updateScroll = this.updateScroll.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.displayResults = this.displayResults.bind(this);
-    //this.fetchMessages = this.fetchMessages.bind(this);
+    this.buildIndex = this.buildIndex.bind(this);
 
     // this.props.dispatch(actions.addMessages(message));
   }
 
   componentWillMount() {
-    // this.fetchIndex(this.props.chatroomId);
+    this.buildIndex();
   }
 
   componentDidUpdate() {
@@ -52,14 +52,36 @@ class Search extends React.Component {
   }
 
   /* fetch all messages from DB */
-  // fetchIndex(chatroomId) {
-  //   //getIndex
-  //   // getMessages(chatroomId)
-  //   // .then(messages => {
-  //   //   this.props.dispatch(actions.updateMessages(JSON.parse(messages)));
-  //   // })
-  //   // .catch(err => console.log(err));
-  // }
+  buildIndex() {
+    const genIndex = (messages) => {
+      let index = {};
+      messages.forEach((message) => {
+        if (typeof message.text === 'string') {
+          let words = message.text.split(' ');
+          words.forEach((word) => {
+            if (index[word] === undefined) {
+              index[word] = [message];
+            } else {
+              index[word] = index[word].concat([message]);
+            }
+          });
+        }
+      });
+      return index;
+    };
+
+    const { username } = this.props.authUser;
+    getAllMessages(username)
+    .then(messagesData => {
+      const messages = JSON.parse(messagesData);
+      let index = genIndex(messages);
+      this.setState({
+        index: index
+      });
+      console.log('built index!', index);
+    })
+    .catch(err => console.log(err));
+  }
   
   displayResults(searchTerm) {
     const { index } = this.state;
@@ -136,7 +158,7 @@ function mapStateToProps(state) {
     return {
         repos: state.repos,
         messages: state.messages,
-        chatroomId: state.activeChatroomId
+        authUser: state.authUser
     };
 }
 
