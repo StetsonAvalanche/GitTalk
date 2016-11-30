@@ -2,6 +2,7 @@
 const SocketIo = require('socket.io');
 const chatroomCtrl = require('./../db/controllers/chatroom.js');
 const outbound = require('./../devApi/outboundController.js');
+const request = require('request');
 
 let io;
 
@@ -34,6 +35,23 @@ function listen(server) {
 
       });
     });
+
+    setInterval(function(){
+        // $.ajax({ url: "server", success: function(data){
+        //     //Update your dashboard gauge
+        //     salesGauge.setValue(data.value);
+        // }, dataType: "json"});
+    let newMessage = {
+      type: 'text',
+      user: '',
+      userAvatarUrl: '',
+      chatroom: this.props.chatroomId,
+      image: image,
+      text: image ? null : this.state.value
+    };
+    console.log('HELLO')
+    }, 3000);
+
   });
 };
 
