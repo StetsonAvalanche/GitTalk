@@ -58,9 +58,9 @@ app.use('/s3', require('react-s3-uploader/s3router')({
   headers: {'Access-Control-Allow-Origin': '*'}
 }));
 
-// app.get('*', function(req, res) {
-//   res.redirect('/');
-// });
+app.get('*', function(req, res) {
+  res.redirect('/');
+});
 
 const port = process.env.PORT || 8000;
 const server = app.listen(port);
