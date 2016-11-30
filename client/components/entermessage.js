@@ -47,6 +47,7 @@ class EnterMessage extends React.Component {
   }
 
   sendMessage(message, image) {
+    if (!this.state.value) return; // bail if message input is blank
     image = image || null;
 
     const newMessage = {
