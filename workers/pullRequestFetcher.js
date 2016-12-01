@@ -44,7 +44,7 @@ function fetchRepoPullRequests(callback) {
 				      	const newPullRequests = pullRequests.filter((pr) => {
 				      		if (_.contains(newPullRequestIds, pr.id)) {return pr;}
 				      	});
-				      	console.log('newPullRequestIds', newPullRequestIds);
+				      	// console.log('newPullRequestIds', newPullRequestIds);
 				      	callback(chatroomId, newPullRequests);
               });
 			      // }

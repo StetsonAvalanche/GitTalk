@@ -38,7 +38,7 @@ function listen(server) {
     });
 
     sendUpdates(function(chatroomId, data){
-      console.log(data);
+      console.log('first PR', data[0].user.login);
       if (data.length > 0) {
         
         data.forEach((pr) => {
