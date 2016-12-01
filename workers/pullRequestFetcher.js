@@ -10,12 +10,10 @@ function fetchRepoPullRequests(callback) {
 	  const repoId = 'StetsonAvalanche/GitTalk/pulls'; // FIXME
 		redis.hgetall(repoId, (e, repo) => {
 		  if (e) console.log(e);
-	    // console.log('REDIS REPO', repo)
 
 		  if (!repo) {
 		    repoPullsRequest(repoId, null, (e, response, body) => {
 		      if (e) console.log(e);
-          // console.log('No Repo - API REQUEST MADE', body)
 		      const status = response.headers.status;
 		      const etag = response.headers.etag;
 		      if (status === '200 OK') updateCache(repoId, etag, body);
@@ -25,12 +23,9 @@ function fetchRepoPullRequests(callback) {
 		    repoPullsRequest(repoId, repo.etag, (e, response, body) => {
 		      if (e) console.log(e);
 
-		      // console.log('Redis Repo - API REQUEST MADE', body)
 		      const status = response.headers.status;
-		      // console.log('STATUS', status)
 		      const etag = response.headers.etag;
 		      if (status === '304 Not Modified') {
-		        // return JSON.parse(repo.body);
 		        callback(forkedRepo, 'Not Modified');
 		      } else {
 		        if (status === '200 OK') updateCache(repoId, etag, body);
