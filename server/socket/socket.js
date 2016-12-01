@@ -40,8 +40,8 @@ function listen(server) {
     sendUpdates(function(chatroomId, data){
       let updateMessage = {
         type: 'text',
-        user: '',
-        userAvatarUrl: '',
+        user: 'GitTalk',
+        userAvatarUrl: '/assets/GitTalkLogo.png',
         chatroom: chatroomId,
         image: '',
         text: data
