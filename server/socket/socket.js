@@ -61,12 +61,8 @@ function listen(server) {
   });
 };
 
-// function updateMessage(message) {
-//   io.sockets.emit('new bc message', message);
-// }
 
 module.exports = {
   io,
-  listen,
-  // updateMessage
+  listen
 }
