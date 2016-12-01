@@ -16,6 +16,7 @@ GitTalk is a Slack clone built for Github users, which allow discussion/correspo
     b. [Sequence Diagram](#sequence-diagram)
 4. [Team](#team)
 5. [Contributing](#contributing)
+6. [Chat-app API Docs](Developer-API-Docs.md)
 
 ## Usage
 
