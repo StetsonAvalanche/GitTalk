@@ -18,16 +18,15 @@ function getUserRepos(req, res) {
         if (status === '200 OK') updateCache(username, etag, body);
       });
     } else {
+      res.status(200).json(JSON.parse(user.body));
+
       userReposRequest(username, user.etag, (e, response, body) => {
         if (e) console.log(e);
 
         const status = response.headers.status;
         const etag = response.headers.etag;
-        if (status === '304 Not Modified') {
-          res.status(200).json(JSON.parse(user.body));
-        } else {
-          res.status(200).json(body);
-          if (status === '200 OK') updateCache(username, etag, body);
+        if (status === '200 OK') {
+          updateCache(username, etag, body);
         }
       });
     }
