@@ -118,5 +118,6 @@ function updateCache(key, etag, body) {
 
 module.exports = {
   getUserRepos,
-  getRepo
+  getRepo,
+  repoRequest
 }

@@ -1,39 +1,44 @@
 const request = require('request');
 const redis = require('./../server/redis/init.js');
+const { repoRequest, updateCache } = require('./../server/handlers/cacheHandler.js');
 
 function fetchRepoPullRequests(callback) {
 
   redis.hgetall('activeChatroomId', (e, room) => {
   	if (e) console.log(e);
-    const forkedRepo = room.id;
+    const chatroomId = room.id;
 	  // const repoId = `${room.id}/pulls`; // FIXME
-	  const repoId = 'StetsonAvalanche/GitTalk/pulls'; // FIXME
-		redis.hgetall(repoId, (e, repo) => {
-		  if (e) console.log(e);
+	  getParentRepo(chatroomId, (parentRepoId) => {
+	    // const repoId = 'StetsonAvalanche/GitTalk/pulls'; // FIXME
+      const repoId = parentRepoId;
+			redis.hgetall(repoId, (e, repo) => {
+			  if (e) console.log(e);
 
-		  if (!repo) {
-		    repoPullsRequest(repoId, null, (e, response, body) => {
-		      if (e) console.log(e);
-		      const status = response.headers.status;
-		      const etag = response.headers.etag;
-		      if (status === '200 OK') updateCache(repoId, etag, body);
-		      callback(forkedRepo, JSON.parse(body));
-		    });
-		  } else {
-		    repoPullsRequest(repoId, repo.etag, (e, response, body) => {
-		      if (e) console.log(e);
+			  if (!repo) {
+			    repoPullsRequest(repoId, null, (e, response, body) => {
+			      if (e) console.log(e);
 
-		      const status = response.headers.status;
-		      const etag = response.headers.etag;
-		      if (status === '304 Not Modified') {
-		        callback(forkedRepo, 'Not Modified');
-		      } else {
-		        if (status === '200 OK') updateCache(repoId, etag, body);
-		        callback(forkedRepo, JSON.parse(body));
-		      }
-		    });
-		  }
-		});
+			      const status = response.headers.status;
+			      const etag = response.headers.etag;
+			      if (status === '200 OK') updateCache(repoId, etag, body);
+			      callback(chatroomId, JSON.parse(body));
+			    });
+			  } else {
+			    repoPullsRequest(repoId, repo.etag, (e, response, body) => {
+			      if (e) console.log(e);
+
+			      const status = response.headers.status;
+			      const etag = response.headers.etag;
+			      if (status === '304 Not Modified') {
+			        callback(chatroomId, 'Not Modified');
+			      } else {
+			        if (status === '200 OK') updateCache(repoId, etag, body);
+			        callback(chatroomId, JSON.parse(body));
+			      }
+			    });
+			  }
+			});
+	  });
   });
 }
 
@@ -60,19 +65,51 @@ function repoPullsRequest(userRepo, etag, cb) {
   }
 }
 
-function updateCache(key, etag, body) {
-  redis.hmset(key, ['etag', etag, 'body', JSON.stringify(body)]);
+
+
+function getParentRepo(forkedRepo, cb) {
+  const forkedRepoKey = `${ forkedRepo }/child`;
+  redis.hgetall(forkedRepoKey, (e, data) => {
+    if (e) console.log(e);
+
+    if (!data) {
+      repoRequest(forkedRepo, null, (e, response, body) => {
+        if (e) console.log(e);
+
+        const status = response.headers.status;
+        const etag = response.headers.etag;
+        if (status === '200 OK') {
+        	redis.hmset(forkedRepoKey, ['parentRepo', JSON.stringify(body)]);
+        };
+        console.log('INSIDE NO DATA - body', body)
+        cb(JSON.parse(body).parent.full_name);
+      });
+    } else {
+      repoRequest(forkedRepo, data.etag, (e, response, body) => {
+        if (e) console.log(e);
+
+        const status = response.headers.status;
+        const etag = response.headers.etag;
+        if (status === '304 Not Modified') {
+          cb(JSON.parse(data.body).parent.full_name);
+        } else {
+          if (status === '200 OK') {
+          	redis.hmset(forkedRepoKey, ['parentRepo', JSON.stringify(body)]);
+          };
+          cb(JSON.parse(body).parent.full_name);
+        }
+      });
+    }
+  });
 }
 
 
 function sendUpdates(cb) {
-
 	setInterval(function(){
 	  fetchRepoPullRequests(function(chatroomId, data){
 	    cb(chatroomId, data);
 	  });
-	  
-	  }, 20000);
+	}, 20000);
 }
 
 module.exports = {
