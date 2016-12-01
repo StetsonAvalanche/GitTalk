@@ -3,6 +3,8 @@ const SocketIo = require('socket.io');
 const chatroomCtrl = require('./../db/controllers/chatroom.js');
 const outbound = require('./../devApi/outboundController.js');
 
+
+
 let io;
 
 function listen(server) {
@@ -34,6 +36,7 @@ function listen(server) {
 
       });
     });
+
   });
 };
 

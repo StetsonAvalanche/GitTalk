@@ -64,7 +64,6 @@ function getRepo(req, res) {
       });
     }
   });
-
 }
 
 function repoRequest(repo, etag, cb) {
@@ -72,7 +71,7 @@ function repoRequest(repo, etag, cb) {
 
   if (!etag) {
     const options = {
-      url: `https://api.github.com/repos/${ repo }${ keys }`,
+      url: `https://api.github.com/repos/${ repo }?per_page=100${ keys }`,
       headers: {
         'User-Agent': 'chasestarr'
       }
@@ -80,7 +79,7 @@ function repoRequest(repo, etag, cb) {
     request(options, cb);
   } else {
     const options = {
-      url: `https://api.github.com/repos/${ repo }${ keys }`,
+      url: `https://api.github.com/repos/${ repo }?per_page=100${ keys }`,
       headers: {
         'If-None-Match': etag,
         'User-Agent': 'chasestarr'
@@ -112,11 +111,14 @@ function userReposRequest(username, etag, cb) {
   }
 }
 
+
 function updateCache(key, etag, body) {
   redis.hmset(key, ['etag', etag, 'body', JSON.stringify(body)]);
 }
 
 module.exports = {
   getUserRepos,
-  getRepo
+  getRepo,
+  updateCache,
+  repoRequest
 }
