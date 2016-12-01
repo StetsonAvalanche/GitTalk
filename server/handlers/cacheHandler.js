@@ -113,35 +113,11 @@ function userReposRequest(username, etag, cb) {
 }
 
 
-function repoPullsRequest(userRepo, etag, cb) {
-  const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
-  if (!etag) {
-    const options = {
-      url: `https://api.github.com/repos/${ userRepo }?per_page=100${ keys }`,
-      headers: {
-        'User-Agent': 'chasestarr'
-      }
-    }
-    request(options, cb);
-  } else {
-    const options = {
-      url: `https://api.github.com/repos/${ userRepo }?per_page=100${ keys }`,
-      headers: {
-        'If-None-Match': etag,
-        'User-Agent': 'chasestarr'
-      }
-    }
-    request(options, cb);
-  }
-}
-
 function updateCache(key, etag, body) {
   redis.hmset(key, ['etag', etag, 'body', JSON.stringify(body)]);
 }
 
 module.exports = {
   getUserRepos,
-  getRepo,
-  repoPullsRequest,
-  updateCache
+  getRepo
 }
