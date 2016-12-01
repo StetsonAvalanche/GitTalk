@@ -38,7 +38,7 @@ function listen(server) {
     });
 
     sendUpdates(function(chatroomId, data){
-      if (data !== 'Not Modified') {
+      // if (data !== 'Not Modified') {
         let updateMessage = {
           type: 'text',
           user: 'GitTalk',
@@ -48,7 +48,7 @@ function listen(server) {
           text: data
         };
         socket.emit(updateMessage.chatroom, updateMessage);
-      }
+      // }
     });
 
 
