@@ -41,13 +41,17 @@ function fetchRepoPullRequests(callback) {
 			        callback(chatroomId, 'Not Modified');
 			      } else {
 			      	const pullRequests = JSON.parse(body); // array of JSON pull requests
+			      	console.log('pull requests', pullRequests);
 			      	const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
               const cachedPullRequestIds = redis.hgetall(repoId, (e, repo) => {
 				      	const newPullRequestIds = _.difference(pullRequestIds, JSON.parse(repo.body));
+				      	console.log('newPullRequestIds', newPullRequestIds);
 				      	if (status === '200 OK') updateCache(repoId, etag, JSON.stringify(newPullRequestIds));
-				      	const prDiffUrls = pullRequests.filter((pr) => {
-				      		if (_.contains(newPullRequestIds, pr.id)) {return pr.diff_url;}
-				      	});;
+				      	const newPullRequests = pullRequests.filter((pr) => {
+				      		if (_.contains(newPullRequestIds, pr.id)) {return pr;}
+				      	});
+				      	const prDiffUrls = newPullRequests.map((pr) => {return pr.diff_url;});
+				      	console.log('prDiffUrls', prDiffUrls);
 				      	getPullRequestDiff(prDiffUrls, (diffFiles) => {
 				      	  callback(chatroomId, JSON.parse(diffFiles));
 				      	});
