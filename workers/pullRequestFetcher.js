@@ -26,10 +26,11 @@ function fetchRepoPullRequests(callback) {
 			      const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
 
 			      if (status === '200 OK') updateCache(repoId, etag, JSON.stringify(pullRequestIds));
-			      const prDiffUrls = pullRequests.map((pr) => {return pr.diff_url;});
-			      getPullRequestDiff(prDiffUrls, (diffFiles) => {
-			        callback(chatroomId, JSON.parse(diffFiles));
-			      });
+			      callback(chatroomId, pullRequests);
+			      // const prDiffUrls = pullRequests.map((pr) => {return pr.diff_url;});
+			      // getPullRequestDiff(prDiffUrls, (diffFiles) => {
+			      //   callback(chatroomId, JSON.parse(diffFiles));
+			      // });
 			    });
 			  } else {
 			    repoPullsRequest(repoId, repo.etag, (e, response, body) => {
@@ -45,16 +46,17 @@ function fetchRepoPullRequests(callback) {
 			      	const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
               const cachedPullRequestIds = redis.hgetall(repoId, (e, repo) => {
 				      	const newPullRequestIds = _.difference(pullRequestIds, JSON.parse(repo.body));
-				      	console.log('newPullRequestIds', newPullRequestIds);
 				      	if (status === '200 OK') updateCache(repoId, etag, JSON.stringify(newPullRequestIds));
 				      	const newPullRequests = pullRequests.filter((pr) => {
 				      		if (_.contains(newPullRequestIds, pr.id)) {return pr;}
 				      	});
-				      	const prDiffUrls = newPullRequests.map((pr) => {return pr.diff_url;});
-				      	console.log('prDiffUrls', prDiffUrls);
-				      	getPullRequestDiff(prDiffUrls, (diffFiles) => {
-				      	  callback(chatroomId, JSON.parse(diffFiles));
-				      	});
+				      	console.log('newPullRequestIds', newPullRequestIds);
+				      	// const prDiffUrls = newPullRequests.map((pr) => {return pr.diff_url;});
+				      	// console.log('prDiffUrls', prDiffUrls);
+				      	callback(chatroomId, newPullRequests);
+				      	// getPullRequestDiff(prDiffUrls, (diffFiles) => {
+				      	//   callback(chatroomId, JSON.parse(diffFiles));
+				      	// });
               })
 			      }
 			    });
