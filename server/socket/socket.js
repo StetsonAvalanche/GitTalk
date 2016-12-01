@@ -2,7 +2,8 @@
 const SocketIo = require('socket.io');
 const chatroomCtrl = require('./../db/controllers/chatroom.js');
 const outbound = require('./../devApi/outboundController.js');
-const request = require('request');
+const {fetchRepoPullRequests} = require('./../../workers/pullRequestFetcher.js');
+
 
 let io;
 
@@ -36,27 +37,20 @@ function listen(server) {
       });
     });
 
-    const pullRequestURL = 'https://api.github.com/repos/StetsonAvalanche/GitTalk/pulls';
 
-    setInterval(function(){
+    // setInterval(function(){
 
-       request(`${pullRequestURL}?client_id=0a1f44ddf5d9aefe2880&client_secret=2e58fc8d180701020cc86225d352e72a678dd5e2`, 
-        function (error, response, body) {
-         if (!error) {
-           console.log(body) // Print the body of response.
-         }
-       })
-      let newMessage = {
-        type: 'text',
-        user: '',
-        userAvatarUrl: '',
-        chatroom: 'StetsonAvalanche/GitTalk',
-        image: '',
-        text: 'HELLO'
-      };
-      
-      // socket.emit(newMessage.chatroom, newMessage);
-      }, 20000);
+    //   let newMessage = {
+    //     type: 'text',
+    //     user: '',
+    //     userAvatarUrl: '',
+    //     chatroom: 'StetsonAvalanche/GitTalk',
+    //     image: '',
+    //     text: 'HELLO'
+    //   };
+    //   console.log(fetchRepoPullRequests())
+    //   // socket.emit(newMessage.chatroom, newMessage);
+    //   }, 20000);
 
   });
 };

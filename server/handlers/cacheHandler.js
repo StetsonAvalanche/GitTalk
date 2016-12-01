@@ -112,11 +112,11 @@ function userReposRequest(username, etag, cb) {
 }
 
 
-function userRepoPulls(userRepo, etag, cb) {
+function repoPullsRequest(userRepo, etag, cb) {
   const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
   if (!etag) {
     const options = {
-      url: `https://api.github.com/repos/${ userRepo }/pulls?per_page=100${ keys }`,
+      url: `https://api.github.com/repos/${ userRepo }?per_page=100${ keys }`,
       headers: {
         'User-Agent': 'chasestarr'
       }
@@ -124,7 +124,7 @@ function userRepoPulls(userRepo, etag, cb) {
     request(options, cb);
   } else {
     const options = {
-      url: `https://api.github.com/repos/${ userRepo }/pulls?per_page=100${ keys }`,
+      url: `https://api.github.com/repos/${ userRepo }?per_page=100${ keys }`,
       headers: {
         'If-None-Match': etag,
         'User-Agent': 'chasestarr'
@@ -140,5 +140,7 @@ function updateCache(key, etag, body) {
 
 module.exports = {
   getUserRepos,
-  getRepo
+  getRepo,
+  repoPullsRequest,
+  updateCache
 }
