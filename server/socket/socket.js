@@ -38,18 +38,18 @@ function listen(server) {
     });
 
     sendUpdates(function(chatroomId, data){
-      console.log('first PR', data[0].user.login);
       if (data.length > 0) {
+      console.log('first PR', data[0].user.login);
         
         data.forEach((pr) => {
-          let messageText = '__' + pr.user.login + '__ made a new pull request. Click the following link to see diffs:\n' + pr.diff_url;
+          // let messageText = '__' + pr.user.login + '__ made a new pull request. Click the following link to see diffs:\n' + pr.diff_url;
           let updateMessage = {
             type: 'text',
             user: 'GitTalk',
             userAvatarUrl: '/assets/GitTalkLogo.png',
             chatroom: chatroomId,
             image: '',
-            text: messageText
+            text: pr.diff_url
           };
           socket.emit(updateMessage.chatroom, updateMessage);
         }); 
