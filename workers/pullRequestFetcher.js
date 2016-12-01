@@ -1,16 +1,18 @@
 const request = require('request');
 const redis = require('./../server/redis/init.js');
 const { repoRequest , updateCache } = require('./../server/handlers/cacheHandler.js');
+const Promise = require('bluebird');
+const _ = require('underscore');
 
 function fetchRepoPullRequests(callback) {
 
   redis.hgetall('activeChatroomId', (e, room) => {
   	if (e) console.log(e);
     const chatroomId = room.id;
-	  // const repoId = `${room.id}/pulls`; // FIXME
 	  getParentRepo(chatroomId, (parentRepoId) => {
-	    // const repoId = 'StetsonAvalanche/GitTalk/pulls'; // FIXME
-      const repoId = parentRepoId;
+	    
+      // const repoId = parentRepoId;
+	    const repoId = `${parentRepoId}/pulls`; // FIXME
 			redis.hgetall(repoId, (e, repo) => {
 			  if (e) console.log(e);
 
@@ -20,8 +22,14 @@ function fetchRepoPullRequests(callback) {
 
 			      const status = response.headers.status;
 			      const etag = response.headers.etag;
-			      if (status === '200 OK') updateCache(repoId, etag, body);
-			      callback(chatroomId, JSON.parse(body));
+			      const pullRequests = JSON.parse(body); // array of JSON pull requests
+			      const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
+
+			      if (status === '200 OK') updateCache(repoId, etag, JSON.stringify(pullRequestIds));
+			      const prDiffUrls = pullRequests.map((pr) => {return pr.diff_url;});
+			      getPullRequestDiff(prDiffUrls, (diffFiles) => {
+			        callback(chatroomId, JSON.parse(diffFiles));
+			      });
 			    });
 			  } else {
 			    repoPullsRequest(repoId, repo.etag, (e, response, body) => {
@@ -32,8 +40,16 @@ function fetchRepoPullRequests(callback) {
 			      if (status === '304 Not Modified') {
 			        callback(chatroomId, 'Not Modified');
 			      } else {
-			        if (status === '200 OK') updateCache(repoId, etag, body);
-			        callback(chatroomId, JSON.parse(body));
+			      	const pullRequests = JSON.parse(body); // array of JSON pull requests
+			      	const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
+              const cachedPullRequestIds = redis.hgetall(repoId, (e, repo) => {
+				      	const newPullRequestIds = _.difference(pullRequestsIds, JSON.parse(repo.body));
+				      	if (status === '200 OK') updateCache(repoId, etag, JSON.stringify(newPullRequestIds));
+				      	const prDiffUrls = newPullRequestIds.map((pr) => {return pr.diff_url;});
+				      	getPullRequestDiff(prDiffUrls, (diffFiles) => {
+				      	  callback(chatroomId, JSON.parse(diffFiles));
+				      	});
+              })
 			      }
 			    });
 			  }
@@ -41,6 +57,23 @@ function fetchRepoPullRequests(callback) {
 	  });
   });
 }
+
+
+function requestDiffFile(diffURL){
+	const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
+  return new Promise((resolve, reject) => {
+  	let options = {
+  	  url: `${ diffURL }?per_page=100${ keys }`,
+  	  headers: {
+  	    'User-Agent': 'chasestarr'
+  	  }
+  	}
+  	request(options, (e, response, body) => {
+  		(e) ? reject(e) : resolve(body);
+  	});
+  })
+}
+
 
 
 function repoPullsRequest(userRepo, etag, cb) {
@@ -73,7 +106,6 @@ function getParentRepo(forkedRepo, cb) {
     if (e) console.log(e);
 
     if (!data) {
-    	console.log(repoRequest)
       repoRequest(forkedRepo, null, (e, response, body) => {
         if (e) console.log(e);
 
@@ -82,7 +114,6 @@ function getParentRepo(forkedRepo, cb) {
         if (status === '200 OK') {
         	redis.hmset(forkedRepoKey, ['parentRepo', JSON.stringify(body)]);
         };
-        console.log('INSIDE NO DATA - body', response.headers.status)
         cb(JSON.parse(body).parent.full_name);
       });
     } else {
