@@ -72,7 +72,7 @@ function repoRequest(repo, etag, cb) {
 
   if (!etag) {
     const options = {
-      url: `https://api.github.com/repos/${ repo }${ keys }`,
+      url: `https://api.github.com/repos/${ repo }?per_page=100${ keys }`,
       headers: {
         'User-Agent': 'chasestarr'
       }
@@ -80,7 +80,7 @@ function repoRequest(repo, etag, cb) {
     request(options, cb);
   } else {
     const options = {
-      url: `https://api.github.com/repos/${ repo }${ keys }`,
+      url: `https://api.github.com/repos/${ repo }?per_page=100${ keys }`,
       headers: {
         'If-None-Match': etag,
         'User-Agent': 'chasestarr'
@@ -120,5 +120,6 @@ function updateCache(key, etag, body) {
 module.exports = {
   getUserRepos,
   getRepo,
+  updateCache,
   repoRequest
 }
