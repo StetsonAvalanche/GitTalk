@@ -60,7 +60,8 @@
     "scroll-behavior": "^0.9.1",
     "smooth-scroll": "github:cferdinandi/smooth-scroll",
     "socket.io": "^1.5.1",
-    "socket.io-client": "^1.5.1"
+    "socket.io-client": "^1.5.1",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
