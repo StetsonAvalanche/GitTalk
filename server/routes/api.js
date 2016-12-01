@@ -8,6 +8,8 @@ router.get('/chatroom/:username/:chatroom', apiHandler.getChatroom);
 
 router.post('/email/invite', apiHandler.emailInvite); 
 
+router.post('/repo/pulls', apiHandler.triggerPullRequestFetcher);
+
 router.get('/messages/:username/:chatroom', apiHandler.getMessages);
 
 // user's a member of repos

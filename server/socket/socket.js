@@ -2,7 +2,7 @@
 const SocketIo = require('socket.io');
 const chatroomCtrl = require('./../db/controllers/chatroom.js');
 const outbound = require('./../devApi/outboundController.js');
-const {sendUpdates} = require('./../../workers/pullRequestFetcher.js');
+
 
 
 let io;
@@ -37,32 +37,16 @@ function listen(server) {
       });
     });
 
-    sendUpdates(function(chatroomId, data){
-      if (data.length > 0) {
-      console.log('first PR', data[0].user.login);
-        
-        data.forEach((pr) => {
-          // let messageText = '__' + pr.user.login + '__ made a new pull request. Click the following link to see diffs:\n' + pr.diff_url;
-          let updateMessage = {
-            type: 'text',
-            user: 'GitTalk',
-            userAvatarUrl: '/assets/GitTalkLogo.png',
-            chatroom: chatroomId,
-            image: '',
-            text: pr.diff_url
-          };
-          socket.emit(updateMessage.chatroom, updateMessage);
-        }); 
-
-      }
-    });
-
 
   });
 };
 
+function updateMessage(message) {
+  io.sockets.emit(message.chatroom, message);
+}
 
 module.exports = {
   io,
-  listen
+  listen,
+  updateMessage
 }
