@@ -2,7 +2,7 @@
 const SocketIo = require('socket.io');
 const chatroomCtrl = require('./../db/controllers/chatroom.js');
 const outbound = require('./../devApi/outboundController.js');
-const {fetchRepoPullRequests} = require('./../../workers/pullRequestFetcher.js');
+const {sendUpdates} = require('./../../workers/pullRequestFetcher.js');
 
 
 let io;
@@ -37,22 +37,18 @@ function listen(server) {
       });
     });
 
-
-    setInterval(function(){
-
-      let newMessage = {
+    sendUpdates(function(data){
+      let updateMessage = {
         type: 'text',
-        user: '',
+        user: 'GitTalk',
         userAvatarUrl: '',
-        chatroom: 'StetsonAvalanche/GitTalk',
+        chatroom: 'anicknam/GitTalk',
         image: '',
-        text: 'HELLO'
+        text: data
       };
-      fetchRepoPullRequests(function(data){
-        console.log(data);
-      })
-      // socket.emit(newMessage.chatroom, newMessage);
-      }, 20000);
+      socket.emit(updateMessage.chatroom, updateMessage);
+    })
+
 
   });
 };
