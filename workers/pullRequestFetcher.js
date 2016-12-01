@@ -70,7 +70,19 @@ function updateCache(key, etag, body) {
 }
 
 
+function sendUpdates(cb) {
+
+	setInterval(function(){
+
+	  fetchRepoPullRequests(function(data){
+	    cb(data);
+	  })
+	  
+	  }, 20000);
+}
+
 module.exports = {
-  fetchRepoPullRequests
+  fetchRepoPullRequests,
+  sendUpdates
 }
 
