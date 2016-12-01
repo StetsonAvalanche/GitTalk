@@ -5,7 +5,7 @@ const Promise = require('bluebird');
 const _ = require('underscore');
 
 function fetchRepoPullRequests(callback) {
-
+  console.log('INSIDE fetchRepoPullRequests FUNCTION')
   redis.hgetall('activeChatroomId', (e, room) => {
   	if (e) console.log(e);
     const chatroomId = room.id;
@@ -151,9 +151,10 @@ function getParentRepo(forkedRepo, cb) {
 
 function sendUpdates(cb) {
 	setInterval(function(){
-	  fetchRepoPullRequests(function(chatroomId, data){
-	    cb(chatroomId, data);
-	  });
+	  // fetchRepoPullRequests(function(chatroomId, data){
+	  //   cb(chatroomId, data);
+	  // });
+	  cb('anicknam/GitTalk', [{diff_url: 'www.cnn.com'}])
 	}, 20000);
 }
 
