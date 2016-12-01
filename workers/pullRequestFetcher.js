@@ -75,7 +75,12 @@ function requestDiffFile(diffURL){
   	  }
   	}
   	request(options, (e, response, body) => {
-  		(e) ? reject(e) : resolve(body);
+  		if (e) {
+  			reject(e)
+  		} else {
+  			console.log('returned diff file', body)
+  		  resolve(body);
+  		}
   	});
   })
 }
