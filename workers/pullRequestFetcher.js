@@ -75,6 +75,17 @@ function requestDiffFile(diffURL){
 }
 
 
+function getPullRequestDiff(diffURLs, cb){
+  let promises = [];
+  for (let i = 0; i < diffURLs.length; i++){
+  	promises.push(requestDiffFile(diffURLs[i]));
+  }
+  Promise.all(promises).then((diffFiles) => {
+  	cb(diffFiles);
+  })
+}
+
+
 
 function repoPullsRequest(userRepo, etag, cb) {
   const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
