@@ -1,6 +1,6 @@
 const request = require('request');
 const redis = require('./../server/redis/init.js');
-const { repoRequest, updateCache } = require('./../server/handlers/cacheHandler.js');
+const { repoRequest , updateCache } = require('./../server/handlers/cacheHandler.js');
 
 function fetchRepoPullRequests(callback) {
 
@@ -73,6 +73,7 @@ function getParentRepo(forkedRepo, cb) {
     if (e) console.log(e);
 
     if (!data) {
+    	console.log(repoRequest)
       repoRequest(forkedRepo, null, (e, response, body) => {
         if (e) console.log(e);
 
@@ -81,7 +82,7 @@ function getParentRepo(forkedRepo, cb) {
         if (status === '200 OK') {
         	redis.hmset(forkedRepoKey, ['parentRepo', JSON.stringify(body)]);
         };
-        console.log('INSIDE NO DATA - body', body)
+        console.log('INSIDE NO DATA - body', response.headers.status)
         cb(JSON.parse(body).parent.full_name);
       });
     } else {
