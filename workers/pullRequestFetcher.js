@@ -5,7 +5,7 @@ function fetchRepoPullRequests(callback) {
 
   redis.hgetall('activeChatroomId', (e, room) => {
   	if (e) console.log(e);
-
+    const forkedRepo = room.id;
 	  // const repoId = `${room.id}/pulls`; // FIXME
 	  const repoId = 'StetsonAvalanche/GitTalk/pulls'; // FIXME
 		redis.hgetall(repoId, (e, repo) => {
@@ -19,7 +19,7 @@ function fetchRepoPullRequests(callback) {
 		      const status = response.headers.status;
 		      const etag = response.headers.etag;
 		      if (status === '200 OK') updateCache(repoId, etag, body);
-		      callback(JSON.parse(body));
+		      callback(forkedRepo, JSON.parse(body));
 		    });
 		  } else {
 		    repoPullsRequest(repoId, repo.etag, (e, response, body) => {
@@ -31,10 +31,10 @@ function fetchRepoPullRequests(callback) {
 		      const etag = response.headers.etag;
 		      if (status === '304 Not Modified') {
 		        // return JSON.parse(repo.body);
-		        callback('Not Modified');
+		        callback(forkedRepo, 'Not Modified');
 		      } else {
 		        if (status === '200 OK') updateCache(repoId, etag, body);
-		        callback(JSON.parse(body));
+		        callback(forkedRepo, JSON.parse(body));
 		      }
 		    });
 		  }
@@ -73,10 +73,9 @@ function updateCache(key, etag, body) {
 function sendUpdates(cb) {
 
 	setInterval(function(){
-
-	  fetchRepoPullRequests(function(data){
-	    cb(data);
-	  })
+	  fetchRepoPullRequests(function(chatroomId, data){
+	    cb(chatroomId, data);
+	  });
 	  
 	  }, 20000);
 }
