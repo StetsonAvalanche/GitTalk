@@ -55,7 +55,7 @@ class Login extends React.Component {
     };
 
     const roundButtonStyle = {
-      position: 'absolute',
+      position: 'fixed',
       bottom: 80,
       right: 80,
     };
@@ -65,13 +65,13 @@ class Login extends React.Component {
     };
 
     return (
-      <div style={styles.box}>
+      <div>
         <AppBar
           title={<span><img src='/assets/GitTalkLogo.png' style={miniLogo} />&nbsp;&nbsp;GitTalk</span>}
           iconClassNameRight="muidocs-icon-custom-github"
           zDepth={0}
 
-          style={{backgroundColor: fullWhite, width: '100%'}}
+          style={{backgroundColor: fullWhite, width: '100%', position: 'fixed', }}
           titleStyle={{color: grey700, fontSize: 16,}}
 
           iconElementLeft={
@@ -96,20 +96,40 @@ class Login extends React.Component {
           <MenuItem>Bots</MenuItem>
           <MenuItem>Search</MenuItem>
         </Drawer>
-        <img src='/assets/GitTalkLogo.png' style={styles.logo}/>
-        <h1 style={styles.title}>GitTalk</h1>
-        <h2 style={styles.subtitle}>Talk while you Git</h2>
-        <div style={{textAlign: 'center'}}>
-          <RaisedButton 
-            className="raised-button"
-            href="/auth/github"
-            label="Login with GitHub"
-            secondary={false}
-            style={styles.button}
-            icon={<FontIcon className="muidocs-icon-custom-github" />}
-            backgroundColor="#8cc665"
-            labelColor="white"
-          />
+        <div style={styles.box}>
+          <img src='/assets/GitTalkLogo.png' style={styles.logo}/>
+          <h1 style={styles.title}>GitTalk</h1>
+          <h2 style={styles.subtitle}>Talk while you Git</h2>
+          <div style={{textAlign: 'center'}}>
+            <RaisedButton 
+              className="raised-button"
+              href="/auth/github"
+              label="Login with GitHub"
+              secondary={false}
+              style={styles.button}
+              icon={<FontIcon className="muidocs-icon-custom-github" />}
+              backgroundColor="#8cc665"
+              labelColor="white"
+            />
+          </div>
+        </div>
+        <div style={styles.box2}>
+          <img src='/assets/GitTalkLaptop.png' style={styles.laptop}/>
+          <div style={styles.titleBox2}>
+            <h1 style={styles.title2}>Made by developers, for developers.</h1>
+          </div>
+          <div style={styles.subtitleBox2}>
+            <h2 style={styles.subtitle2}>Built for rapid collaboration, GitTalk is a platform that goes beyond the conventional chat application to help you reach out to your fellow Github contributors.</h2>
+          </div>
+        </div>
+        <div style={styles.box3}>
+          <img src='/assets/GitTalkLogo.png' style={styles.logo}/>
+          <div style={styles.titleBox2}>
+            <h1 style={styles.title2}>Made by developers, for developers.</h1>
+          </div>
+          <div style={styles.subtitleBox2}>
+            <h2 style={styles.subtitle2}>Built for rapid collaboration, GitTalk is a platform that goes beyond the conventional chat application to help you reach out to your fellow Github contributors.</h2>
+          </div>
         </div>
         <FloatingActionButton 
           backgroundColor={githubGreen}
@@ -125,18 +145,24 @@ class Login extends React.Component {
 const styles = {
   button: {
     position: 'absolute',
-    top: 365,
+    top: 385,
     left: '51%',
   },
   logo: {
     height: 300,
     position: 'absolute',
-    top: 120,
+    top: 140,
     right: '55%',
+  },
+  laptop: {
+    height: 700,
+    position: 'absolute',
+    top: 420,
+    right: '28%',
   },
   title: {
     position: 'absolute',
-    top: 85,
+    top: 105,
     left: '45%',
     textAlign: 'center', 
     fontFamily: 'Roboto', 
@@ -145,7 +171,7 @@ const styles = {
   },
   subtitle: {
     position: 'absolute',
-    top: 265,
+    top: 285,
     left: '47%',
     textAlign: 'center', 
     fontFamily: 'Roboto', 
@@ -155,7 +181,39 @@ const styles = {
   box: {
     backgroundColor: grey100,
     height: 540,
-  }
+  },
+  box2: {
+    backgroundColor: githubLightGreen,
+    height: 480,
+  },
+  box3: {
+    backgroundColor: grey200,
+    height: 110,
+  },
+  titleBox2: {
+    position: 'absolute',
+    top: 100 + 540,
+    left: '55%',
+    width: 420,
+  },
+  title2: {
+    textAlign: 'center', 
+    fontFamily: 'Roboto', 
+    fontSize: 40,
+    fontWeight: 'normal',
+  },
+  subtitleBox2: {
+    position: 'absolute',
+    top: 220 + 540,
+    left: '54%',
+    width: 420,
+  },
+  subtitle2: {
+    textAlign: 'center', 
+    fontFamily: 'Roboto', 
+    fontSize: 20,
+    fontWeight: 'normal',
+  },
 };
 
 export default Login;
