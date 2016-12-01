@@ -38,16 +38,18 @@ function listen(server) {
     });
 
     sendUpdates(function(chatroomId, data){
+      console.log(data);
       if (data !== 'Not Modified') {
         
-        data.forEach((diffFile) => {
+        data.forEach((pr) => {
+          let messageText = `__${pr.user.login}__ made a new pull request. Click the following link to see diffs:\n ${pr.diff_url}`;
           let updateMessage = {
             type: 'text',
             user: 'GitTalk',
             userAvatarUrl: '/assets/GitTalkLogo.png',
             chatroom: chatroomId,
             image: '',
-            text: diffFile
+            text: messageText
           };
           socket.emit(updateMessage.chatroom, updateMessage);
         }); 
