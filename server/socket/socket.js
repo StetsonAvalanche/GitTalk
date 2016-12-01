@@ -38,17 +38,21 @@ function listen(server) {
     });
 
     sendUpdates(function(chatroomId, data){
-      // if (data !== 'Not Modified') {
-        let updateMessage = {
-          type: 'text',
-          user: 'GitTalk',
-          userAvatarUrl: '/assets/GitTalkLogo.png',
-          chatroom: chatroomId,
-          image: '',
-          text: data
-        };
-        socket.emit(updateMessage.chatroom, updateMessage);
-      // }
+      if (data !== 'Not Modified') {
+        
+        data.forEach((diffFile) => {
+          let updateMessage = {
+            type: 'text',
+            user: 'GitTalk',
+            userAvatarUrl: '/assets/GitTalkLogo.png',
+            chatroom: chatroomId,
+            image: '',
+            text: diffFile
+          };
+          socket.emit(updateMessage.chatroom, updateMessage);
+        }); 
+
+      }
     });
 
 
