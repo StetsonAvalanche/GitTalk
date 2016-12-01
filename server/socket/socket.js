@@ -37,12 +37,12 @@ function listen(server) {
       });
     });
 
-    sendUpdates(function(data){
+    sendUpdates(function(chatroomId, data){
       let updateMessage = {
         type: 'text',
-        user: 'GitTalk',
+        user: '',
         userAvatarUrl: '',
-        chatroom: 'anicknam/GitTalk',
+        chatroom: chatroomId,
         image: '',
         text: data
       };
