@@ -42,7 +42,7 @@ function listen(server) {
       if (data.length > 0) {
         
         data.forEach((pr) => {
-          let messageText = '__' + pr.user.login + '__ made a new pull request. Click the following link to see diffs:\n' + 'pr.diff_url';
+          let messageText = '__' + pr.user.login + '__ made a new pull request. Click the following link to see diffs:\n' + pr.diff_url;
           let updateMessage = {
             type: 'text',
             user: 'GitTalk',
