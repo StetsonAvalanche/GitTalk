@@ -11,8 +11,7 @@ function fetchRepoPullRequests(callback) {
     const chatroomId = room.id;
 	  getParentRepo(chatroomId, (parentRepoId) => {
 	    
-      // const repoId = parentRepoId;
-	    const repoId = `${parentRepoId}/pulls`; // FIXME
+	    const repoId = `${parentRepoId}/pulls`; 
 			redis.hgetall(repoId, (e, repo) => {
 			  if (e) console.log(e);
 
@@ -27,10 +26,6 @@ function fetchRepoPullRequests(callback) {
 
 			      if (status === '200 OK') updateCache(repoId, etag, JSON.stringify(pullRequestIds));
 			      callback(chatroomId, pullRequests);
-			      // const prDiffUrls = pullRequests.map((pr) => {return pr.diff_url;});
-			      // getPullRequestDiff(prDiffUrls, (diffFiles) => {
-			      //   callback(chatroomId, JSON.parse(diffFiles));
-			      // });
 			    });
 			  } else {
 			    repoPullsRequest(repoId, repo.etag, (e, response, body) => {
@@ -42,7 +37,6 @@ function fetchRepoPullRequests(callback) {
 			        callback(chatroomId, 'Not Modified');
 			      } else {
 			      	const pullRequests = JSON.parse(body); // array of JSON pull requests
-			      	console.log('pull requests', pullRequests);
 			      	const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
               const cachedPullRequestIds = redis.hgetall(repoId, (e, repo) => {
 				      	const newPullRequestIds = _.difference(pullRequestIds, JSON.parse(repo.body));
@@ -51,12 +45,7 @@ function fetchRepoPullRequests(callback) {
 				      		if (_.contains(newPullRequestIds, pr.id)) {return pr;}
 				      	});
 				      	console.log('newPullRequestIds', newPullRequestIds);
-				      	// const prDiffUrls = newPullRequests.map((pr) => {return pr.diff_url;});
-				      	// console.log('prDiffUrls', prDiffUrls);
 				      	callback(chatroomId, newPullRequests);
-				      	// getPullRequestDiff(prDiffUrls, (diffFiles) => {
-				      	//   callback(chatroomId, JSON.parse(diffFiles));
-				      	// });
               })
 			      }
 			    });
