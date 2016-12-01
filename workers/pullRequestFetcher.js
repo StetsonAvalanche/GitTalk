@@ -1,46 +1,74 @@
-const { repoPullsRequest, updateCache } = require('./../server/handlers/cacheHandler.js');
+const request = require('request');
 const redis = require('./../server/redis/init.js');
 
-function fetchRepoPullRequests() {
+function fetchRepoPullRequests(callback) {
 
   redis.hgetall('activeChatroomId', (e, room) => {
   	if (e) console.log(e);
 
-	  const repoId = `${room.id}/pulls`;
-	  console.log(repoId)
+	  // const repoId = `${room.id}/pulls`; // FIXME
+	  const repoId = 'StetsonAvalanche/GitTalk/pulls'; // FIXME
 		redis.hgetall(repoId, (e, repo) => {
 		  if (e) console.log(e);
+	    // console.log('REDIS REPO', repo)
 
 		  if (!repo) {
 		    repoPullsRequest(repoId, null, (e, response, body) => {
 		      if (e) console.log(e);
-		      // res.status(200).json(body);
-
+          // console.log('No Repo - API REQUEST MADE', body)
 		      const status = response.headers.status;
 		      const etag = response.headers.etag;
 		      if (status === '200 OK') updateCache(repoId, etag, body);
-		      return body;
+		      callback(JSON.parse(body));
 		    });
 		  } else {
 		    repoPullsRequest(repoId, repo.etag, (e, response, body) => {
 		      if (e) console.log(e);
 
+		      // console.log('Redis Repo - API REQUEST MADE', body)
 		      const status = response.headers.status;
+		      // console.log('STATUS', status)
 		      const etag = response.headers.etag;
 		      if (status === '304 Not Modified') {
-		        // res.status(200).json(JSON.parse(user.body));
 		        // return JSON.parse(repo.body);
-		        return 'Not Modified';
+		        callback('Not Modified');
 		      } else {
 		        if (status === '200 OK') updateCache(repoId, etag, body);
-		        // res.status(200).json(body);
-		        return body;
+		        callback(JSON.parse(body));
 		      }
 		    });
 		  }
 		});
   });
 }
+
+
+function repoPullsRequest(userRepo, etag, cb) {
+  const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
+  if (!etag) {
+    const options = {
+      url: `https://api.github.com/repos/${ userRepo }?per_page=100${ keys }`,
+      headers: {
+        'User-Agent': 'chasestarr'
+      }
+    }
+    request(options, cb);
+  } else {
+    const options = {
+      url: `https://api.github.com/repos/${ userRepo }?per_page=100${ keys }`,
+      headers: {
+        'If-None-Match': etag,
+        'User-Agent': 'chasestarr'
+      }
+    }
+    request(options, cb);
+  }
+}
+
+function updateCache(key, etag, body) {
+  redis.hmset(key, ['etag', etag, 'body', JSON.stringify(body)]);
+}
+
 
 module.exports = {
   fetchRepoPullRequests

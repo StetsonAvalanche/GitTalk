@@ -38,19 +38,21 @@ function listen(server) {
     });
 
 
-    // setInterval(function(){
+    setInterval(function(){
 
-    //   let newMessage = {
-    //     type: 'text',
-    //     user: '',
-    //     userAvatarUrl: '',
-    //     chatroom: 'StetsonAvalanche/GitTalk',
-    //     image: '',
-    //     text: 'HELLO'
-    //   };
-    //   console.log(fetchRepoPullRequests())
-    //   // socket.emit(newMessage.chatroom, newMessage);
-    //   }, 20000);
+      let newMessage = {
+        type: 'text',
+        user: '',
+        userAvatarUrl: '',
+        chatroom: 'StetsonAvalanche/GitTalk',
+        image: '',
+        text: 'HELLO'
+      };
+      fetchRepoPullRequests(function(data){
+        console.log(data);
+      })
+      // socket.emit(newMessage.chatroom, newMessage);
+      }, 20000);
 
   });
 };
