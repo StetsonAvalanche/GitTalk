@@ -33,9 +33,9 @@ function fetchRepoPullRequests(callback) {
 
 			      const status = response.headers.status;
 			      const etag = response.headers.etag;
-			      if (status === '304 Not Modified') {
-			        callback(chatroomId, 'Not Modified');
-			      } else {
+			      // if (status === '304 Not Modified') {
+			      //   callback(chatroomId, 'Not Modified');
+			      // } else {
 			      	const pullRequests = JSON.parse(body); // array of JSON pull requests
 			      	const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
               const cachedPullRequestIds = redis.hgetall(repoId, (e, repo) => {
@@ -46,8 +46,8 @@ function fetchRepoPullRequests(callback) {
 				      	});
 				      	console.log('newPullRequestIds', newPullRequestIds);
 				      	callback(chatroomId, newPullRequests);
-              })
-			      }
+              });
+			      // }
 			    });
 			  }
 			});
