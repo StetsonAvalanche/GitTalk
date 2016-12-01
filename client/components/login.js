@@ -13,6 +13,12 @@ import NavMenuIcon from 'material-ui/svg-icons/navigation/menu';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 
+import Paper from 'material-ui/Paper';
+
+//import GithubIcon from 'material-ui/svg-icons/navigation/menu';
+import ChatIcon from 'material-ui/svg-icons/communication/chat';
+import ExtensionIcon from 'material-ui/svg-icons/action/extension';
+
 /* Color Scheme */
 import {
   githubLightGreen,
@@ -64,6 +70,43 @@ class Login extends React.Component {
       width: 40,
     };
 
+    const paperStyle = {
+      height: '100%',
+      width: '31%',
+      margin: '1%',
+      textAlign: 'center',
+      display: 'inline-block',
+    };
+
+    const paperTitleStyle = {
+      textAlign: 'center', 
+      fontFamily: 'Roboto', 
+      fontSize: 25,
+      fontWeight: 'normal',
+    };
+
+    const paperSubtitleStyle = {
+      textAlign: 'center', 
+      fontFamily: 'Roboto', 
+      fontSize: 18,
+      fontWeight: 'normal',
+      marginLeft: 10,
+      marginRight: 10,
+    };
+
+    const paperIconStyle = {
+      color: githubGreen,
+      width: 120,
+      height: 120,
+      fontSize: 120,
+      textAlign: 'center',
+    };
+
+    const iconButtonStyle = {
+      width: 140,
+      height: 140,
+    };
+    
     return (
       <div>
         <AppBar
@@ -99,7 +142,7 @@ class Login extends React.Component {
         <div style={styles.box}>
           <img src='/assets/GitTalkLogo.png' style={styles.logo}/>
           <h1 style={styles.title}>GitTalk</h1>
-          <h2 style={styles.subtitle}>Talk while you Git</h2>
+          <h2 style={styles.subtitle}>Talk while you Git.</h2>
           <div style={{textAlign: 'center'}}>
             <RaisedButton 
               className="raised-button"
@@ -123,13 +166,47 @@ class Login extends React.Component {
           </div>
         </div>
         <div style={styles.box3}>
-          <img src='/assets/GitTalkLogo.png' style={styles.logo}/>
-          <div style={styles.titleBox2}>
-            <h1 style={styles.title2}>Made by developers, for developers.</h1>
+          <div style={styles.paperBox}>
+            <Paper style={paperStyle} zDepth={0}>
+              <IconButton
+                iconClassName="muidocs-icon-custom-github"
+                iconStyle={paperIconStyle} 
+                style={iconButtonStyle}
+                disableTouchRipple={true}
+              />
+              <div>
+                <h1 style={paperTitleStyle}>GitHub API Integration</h1>
+              </div>
+              <div>
+                <h2 style={paperSubtitleStyle}>Log in with your Github account and get immediate access to your collaborators.</h2>
+              </div>
+            </Paper>
+            <Paper style={paperStyle} zDepth={0}>
+              <IconButton style={iconButtonStyle} iconStyle={paperIconStyle} disableTouchRipple={true}>
+                <ChatIcon color={paperIconStyle.color}/>
+              </IconButton>
+              <div>
+                <h1 style={paperTitleStyle}>Repo-centric Chatrooms</h1>
+              </div>
+              <div>
+                <h2 style={paperSubtitleStyle}>Each public Github repository is one chatroom, where all discussions are consolidated.</h2>
+              </div>
+            </Paper>
+            <Paper style={paperStyle} zDepth={0}>
+              <IconButton style={iconButtonStyle} iconStyle={paperIconStyle} disableTouchRipple={true}>
+                <ExtensionIcon color={paperIconStyle.color} style={paperIconStyle} />
+              </IconButton>
+              <div>
+                <h1 style={paperTitleStyle}>Developer Extensions</h1>
+              </div>
+              <div>
+                <h2 style={paperSubtitleStyle}>Choose from a range of developer-contributed apps to enhance your conversations.</h2>
+              </div>
+            </Paper>
           </div>
-          <div style={styles.subtitleBox2}>
-            <h2 style={styles.subtitle2}>Built for rapid collaboration, GitTalk is a platform that goes beyond the conventional chat application to help you reach out to your fellow Github contributors.</h2>
-          </div>
+        </div>
+        <div style={styles.box4}>
+          <p>Created by Afsoon Nickname, Chase Starr, Felicia Fong, and Tony Tan</p>
         </div>
         <FloatingActionButton 
           backgroundColor={githubGreen}
@@ -188,7 +265,19 @@ const styles = {
   },
   box3: {
     backgroundColor: grey200,
-    height: 110,
+    height: 480,
+  },
+  box4: {
+    backgroundColor: fullWhite,
+    height: 90,
+  },
+  paperBox: {
+    position: 'relative',
+    top: 130,
+    height: '60%',
+    width: '96%',
+    marginLeft: '2%',
+    marginRight: '2%',
   },
   titleBox2: {
     position: 'absolute',
