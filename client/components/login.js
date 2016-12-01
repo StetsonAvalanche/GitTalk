@@ -72,10 +72,11 @@ class Login extends React.Component {
 
     const paperStyle = {
       height: '100%',
-      width: '31%',
+      width: 290,
       margin: '1%',
       textAlign: 'center',
       display: 'inline-block',
+      top: 0,
     };
 
     const paperTitleStyle = {
@@ -92,6 +93,8 @@ class Login extends React.Component {
       fontWeight: 'normal',
       marginLeft: 10,
       marginRight: 10,
+      marginTop: 0,
+      marginBottom: 0,
     };
 
     const paperIconStyle = {
@@ -166,6 +169,9 @@ class Login extends React.Component {
           </div>
         </div>
         <div style={styles.box3}>
+          <div style={styles.titleBox3}>
+            <h1 style={styles.title3}>Github-centric, Rapid, Flexible</h1>
+          </div>
           <div style={styles.paperBox}>
             <Paper style={paperStyle} zDepth={0}>
               <IconButton
@@ -186,7 +192,7 @@ class Login extends React.Component {
                 <ChatIcon color={paperIconStyle.color}/>
               </IconButton>
               <div>
-                <h1 style={paperTitleStyle}>Repo-centric Chatrooms</h1>
+                <h1 style={paperTitleStyle}>Repo-based Chatrooms</h1>
               </div>
               <div>
                 <h2 style={paperSubtitleStyle}>Each public Github repository is one chatroom, where all discussions are consolidated.</h2>
@@ -273,11 +279,12 @@ const styles = {
   },
   paperBox: {
     position: 'relative',
-    top: 130,
-    height: '60%',
+    top: 120,
+    height: 290,
     width: '96%',
     marginLeft: '2%',
     marginRight: '2%',
+    textAlign: 'center',
   },
   titleBox2: {
     position: 'absolute',
@@ -286,6 +293,17 @@ const styles = {
     width: 420,
   },
   title2: {
+    textAlign: 'center', 
+    fontFamily: 'Roboto', 
+    fontSize: 40,
+    fontWeight: 'normal',
+  },
+  titleBox3: {
+    position: 'absolute',
+    top: 100 + 540 + 390,
+    width: '100%',
+  },
+  title3: {
     textAlign: 'center', 
     fontFamily: 'Roboto', 
     fontSize: 40,
