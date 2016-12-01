@@ -62,6 +62,7 @@ function listen(server) {
 };
 
 
+
 function updateMessage(message) {
   io.sockets.emit(message.chatroom, message);
 }
@@ -69,6 +70,5 @@ function updateMessage(message) {
 
 module.exports = {
   io,
-  listen,
-  // updateMessage
+  listen
 }
