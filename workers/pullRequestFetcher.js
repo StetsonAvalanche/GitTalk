@@ -23,7 +23,7 @@ function fetchRepoPullRequests(callback) {
 			      const pullRequests = JSON.parse(body); // array of JSON pull requests
 			      const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
 
-			      if (status === '200 OK') updateCache(repoId, etag, JSON.stringify(pullRequestIds));
+			      if (status === '200 OK') updateCache(repoId, etag, pullRequestIds);
 			      callback(chatroomId, pullRequests);
 			    });
 			  } else {
@@ -38,12 +38,14 @@ function fetchRepoPullRequests(callback) {
 			      	const pullRequests = JSON.parse(body); // array of JSON pull requests
 			      	const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
               const cachedPullRequestIds = redis.hgetall(repoId, (e, repo) => {
+              	console.log('CACHED REQUEST IDs', JSON.parse(repo.body));
+              	console.log('FETCHED REQUEST IDs', pullRequestIds);
 				      	const newPullRequestIds = _.difference(pullRequestIds, JSON.parse(repo.body));
-				      	if (status === '200 OK') updateCache(repoId, etag, JSON.stringify(newPullRequestIds));
+				      	console.log('newPullRequestIds', newPullRequestIds);
+				      	if (status === '200 OK') updateCache(repoId, etag, pullRequestIds);
 				      	const newPullRequests = pullRequests.filter((pr) => {
 				      		if (_.contains(newPullRequestIds, pr.id)) {return pr;}
 				      	});
-				      	console.log('newPullRequestIds', newPullRequestIds);
 				      	callback(chatroomId, newPullRequests);
               });
 			      }
