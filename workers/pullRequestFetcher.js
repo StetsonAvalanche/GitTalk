@@ -88,7 +88,12 @@ function getParentRepo(forkedRepo, cb) {
         if (status === '200 OK') {
         	redis.hmset(forkedRepoKey, ['parentRepo', JSON.stringify(body)]);
         };
-        cb(JSON.parse(body).parent.full_name);
+        const parsedBody = JSON.parse(body);
+        if (parsedBody.parent) {
+          cb(parsedBody.parent.full_name); 
+        } else {
+          cb(parsedBody.full_name);
+        }
       });
     } else {
       repoRequest(forkedRepo, data.etag, (e, response, body) => {
@@ -97,12 +102,18 @@ function getParentRepo(forkedRepo, cb) {
         const status = response.headers.status;
         const etag = response.headers.etag;
         if (status === '304 Not Modified') {
-          cb(JSON.parse(data.body).parent.full_name);
+          const cachedRepo = JSON.parse(data.body);
+          (cachedRepo.parent) ? cb(cachedRepo.parent.full_name) : cb(cachedRepo.full_name);
         } else {
           if (status === '200 OK') {
           	redis.hmset(forkedRepoKey, ['parentRepo', JSON.stringify(body)]);
           };
-          cb(JSON.parse(body).parent.full_name);
+          const parsedBody = JSON.parse(body);
+          if (parsedBody.parent) {
+            cb(parsedBody.parent.full_name); 
+          } else {
+            cb(parsedBody.full_name);
+          }
         }
       });
     }
