@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+let PROD = process.argv[2] === '-prod' ? 1 : 0;
+
 // env
 const buildDirectory = './public/';
 
@@ -38,6 +40,11 @@ module.exports = {
       },
     }],
   },
-  plugins: [],
+  plugins: PROD ? [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false }
+    })
+  ] : [],
   // devtool: 'source-map',
 };
