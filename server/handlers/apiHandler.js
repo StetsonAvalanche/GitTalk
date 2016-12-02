@@ -54,11 +54,9 @@ function getMemberRepos (req, res) {
   });
 }
 
-
 function triggerPullRequestFetcher(req, res) {
   sendUpdates(function(chatroomId, data){
     if (data.length > 0) {
-      
       data.forEach((pr) => {
         let messageText = '__' + pr.user.login + '__ made a new pull request. Click the following link to see diffs:\n' + pr.diff_url;
         let message = {
@@ -72,12 +70,9 @@ function triggerPullRequestFetcher(req, res) {
         updateMessage(message);
         res.status(200).end();
       }); 
-
     }
   });
 }
-
-
 
 function emailInvite (req, res) {
   const emailList = req.body.emailAddressList; 

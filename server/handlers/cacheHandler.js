@@ -111,7 +111,6 @@ function userReposRequest(username, etag, cb) {
   }
 }
 
-
 function updateCache(key, etag, body) {
   redis.hmset(key, ['etag', etag, 'body', JSON.stringify(body)]);
 }

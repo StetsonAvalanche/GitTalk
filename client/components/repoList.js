@@ -35,7 +35,7 @@ class RepoList extends React.Component {
       .then(() => {
         browserHistory.push(`/rooms/${repoName}`);
         updatePullRequest().then(() => {
-          console.log('made a post request to wake up worker');
+          // console.log('woke up worker');
         }).catch(e => console.log(e));
       }).catch(err => { 
         console.log(err); 
