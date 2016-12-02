@@ -19,6 +19,9 @@ import Paper from 'material-ui/Paper';
 import ChatIcon from 'material-ui/svg-icons/communication/chat';
 import ExtensionIcon from 'material-ui/svg-icons/action/extension';
 
+import SmoothScroll from 'smooth-scroll';
+import ScrollBehavior from 'scroll-behavior';
+
 /* Color Scheme */
 import {
   githubLightGreen,
@@ -37,15 +40,148 @@ class Login extends React.Component {
 
     this.state = {
       open: false,
+      currentTag: '#gittalk',
+      scrolling: false,
     };
 
     this.toggleDrawer = this.toggleDrawer.bind(this);
+    this.moveToAnchor = this.moveToAnchor.bind(this);
+    this.moveToGitTalk = this.moveToGitTalk.bind(this);
+    this.moveToForDevs = this.moveToForDevs.bind(this);
+    this.moveToFeatures = this.moveToFeatures.bind(this);
+    this.moveUp = this.moveUp.bind(this);
+    this.moveDown = this.moveDown.bind(this);
+    this.preventDefault = this.preventDefault.bind(this);
+    this.controlBehaviorForScrollKeys = this.controlBehaviorForScrollKeys.bind(this);
+    this.controlBehaviorForScroll = this.controlBehaviorForScroll.bind(this);
+    this.enableScroll = this.enableScroll.bind(this);
+    this.disableScroll = this.disableScroll.bind(this);
+  }
+
+  componentDidMount() {
+    SmoothScroll.init({
+      selector: '[data-scroll]', // Selector for links (must be a class, ID, data attribute, or element tag)
+      selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]
+      speed: 500, // Integer. How fast to complete the scroll in milliseconds
+      easing: 'easeInOutQuad', // Easing pattern to use
+      offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
+      callback: function ( anchor, toggle ) {} // Function to run after scrolling
+    });    
+
+    this.disableScroll();
+  }
+
+  componentWillUnmount() {
+    this.enableScroll();
+  }
+
+  preventDefault(e) {
+    e = e || window.event;
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
+    e.returnValue = false;  
+  }
+
+  controlBehaviorForScrollKeys(e) {
+    // left: 37, up: 38, right: 39, down: 40,
+    // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+    const keys = {37: 'left', 38: 'up', 39: 'right', 40: 'down', 
+                  32: 'spacebar', 33: 'pageup', 34: 'pagedown', 35: 'end', 36: 'home'};
+    if (keys[e.keyCode]) {
+        this.preventDefault(e);
+        if (keys[e.keyCode] === 'down' || keys[e.keyCode] === 'pagedown' || keys[e.keyCode] === 'spacebar') {
+          this.moveDown();
+        }
+        if (keys[e.keyCode] === 'up' || keys[e.keyCode] === 'pageup') {
+          this.moveUp();
+        }
+        if (keys[e.keyCode] === 'home') {
+          this.moveToGitTalk();
+        }
+        if (keys[e.keyCode] === 'end') {
+          this.moveToFeatures();
+        }
+        return false;
+    }
+  }
+
+  controlBehaviorForScroll(e) {
+    // moveUp: negative deltaY
+    // moveDown: positive deltaY
+    this.preventDefault(e);
+    if (this.state.scrolling === false) {
+      this.setState({ scrolling: true });
+      if (e.deltaY < 0) {
+        this.moveUp();
+      } else if (e.deltaY > 0) {
+        this.moveDown();
+      }
+      setTimeout(() => {
+        this.setState({ scrolling: false });
+      }, 1800);
+    }
+    return false;
+  }
+
+  disableScroll() {
+    if (window.addEventListener) // older FF
+        window.addEventListener('DOMMouseScroll', this.preventDefault, false);
+    window.onwheel = this.preventDefault; // modern standard
+    window.onmousewheel = document.onmousewheel = this.controlBehaviorForScroll; // older browsers, IE
+    window.ontouchmove  = this.controlBehaviorForScroll; // mobile
+    document.onkeydown  = this.controlBehaviorForScrollKeys;
+  }
+
+  enableScroll() {
+      if (window.removeEventListener)
+          window.removeEventListener('DOMMouseScroll', this.preventDefault, false);
+      window.onmousewheel = document.onmousewheel = null; 
+      window.onwheel = null; 
+      window.ontouchmove = null;  
+      document.onkeydown = null;  
   }
 
   toggleDrawer() {
     this.setState({
       open: !this.state.open,
     });
+  }
+
+  moveToAnchor(id) {
+    const anchor = document.querySelector(id);
+    SmoothScroll.animateScroll(anchor);
+  }
+
+  moveUp() {
+    if (this.state.currentTag === '#fordevs') {
+      this.moveToGitTalk();
+    } else if (this.state.currentTag === '#features') {
+      this.moveToForDevs();
+    }
+  }
+
+  moveDown() {
+    if (this.state.currentTag === '#gittalk') {
+      this.moveToForDevs();
+    } else if (this.state.currentTag === '#fordevs') {
+      this.moveToFeatures();
+    }
+  }
+
+  moveToGitTalk() {
+    this.moveToAnchor('#gittalk');
+    this.setState({currentTag: '#gittalk'});
+  }
+
+  moveToForDevs() {
+    this.moveToAnchor('#fordevs');
+    this.setState({currentTag: '#fordevs'});
+  }
+
+  moveToFeatures() {
+    this.moveToAnchor('#features');
+    this.setState({currentTag: '#features'});
   }
 
   render() {
@@ -109,12 +245,17 @@ class Login extends React.Component {
       width: 140,
       height: 140,
     };
+
+    const aTagStyle = {
+      textDecoration: 'none',
+      cursor: 'auto',
+      color: grey700,
+    };
     
     return (
       <div>
         <AppBar
           title={<span><img src='/assets/GitTalkLogo.png' style={miniLogo} />&nbsp;&nbsp;GitTalk</span>}
-          iconClassNameRight="muidocs-icon-custom-github"
           zDepth={0}
 
           style={{backgroundColor: fullWhite, width: '100%', position: 'fixed', }}
@@ -136,13 +277,11 @@ class Login extends React.Component {
           containerStyle={drawerStyle}
           zDepth={0}
         >
-          <MenuItem>GitTalk</MenuItem>
-          <MenuItem>Github API Integration</MenuItem>
-          <MenuItem>Repo = Chatroom</MenuItem>
-          <MenuItem>Bots</MenuItem>
-          <MenuItem>Search</MenuItem>
+          <MenuItem onTouchTap={this.moveToGitTalk}>GitTalk</MenuItem>
+          <MenuItem onTouchTap={this.moveToForDevs}>For Devs</MenuItem>
+          <MenuItem onTouchTap={this.moveToFeatures}>Features</MenuItem>
         </Drawer>
-        <div style={styles.box}>
+        <div style={styles.box} id="gittalk">
           <img src='/assets/GitTalkLogo.png' style={styles.logo}/>
           <h1 style={styles.title}>GitTalk</h1>
           <h2 style={styles.subtitle}>Talk while you Git.</h2>
@@ -159,7 +298,7 @@ class Login extends React.Component {
             />
           </div>
         </div>
-        <div style={styles.box2}>
+        <div style={styles.box2} id="fordevs">
           <img src='/assets/GitTalkLaptop.png' style={styles.laptop}/>
           <div style={styles.titleBox2}>
             <h1 style={styles.title2}>Made by developers, for developers.</h1>
@@ -168,7 +307,7 @@ class Login extends React.Component {
             <h2 style={styles.subtitle2}>Built for rapid collaboration, GitTalk is a platform that goes beyond the conventional chat application to help you reach out to your fellow Github contributors.</h2>
           </div>
         </div>
-        <div style={styles.box3}>
+        <div style={styles.box3} id="features">
           <div style={styles.titleBox3}>
             <h1 style={styles.title3}>Github-centric, Rapid, Flexible</h1>
           </div>
@@ -212,11 +351,14 @@ class Login extends React.Component {
           </div>
         </div>
         <div style={styles.box4}>
-          <p>Created by Afsoon Nickname, Chase Starr, Felicia Fong, and Tony Tan</p>
+          <div style={styles.subtitleBox4}>
+            <h2 style={styles.subtitle4}>Built by <a style={aTagStyle} href='https://github.com/anicknam'>Afsoon Nicknam</a>, <a style={aTagStyle} href='https://github.com/chasestarr'>Chase Starr</a>, <a style={aTagStyle} href='https://github.com/f-fong'>Felicia Fong</a>, and <a style={aTagStyle} href='https://github.com/tankwan'>Tony Tan</a></h2>
+          </div>
         </div>
         <FloatingActionButton 
           backgroundColor={githubGreen}
           style={roundButtonStyle}
+          onTouchTap={this.moveDown}
         >
           <ExpandMoreIcon style={expandMoreStyle}/>
         </FloatingActionButton>
@@ -275,7 +417,7 @@ const styles = {
   },
   box4: {
     backgroundColor: fullWhite,
-    height: 90,
+    height: 105,
   },
   paperBox: {
     position: 'relative',
@@ -316,6 +458,17 @@ const styles = {
     width: 420,
   },
   subtitle2: {
+    textAlign: 'center', 
+    fontFamily: 'Roboto', 
+    fontSize: 20,
+    fontWeight: 'normal',
+  },
+  subtitleBox4: {
+    position: 'absolute',
+    top: 220 + 540 + 540 + 220,
+    width: '100%',
+  },
+  subtitle4: {
     textAlign: 'center', 
     fontFamily: 'Roboto', 
     fontSize: 20,
