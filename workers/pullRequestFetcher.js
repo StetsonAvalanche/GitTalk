@@ -5,7 +5,6 @@ const Promise = require('bluebird');
 const _ = require('underscore');
 
 function fetchRepoPullRequests(callback) {
-  console.log('INSIDE fetchRepoPullRequests FUNCTION')
   redis.hgetall('activeChatroomId', (e, room) => {
   	if (e) console.log(e);
     const chatroomId = room.id;
@@ -33,9 +32,9 @@ function fetchRepoPullRequests(callback) {
 
 			      const status = response.headers.status;
 			      const etag = response.headers.etag;
-			      // if (status === '304 Not Modified') {
-			      //   callback(chatroomId, 'Not Modified');
-			      // } else {
+			      if (status === '304 Not Modified') {
+			        callback(chatroomId, '');
+			      } else {
 			      	const pullRequests = JSON.parse(body); // array of JSON pull requests
 			      	const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
               const cachedPullRequestIds = redis.hgetall(repoId, (e, repo) => {
@@ -44,10 +43,10 @@ function fetchRepoPullRequests(callback) {
 				      	const newPullRequests = pullRequests.filter((pr) => {
 				      		if (_.contains(newPullRequestIds, pr.id)) {return pr;}
 				      	});
-				      	// console.log('newPullRequestIds', newPullRequestIds);
+				      	console.log('newPullRequestIds', newPullRequestIds);
 				      	callback(chatroomId, newPullRequests);
               });
-			      // }
+			      }
 			    });
 			  }
 			});

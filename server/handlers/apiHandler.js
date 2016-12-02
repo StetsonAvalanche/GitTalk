@@ -58,17 +58,16 @@ function getMemberRepos (req, res) {
 function triggerPullRequestFetcher(req, res) {
   sendUpdates(function(chatroomId, data){
     if (data.length > 0) {
-    // console.log('first PR', data[0].user.login);
       
       data.forEach((pr) => {
-        // let messageText = '__' + pr.user.login + '__ made a new pull request. Click the following link to see diffs:\n' + pr.diff_url;
+        let messageText = '__' + pr.user.login + '__ made a new pull request. Click the following link to see diffs:\n' + pr.diff_url;
         let message = {
           type: 'text',
           user: 'GitTalk',
           userAvatarUrl: '/assets/GitTalkLogo.png',
           chatroom: chatroomId,
           image: '',
-          text: pr.diff_url
+          text: messageText
         };
         updateMessage(message);
         res.status(200).end();
