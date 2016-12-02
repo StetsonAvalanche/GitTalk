@@ -144,8 +144,7 @@ function sendUpdates(cb) {
 	  fetchRepoPullRequests(function(chatroomId, data){
 	    cb(chatroomId, data);
 	  });
-	  // cb('anicknam/GitTalk', [{diff_url: 'www.cnn.com'}])
-	}, 20000);
+	}, 30000);
 }
 
 module.exports = {

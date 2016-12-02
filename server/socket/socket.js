@@ -44,12 +44,6 @@ function updateMessage(message) {
   io.sockets.emit(message.chatroom, message);
 }
 
-
-function updateMessage(message) {
-  io.sockets.emit(message.chatroom, message);
-}
-
-
 module.exports = {
   io,
   listen,
