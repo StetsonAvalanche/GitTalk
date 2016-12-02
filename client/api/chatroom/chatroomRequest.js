@@ -54,8 +54,7 @@ function getChatroom(repo) {
   });
 }
 
-
-//
+/* Trigger worker responsible for pull request update notification */
 function updatePullRequest(){
   return new Promise((resolve, reject) => {
     _post('/api/repo/pulls', {})

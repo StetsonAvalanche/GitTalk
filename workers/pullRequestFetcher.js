@@ -7,9 +7,9 @@ const _ = require('underscore');
 function fetchRepoPullRequests(callback) {
   redis.hgetall('activeChatroomId', (e, room) => {
   	if (e) console.log(e);
+
     const chatroomId = room.id;
 	  getParentRepo(chatroomId, (parentRepoId) => {
-	    
 	    const repoId = `${parentRepoId}/pulls`; 
 			redis.hgetall(repoId, (e, repo) => {
 			  if (e) console.log(e);
@@ -22,7 +22,6 @@ function fetchRepoPullRequests(callback) {
 			      const etag = response.headers.etag;
 			      const pullRequests = JSON.parse(body); // array of JSON pull requests
 			      const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
-
 			      if (status === '200 OK') updateCache(repoId, etag, pullRequestIds);
 			      callback(chatroomId, pullRequests);
 			    });
@@ -38,10 +37,7 @@ function fetchRepoPullRequests(callback) {
 			      	const pullRequests = JSON.parse(body); // array of JSON pull requests
 			      	const pullRequestIds = pullRequests.map((pr) => {return pr.id;});
               const cachedPullRequestIds = redis.hgetall(repoId, (e, repo) => {
-              	console.log('CACHED REQUEST IDs', JSON.parse(repo.body));
-              	console.log('FETCHED REQUEST IDs', pullRequestIds);
 				      	const newPullRequestIds = _.difference(pullRequestIds, JSON.parse(repo.body));
-				      	console.log('newPullRequestIds', newPullRequestIds);
 				      	if (status === '200 OK') updateCache(repoId, etag, pullRequestIds);
 				      	const newPullRequests = pullRequests.filter((pr) => {
 				      		if (_.contains(newPullRequestIds, pr.id)) {return pr;}
@@ -55,40 +51,6 @@ function fetchRepoPullRequests(callback) {
 	  });
   });
 }
-
-
-function requestDiffFile(diffURL){
-	const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
-  return new Promise((resolve, reject) => {
-  	let options = {
-  	  url: `${ diffURL }?per_page=100${ keys }`,
-  	  headers: {
-  	    'User-Agent': 'chasestarr'
-  	  }
-  	}
-  	request(options, (e, response, body) => {
-  		if (e) {
-  			reject(e)
-  		} else {
-  			console.log('returned diff file', body);
-  		  resolve(body);
-  		}
-  	});
-  })
-}
-
-
-function getPullRequestDiff(diffURLs, cb){
-  let promises = [];
-  for (let i = 0; i < diffURLs.length; i++){
-  	promises.push(requestDiffFile(diffURLs[i]));
-  }
-  Promise.all(promises).then((diffFiles) => {
-  	cb(diffFiles);
-  })
-}
-
-
 
 function repoPullsRequest(userRepo, etag, cb) {
   const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
@@ -111,8 +73,6 @@ function repoPullsRequest(userRepo, etag, cb) {
     request(options, cb);
   }
 }
-
-
 
 function getParentRepo(forkedRepo, cb) {
   const forkedRepoKey = `${ forkedRepo }/child`;
@@ -149,6 +109,35 @@ function getParentRepo(forkedRepo, cb) {
   });
 }
 
+function requestDiffFile(diffURL){
+	const keys = `&client_id=${ process.env.GITHUB_CLIENT_ID }&client_secret=${ process.env.GITHUB_CLIENT_SECRET }`;
+  return new Promise((resolve, reject) => {
+  	let options = {
+  	  url: `${ diffURL }?per_page=100${ keys }`,
+  	  headers: {
+  	    'User-Agent': 'chasestarr'
+  	  }
+  	}
+  	request(options, (e, response, body) => {
+  		if (e) {
+  			reject(e)
+  		} else {
+  			console.log('returned diff file', body);
+  		  resolve(body);
+  		}
+  	});
+  })
+}
+
+function getPullRequestDiff(diffURLs, cb){
+  let promises = [];
+  for (let i = 0; i < diffURLs.length; i++){
+  	promises.push(requestDiffFile(diffURLs[i]));
+  }
+  Promise.all(promises).then((diffFiles) => {
+  	cb(diffFiles);
+  })
+}
 
 function sendUpdates(cb) {
 	setInterval(function(){
