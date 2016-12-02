@@ -1,6 +1,9 @@
 const chatroomCtrl = require('../db/controllers/chatroom.js');
 const gmailSend = require('gmail-send');
 const Promise = require('bluebird');
+const redis = require('./../redis/init.js');
+const { sendUpdates } = require('./../../workers/pullRequestFetcher.js');
+const { updateMessage } = require('./../socket/socket.js');
 
 
 function chatroomInit(req, res) {
@@ -18,7 +21,8 @@ function getChatroom (req, res) {
       if (chatroom[0] === undefined) {
         res.status(200).send(JSON.stringify(null));
       } else {
-        res.status(200).send(JSON.stringify(chatroom[0]));      
+        redis.hmset('activeChatroomId', ['id', chatroom[0].id]);      
+        res.status(200).send(JSON.stringify(chatroom[0]));
       }
     } 
   });
@@ -47,6 +51,26 @@ function getMemberRepos (req, res) {
     } else {
       res.status(200).send(JSON.stringify(chatrooms));
     } 
+  });
+}
+
+function triggerPullRequestFetcher(req, res) {
+  sendUpdates(function(chatroomId, data){
+    if (data.length > 0) {
+      data.forEach((pr) => {
+        let messageText = '__' + pr.user.login + '__ made a new pull request. Click the following link to see diffs:\n' + pr.diff_url;
+        let message = {
+          type: 'text',
+          user: 'GitTalk',
+          userAvatarUrl: '/assets/GitTalkLogo.png',
+          chatroom: chatroomId,
+          image: '',
+          text: messageText
+        };
+        updateMessage(message);
+        res.status(200).end();
+      }); 
+    }
   });
 }
 
@@ -92,6 +116,7 @@ module.exports = {
   emailInvite: emailInvite,
   getChatroom: getChatroom,
   getMemberRepos: getMemberRepos,
-  getMessages: getMessages
+  getMessages: getMessages,
+  triggerPullRequestFetcher: triggerPullRequestFetcher
 }
 

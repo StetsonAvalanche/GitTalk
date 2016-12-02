@@ -1,6 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
-import { init, getChatroom } from '../api/chatroom/chatroomRequest.js';
+import { init, getChatroom, updatePullRequest} from '../api/chatroom/chatroomRequest.js';
 import { getRepoInfoCached, getUserReposCached, getUserRepos, getRepoInfo } from './../api/user/userRequest.js';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
@@ -34,6 +34,9 @@ class RepoList extends React.Component {
       })
       .then(() => {
         browserHistory.push(`/rooms/${repoName}`);
+        updatePullRequest().then(() => {
+          // console.log('woke up worker');
+        }).catch(e => console.log(e));
       }).catch(err => { 
         console.log(err); 
       });

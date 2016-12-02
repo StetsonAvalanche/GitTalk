@@ -54,6 +54,19 @@ function getChatroom(repo) {
   });
 }
 
+/* Trigger worker responsible for pull request update notification */
+function updatePullRequest(){
+  return new Promise((resolve, reject) => {
+    _post('/api/repo/pulls', {})
+    .done(() => { 
+      resolve(); 
+    }).fail((jqXHR, textStatus, err) => {
+      reject(err);
+    });
+  });
+
+}
+
 /* Send email invitation to chatroom */
 function getUserEmailAddress(url) {
   return new Promise((resolve, reject) => {
@@ -101,5 +114,6 @@ function sendInvite(chatroomLink, forkedRepoUrl) {
 module.exports = {
   init: init,
   getChatroom: getChatroom,
-  sendInvite: sendInvite
+  sendInvite: sendInvite,
+  updatePullRequest: updatePullRequest
 }
